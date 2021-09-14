@@ -14,29 +14,28 @@
     <!-- My CSS -->
     <link rel="stylesheet" href="{{asset('style.css')}}">
 
-    <title>Hani Lesmana</title>
+    <title>Babowe</title>
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: azure;">
       <div class="container">
-        <a class="navbar-brand" href="#">Babowe</a>
+        <a class="navbar-brand" id="gambar" href="#"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Pricing</a>
-            <a class="nav-item nav-link" href="#">Features</a>
-            <a class="nav-item nav-link" href="#">About</a>
+            <a class="nav-item nav-link active" href="#" style="color: black;">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#" style="color: black;">Features</a>
+            <a class="nav-item nav-link" href="#About" style="color: black;">About</a>
             <button type ="button" class="btn btn-primary tombol" data-toggle="modal" data-target="#SignInModal">Sign In</button>
           </div>
         </div>
       </div>
     </nav>
     <!-- Akhir Navbar -->
-    
+
     <!-- Sign In Modal -->
     <div class="modal fade" id="SignInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -104,7 +103,7 @@
     <div class="container">
 
       <!-- info panel -->
-      <div class="row justify-content-center">
+      <!-- <div class="row justify-content-center">
         <div class="col-10 info-panel">
           <div class="row">
             <div class="col-lg">
@@ -124,7 +123,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- akhir info panel -->
 
       <!-- bagian Work like at home -->
@@ -140,6 +139,7 @@
       </div>
       <!-- Akhir work like at home -->
 
+      <a id="About">About</a>
     </div>
     <!-- akhir container -->
 
