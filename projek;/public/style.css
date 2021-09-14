@@ -10,7 +10,7 @@
 
 /* Jumbotron */
 .jumbotron{
-    background-image: url(img/tukang.jpg);
+    background-image: url(img/tukang2.png);
     /* background-size: cover;
     height: 540px;
     text-align: center;
@@ -31,12 +31,12 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    height: 200px;
-    width: 200px;
-    position: fixed;
+    height: 70px;
+    width: 250px;
+    position:inherit;
 }
 
-/* .jumbotron::after{
+.jumbotron::after{
     content: '';
     display: block;
     width:100%;
@@ -46,7 +46,7 @@
     position: absolute;
     bottom: 0;
 
-} */
+}
 
 .jumbotron .display-4 {
     color: white;
@@ -108,7 +108,7 @@
 /* DESKTOP VERSION */
 @media (min-width: 992px) {
     .navbar-brand, .nav-link{
-        color: white !important;
+        /* color: white !important; */
         text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
     }
     .nav-link {

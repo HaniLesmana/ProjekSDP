@@ -18,7 +18,7 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: azure;">
+    <nav class="navbar navbar-expand-lg navbar navbar-light" style=" background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0))" >
       <div class="container">
         <a class="navbar-brand" id="gambar" href="#"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +26,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="#" style="color: black;">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#" style="color: black;">Features</a>
-            <a class="nav-item nav-link" href="#About" style="color: black;">About</a>
+            <a class="nav-item nav-link active" href="#>Home <span class="sr-only">About</span></a>
+            <a class="nav-item nav-link " href="#" >Features</a>
+            <a class="nav-item nav-link" href="#About">About</a>
             <button type ="button" class="btn btn-primary tombol" data-toggle="modal" data-target="#SignInModal">Sign In</button>
           </div>
         </div>
