@@ -1,0 +1,58 @@
+.navbar-brand{
+    font-family: viga;
+    font-size: 33px;
+}
+.nav-item{
+    font-weight:light;
+    font-size: 16px;
+}
+#logo{
+    background-image: url(img/title.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 70px;
+    width: 250px;
+    position:inherit;
+}
+.tombolSignOut{
+    text-transform: uppercase;
+    border-radius: 40px;
+    width:170px;
+}
+#ads{
+    background-image: url(img/employee.png);
+    height: 100%;
+    width:100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* DESKTOP VERSION */
+@media (min-width: 992px) {
+    .navbar-brand, .nav-link{
+        /* color: white !important; */
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+    }
+    .nav-link {
+        text-transform: uppercase;
+        margin-right: 30px;
+    }
+    .nav-link:hover::after{
+        content: '';
+        display: block;
+        border-bottom: 3px solid blue;
+        width: 50%;
+        margin : auto;
+        padding-bottom: 5px;
+        margin-top: -8px;
+    }
+    .jumbotron{
+        margin-top: -75px;
+        height: 640px;
+    }
+    .jumbotron .display-4 {
+        font-size: 62px;
+    }
+
+}

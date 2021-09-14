@@ -20,12 +20,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,"home"]);
 
-Route::get('/home', function () {
-    Route::get("/", [HomeController::class, "home"]);
-});
+// Route::get('/home', function () {
+//     Route::get("/", [HomeController::class, "home"]);
+// });
 
 Route::prefix("home")->group(function(){
     Route::get("/user", [HomeController::class, "home_user"]);
     Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
     Route::get("/admin", [HomeController::class, "home_admin"]);
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
