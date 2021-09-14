@@ -30,12 +30,66 @@
             <a class="nav-item nav-link" href="#">Pricing</a>
             <a class="nav-item nav-link" href="#">Features</a>
             <a class="nav-item nav-link" href="#">About</a>
-            <a class="nav-item btn btn-primary tombol" href="#">Sign In</a>
+            <button type ="button" class="btn btn-primary tombol" data-toggle="modal" data-target="#SignInModal">Sign In</button>
           </div>
         </div>
       </div>
     </nav>
     <!-- Akhir Navbar -->
+    
+    <!-- Sign In Modal -->
+    <div class="modal fade" id="SignInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Sign In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Email : <br>
+          <input type="email" name="" id=""> <br>
+          Password : <br>
+          <input type="password" name="" id="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Sign In</button>
+          <a href="#" class="regislink" data-toggle="modal" data-target="#RegisterModal" data-dismiss="modal">Go to Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RegisterModal -->
+  <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Register</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Name : <br>
+          <input type="text" name="" id=""> <br>
+          Email : <br>
+          <input type="email" name="" id=""><br>
+          Password : <br>
+          <input type="password" name="" id=""><br>
+          Confirm Password : <br>
+          <input type="password" name="" id="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Register</button>
+          <a href="#" class="loginlink" data-toggle="modal" data-target="#SignInModal" data-dismiss="modal">Go To Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid">
