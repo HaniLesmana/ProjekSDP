@@ -1,6 +1,6 @@
 /* Navbar*/
 .navbar {
-    position: relative;
+    position: sticky;
     z-index: 1;
 }
 .navbar-brand{
