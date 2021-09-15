@@ -18,6 +18,13 @@
     <title>Babowe</title>
   </head>
   <body>
+    {{-- LOGIN SUCCESS --}}
+    @if (session("welcomeUser"))
+        <script>
+            alert("{{ session('welcomeUser') }}");
+        </script>
+    @endif
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));">
         <div class="container">

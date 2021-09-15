@@ -37,6 +37,11 @@
     <!-- Akhir Navbar -->
 
     <!-- Sign In Modal -->
+    @if ($errors->any())
+        <script>alert("Email atau password salah")</script>
+    @endif
+
+
     <div class="modal fade" id="SignInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -46,17 +51,20 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          Email : <br>
-          <input type="email" name="" id=""> <br>
-          Password : <br>
-          <input type="password" name="" id="">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Sign In</button>
-          <a href="#" class="regislink" data-toggle="modal" data-target="#RegisterModal" data-dismiss="modal">Go to Register</a>
-        </div>
+        <form action="/checkLogin" method="post">
+            @csrf
+            <div class="modal-body">
+            Email : <br>
+            <input type="email" name="user_login_email" id=""> <br>
+            Password : <br>
+            <input type="password" name="user_login_pass" id="">
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+            <a href="#" class="regislink" data-toggle="modal" data-target="#RegisterModal" data-dismiss="modal">Go to Register</a>
+            </div>
+        </form>
       </div>
     </div>
   </div>
