@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomeController::class,"home"]);
 
 Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
+Route::get('/register', [HomeController::class, "register"]);
 
 Route::prefix("home")->group(function(){
     Route::get("/user", [HomeController::class, "home_user"]);

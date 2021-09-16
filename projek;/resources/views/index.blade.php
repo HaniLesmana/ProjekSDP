@@ -18,7 +18,7 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar navbar-light fixed-top"  style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));" >
+    <nav class="navbar navbar-expand-lg navbar navbar-light fixed-top"  style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));position:fixed;" >
       <div class="container">
         <a class="navbar-brand" id="gambar" href="#"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,6 @@
         <script>alert("Email atau password salah")</script>
     @endif
 
-
     <div class="modal fade" id="SignInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -55,9 +54,9 @@
             @csrf
             <div class="modal-body">
             Email : <br>
-            <input type="email" name="user_login_email" id=""> <br>
+            <input type="email" name="user_login_email" id="" > <br>
             Password : <br>
-            <input type="password" name="user_login_pass" id="">
+            <input type="password" name="user_login_pass" id="" >
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -79,21 +78,35 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          Name : <br>
-          <input type="text" name="" id=""> <br>
-          Email : <br>
-          <input type="email" name="" id=""><br>
-          Password : <br>
-          <input type="password" name="" id=""><br>
-          Confirm Password : <br>
-          <input type="password" name="" id="">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Register</button>
-          <a href="#" class="loginlink" data-toggle="modal" data-target="#SignInModal" data-dismiss="modal">Go To Sign In</a>
-        </div>
+        <form action="/register" method="get">
+          <div class="modal-body">
+            Name : <br>
+            <input type="text" name="nama_user" id=""> <br>
+            Email : <br>
+            <input type="email" name="email_user" id=""><br>
+            No.Telp : <br>
+            <input type="text" name="telp_user" id=""><br>
+            Password : <br>
+            <input type="password" name="password_user" id=""><br>
+            Confirm Password : <br>
+            <input type="password" name="confirm_password" id="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a href="#" class="loginlink" data-toggle="modal" data-target="#SignInModal" data-dismiss="modal">Go To Sign In</a>
+          </div>
+        </form>
+
+        @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+        @endif
       </div>
     </div>
   </div>
