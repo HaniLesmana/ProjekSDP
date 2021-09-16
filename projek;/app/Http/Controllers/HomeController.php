@@ -41,7 +41,7 @@ class HomeController extends Controller
 
         $email = $request->input("user_login_email");
         $password = $request->input("user_login_pass");
-        $users = DB::select("select * from user where user_status = 1 and user_email = '$email'", [1]);
+        $users = DB::select("select * from user where user_status = 1 and user_email = '$email'");
 
 
         if (!empty($users)) {

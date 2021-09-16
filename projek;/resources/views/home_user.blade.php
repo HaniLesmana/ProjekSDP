@@ -13,7 +13,7 @@
 
     <!-- My CSS -->
     <link rel="stylesheet" href="{{asset('style_user_home.css')}}">
-    <!-- <link rel="stylesheet" href="{{asset('style.css')}}"> -->
+
 
     <title>Babowe</title>
   </head>
@@ -50,12 +50,12 @@
 
 
     <!-- Jumbotron -->
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container" id="ads">
-        <!-- <h1 class="display-4">Get work done faster <br>& better with Us</h1>
-        <a class="nav-item btn btn-primary tombol" style="margin-bottom: 30px;" href="#">Our Work</a>
-        <a class="navbar-brand" id="gambarart" href="#"></a> -->
-      </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg" style="height:400px;width:100%;" id="ads">
+
+            </div>
+        </div>
     </div>
     <!-- Akhir jumbotron -->
 

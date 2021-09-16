@@ -1,3 +1,8 @@
+.navbar{
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}
 .navbar-brand{
     font-family: viga;
     font-size: 33px;
@@ -5,6 +10,10 @@
 .nav-item{
     font-weight:light;
     font-size: 16px;
+}
+.jumbotron .container{
+    z-index: 0;
+    position: relative;
 }
 #logo{
     background-image: url(img/title.png);
@@ -21,11 +30,10 @@
     width:170px;
 }
 #ads{
-    background-image: url(img/employee.png);
-    height: 100%;
-    width:100%;
+    background-image: url(https://pbs.twimg.com/media/EF7pxQ0UcAETWZC.jpg);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
 }
 
 /* DESKTOP VERSION */
