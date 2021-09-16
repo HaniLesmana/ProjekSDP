@@ -50,10 +50,33 @@
 
 
     <!-- Jumbotron -->
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg" style="height:400px;width:100%;" id="ads">
-
+    <div class="container mb-3">
+        <div class="row align-items-center" style="height: 400px;width: 100%;">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block img-fluid ads" src="https://pbs.twimg.com/media/EF7pxQ0UcAETWZC.jpg" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block img-fluid ads" src="https://ecs7.tokopedia.net/img/kjjBfF/2021/2/9/7621c986-da97-48e2-a389-31ca5f1d228b.png" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block img-fluid ads" src="https://esports.id/img/article/76320210531063444.jpg" alt="Third slide">
+                </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
     </div>
@@ -64,7 +87,7 @@
       <!-- bagian Work like at home -->
       <div class="row justify-content-center">
         <div class="col-lg">
-          <img src="img/workingspace.png" alt="workingspace" class="img-fluid">
+          <img src="../img/workingspace.png" alt="workingspace" class="img-fluid">
         </div>
         <div class="col-lg">
           <h2>You <b>Work</b> Like at <b>Home</b></h2>

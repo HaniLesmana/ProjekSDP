@@ -29,8 +29,10 @@
     border-radius: 40px;
     width:170px;
 }
-#ads{
-    background-image: url(https://pbs.twimg.com/media/EF7pxQ0UcAETWZC.jpg);
+.ads{
+    /* background-image: url(https://pbs.twimg.com/media/EF7pxQ0UcAETWZC.jpg); */
+    height: 400px;
+    width:1200px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
