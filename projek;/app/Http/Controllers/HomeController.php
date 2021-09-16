@@ -61,4 +61,36 @@ class HomeController extends Controller
 
     }
 
+    function register(Request $request){
+
+        $rules = $request->validate([
+			'nama_user' => 'required|string|min:3|max:30',
+            'telp_user' => 'required|number',
+			'email_user' => 'required|email',
+			'password_user' => 'required|min:8|required_with:confirm_password|same:confirm_password',
+            'confirm_password'=> 'min:8',
+		]);
+
+        $email = $request->input("email_user");
+        $users = DB::select("select * from user where user_status = 1 and user_email = '$email'");
+        if (!empty($users)) {
+            echo "<script>alert('Email telah digunakan')</script>";
+        }
+        else{
+            $nama = $request ->input("nama_user");
+            $password = $request ->input("password_user");
+            $telp = $request ->input("telp_user");
+            DB::table('user')->insert([
+                'user_email' => $email,
+                'user_nama' => $nama,
+                'user_telepon' => $telp,
+                'user_password' => $password,
+                'user_saldo' => 0,
+                'user_poin' => 0,
+                'user_status' => 1,
+            ]);
+        }
+
+    }
+
 }
