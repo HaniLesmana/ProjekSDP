@@ -57,8 +57,6 @@ class HomeController extends Controller
         else{
             echo "<script>alert('Username atau password salah')</script>";
         }
-
-
     }
 
     function register(Request $request){
