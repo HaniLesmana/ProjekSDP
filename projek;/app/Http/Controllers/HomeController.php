@@ -26,7 +26,7 @@ class HomeController extends Controller
     }
 
     function home_admin(){
-        return view("home_admin");
+        return view("admin.home_admin");
     }
 
     function checkLogin(Request $request){
@@ -41,14 +41,14 @@ class HomeController extends Controller
 
         $email = $request->input("user_login_email");
         $password = $request->input("user_login_pass");
-        $users = DB::select("select * from user where user_status = 1 and user_email = '$email'");
+        $users = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
 
 
         if (!empty($users)) {
-            if ($password == data_get($users,'0.user_password')) {
+            if ($password == data_get($users,'0.admin_password')) {
                 $request->session()->put("loggedInUser", $validatedData["user_login_email"]);
-                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($users,'0.user_nama'));
-                return redirect("/home/user");
+                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($users,'0.admin_nama'));
+                return redirect("/home/admin");
             }
             else{
                 echo "<script>alert('Username atau password salah')</script>";

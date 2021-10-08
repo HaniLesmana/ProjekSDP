@@ -28,6 +28,32 @@ Route::prefix("home")->group(function(){
     Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
     Route::get("/admin", [HomeController::class, "home_admin"]);
 });
+Route::prefix("admin")->group(function(){
+    Route::get("/listpegawai",function ()
+    {
+        return view('admin.listPegawai_Admin');
+    });
+    Route::get("/listbarang",function ()
+    {
+        return view('admin.listBarang_Admin');
+    });
+    Route::get("/addBarang",function ()
+    {
+        return view('admin.addBarang_Admin');
+    });
+    Route::get("/editBarang",function ()
+    {
+        return view('admin.editBarang_Admin');
+    });
+    Route::get("/addPegawai",function ()
+    {
+        return view('admin.addPegawai_Admin');
+    });
+    Route::get("/editPegawai",function ()
+    {
+        return view('admin.editPegawai_Admin');
+    });
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
