@@ -28,7 +28,10 @@ class HomeController extends Controller
     function home_admin(){
         return view("admin.home_admin");
     }
-
+    public function home_list_pegawai(){
+        $pegawai = DB::table('pegawai')->get();
+        return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+    }
     function checkLogin(Request $request){
 
         $validatedData = $request->validate([

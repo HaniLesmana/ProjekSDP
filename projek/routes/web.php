@@ -25,10 +25,13 @@ Route::prefix("home")->group(function(){
     Route::get("/admin", [HomeController::class, "home_admin"]);
 });
 Route::prefix("admin")->group(function(){
-    Route::get("/listpegawai",function ()
-    {
-        return view('admin.listPegawai_Admin');
-    });
+    //Route::get("/listpegawai",function ()
+    //{
+        //return view('admin.listPegawai_Admin');
+        //Route::get("/listPegawai_Admin", [HomeController::class, "home_list_pegawai"]);
+    //});
+
+    Route::get("/listpegawai", [HomeController::class, "home_list_pegawai"]);
     Route::get("/listbarang",function ()
     {
         return view('admin.listBarang_Admin');
@@ -45,7 +48,7 @@ Route::prefix("admin")->group(function(){
     {
         return view('admin.addPegawai_Admin');
     });
-    Route::get("/editPegawai",function ()
+    Route::get("/editPegawai/{id}",function ()
     {
         return view('admin.editPegawai_Admin');
     });
