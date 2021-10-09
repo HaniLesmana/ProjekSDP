@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2021 at 01:59 PM
+-- Generation Time: Oct 09, 2021 at 03:26 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -37,6 +37,13 @@ CREATE TABLE `admin` (
   `admin_password` varchar(255) NOT NULL,
   `admin_status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `admin_email`, `admin_nama`, `admin_telepon`, `admin_password`, `admin_status`) VALUES
+('A00000000001', 'admin@a.com', 'admin', '123123123', 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -211,9 +218,11 @@ CREATE TABLE `kategori` (
 
 CREATE TABLE `pegawai` (
   `pegawai_id` varchar(255) NOT NULL,
+  `pegawai_nik` varchar(16) NOT NULL,
   `pegawai_email` varchar(255) NOT NULL,
   `pegawai_nama` varchar(255) NOT NULL,
   `pegawai_telepon` varchar(15) NOT NULL,
+  `pegawai_alamat` varchar(255) NOT NULL,
   `pegawai_password` varchar(255) NOT NULL,
   `pegawai_jasa` varchar(50) NOT NULL,
   `pegawai_saldo` int(15) NOT NULL,
@@ -258,6 +267,7 @@ CREATE TABLE `user` (
   `user_email` varchar(200) NOT NULL,
   `user_nama` varchar(255) NOT NULL,
   `user_telepon` varchar(15) NOT NULL,
+  `user_alamat` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL,
   `user_saldo` int(15) NOT NULL,
   `user_poin` int(10) NOT NULL DEFAULT 0,

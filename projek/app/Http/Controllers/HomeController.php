@@ -28,10 +28,79 @@ class HomeController extends Controller
     function home_admin(){
         return view("admin.home_admin");
     }
+<<<<<<< Updated upstream
     public function home_list_pegawai(){
         $pegawai = DB::table('pegawai')->get();
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
+=======
+
+    function prosesAddPegawai(Request $request){
+        $nik = $request->nik;
+        $email = $request->email;
+        $nama = $request->nama;
+        $telepon = $request->telepon;
+        $alamat = $request->alamat;
+        $jenis = $request->jenis;
+        $password = $request->password;
+        $confirm = $request->confirm;
+
+        $rules = [
+            'nik' => 'required|max:16|min:16',
+            'email' => 'required',
+            'nama' => 'required',
+            'telepon' => 'required',
+            'alamat' => 'required|max:255',
+            'jenis' => 'required',
+            'password' => 'required'
+        ];
+        $message = [
+            'nik.required' => 'NIK harus diisi',
+            'nik.min' => 'NIK harus 16 karakter',
+            'nik.max' => 'NIK harus 16 karakter',
+            'email.required' => 'Email harus diisi',
+            'nama.required' => 'Nama harus diisi',
+            'telepon.required' => 'Telepon harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
+            'alamat.max' => 'Alamat maximal 255 karakter',
+            'jenis.required' => 'Pilih salah satu jenis!',
+            'password.required' => 'Password harus diisi',
+        ];
+        $request->validate($rules, $message);
+
+        $pegawai = DB::table('pegawai')->get();
+        $id = "";
+        $max = 0;
+        $cek = false;
+        foreach ($pegawai as $peg) {
+            if((int)substr($peg->pegawai_id,1,11) > $id){
+                $max = (int)substr($peg->pegawai_id,1,11);
+            }
+        }
+        if($cek){
+            $id = "P".str_pad($max, 11, "0", STR_PAD_LEFT);
+        }
+        else{
+            $id = "P00000000000";
+        }
+
+        DB::table('pegawai')->insert(array(
+            'pegawai_id' => $id,
+            'pegawai_nik' => $nik,
+            'pegawai_email' => $email,
+            'pegawai_nama' => $nama,
+            'pegawai_telepon' => $telepon,
+            'pegawai_alamat' => $alamat,
+            'pegawai_password' => $password,
+            'pegawai_jasa' => $jenis,
+            'pegawai_saldo' => 0,
+            'pegawai_status' => 1
+        ));
+
+        return redirect("/listpegawai");
+    }
+
+>>>>>>> Stashed changes
     function checkLogin(Request $request){
 
         $validatedData = $request->validate([

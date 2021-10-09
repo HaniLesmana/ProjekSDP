@@ -19,6 +19,8 @@ Route::get('/',[HomeController::class,"home"]);
 Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
 Route::get('/register', [HomeController::class, "register"]);
 
+
+
 Route::prefix("home")->group(function(){
     Route::get("/user", [HomeController::class, "home_user"]);
     Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
@@ -53,6 +55,8 @@ Route::prefix("admin")->group(function(){
         return view('admin.editPegawai_Admin');
     });
 });
+
+Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
