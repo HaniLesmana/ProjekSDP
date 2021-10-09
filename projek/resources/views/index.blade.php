@@ -37,8 +37,8 @@
     <!-- Akhir Navbar -->
 
     <!-- Sign In Modal -->
-    @if ($errors->any())
-        <script>alert("Email atau password salah")</script>
+    @if (isset($sukses))
+        <script>alert("Register berhasil!")</script>
     @endif
 
     <div class="modal fade" id="SignInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -58,6 +58,13 @@
             Password : <br>
             <input type="password" name="user_login_pass" id="" >
             </div>
+            @if (isset($error))
+                <div class="errormsg" style="color: red">
+                    <ul>
+                        <li>{{$error}}</li>
+                    </ul>
+                </div>
+            @endif
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Sign In</button>
@@ -78,7 +85,8 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="/register" method="get">
+        <form action="/register" method="post">
+            @csrf
           <div class="modal-body">
             Name : <br>
             <input type="text" name="nama_user" id=""> <br>
@@ -86,6 +94,8 @@
             <input type="email" name="email_user" id=""><br>
             No.Telp : <br>
             <input type="text" name="telp_user" id=""><br>
+            Alamat : <br>
+            <input type="text" name="alamat_user" id=""><br>
             Password : <br>
             <input type="password" name="password_user" id=""><br>
             Confirm Password : <br>
@@ -106,6 +116,13 @@
                   @endforeach
               </ul>
           </div>
+        @endif
+        @if(isset($errorEmail))
+            <div class="errormsg" style="color: red">
+                <ul>
+                    <li>{{$errorEmail}}</li>
+                </ul>
+            </div>
         @endif
       </div>
     </div>

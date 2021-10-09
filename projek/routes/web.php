@@ -17,7 +17,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/',[HomeController::class,"home"]);
 
 Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
-Route::get('/register', [HomeController::class, "register"]);
+Route::post('/register', [HomeController::class, "register"]);
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\cekPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -117,32 +118,23 @@ class HomeController extends Controller
     }
 
     function checkLogin(Request $request){
-
-        $validatedData = $request->validate([
-            'user_login_email' => 'required|email',
-            'user_login_pass' => 'required',
-        ],[
-            'username.email'=> "Email atau password salah",
-            'password.required' => "Email atau password salah",
-        ]);
-
         $email = $request->input("user_login_email");
         $password = $request->input("user_login_pass");
+
         $users = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
-
-
+        $tempPass = data_get($users,'0.admin_password');
         if (!empty($users)) {
             if ($password == data_get($users,'0.admin_password')) {
-                $request->session()->put("loggedInUser", $validatedData["user_login_email"]);
+                $request->session()->put("loggedInUser", $email);
                 $request->session()->flash("welcomeUser", "Selamat datang ".data_get($users,'0.admin_nama'));
                 return redirect("/home/admin");
             }
             else{
-                echo "<script>alert('Username atau password salah')</script>";
+                return view('index',['error'=>'Password Anda salah!']);
             }
         }
         else{
-            echo "<script>alert('Username atau password salah')</script>";
+            return view('index',['error'=>'Email tidak terdaftar']);
         }
     }
 
@@ -150,7 +142,7 @@ class HomeController extends Controller
 
         $rules = $request->validate([
 			'nama_user' => 'required|string|min:3|max:30',
-            'telp_user' => 'required|number',
+            'telp_user' => 'required|numeric',
 			'email_user' => 'required|email',
 			'password_user' => 'required|min:8|required_with:confirm_password|same:confirm_password',
             'confirm_password'=> 'min:8',
@@ -159,7 +151,7 @@ class HomeController extends Controller
         $email = $request->input("email_user");
         $users = DB::select("select * from user where user_status = 1 and user_email = '$email'");
         if (!empty($users)) {
-            echo "<script>alert('Email telah digunakan')</script>";
+            return view('index',['errorEmail'=>'Email telah terdaftar']);
         }
         else{
             $nama = $request ->input("nama_user");
@@ -169,11 +161,13 @@ class HomeController extends Controller
                 'user_email' => $email,
                 'user_nama' => $nama,
                 'user_telepon' => $telp,
+                'user_alamat' => $request->input("alamat_user"),
                 'user_password' => $password,
                 'user_saldo' => 0,
                 'user_poin' => 0,
                 'user_status' => 1,
             ]);
+            return view('index',['sukses'=>'Register berhasil!']);
         }
 
     }
