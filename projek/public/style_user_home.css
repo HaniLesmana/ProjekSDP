@@ -1,0 +1,68 @@
+.navbar{
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}
+.navbar-brand{
+    font-family: viga;
+    font-size: 33px;
+}
+.nav-item{
+    font-weight:light;
+    font-size: 16px;
+}
+.jumbotron .container{
+    z-index: 0;
+    position: relative;
+}
+#logo{
+    background-image: url(img/title.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 70px;
+    width: 250px;
+    position:inherit;
+}
+.tombolSignOut{
+    text-transform: uppercase;
+    border-radius: 40px;
+    width:170px;
+}
+.ads{
+    /* background-image: url(https://pbs.twimg.com/media/EF7pxQ0UcAETWZC.jpg); */
+    height: 400px;
+    width:1200px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* DESKTOP VERSION */
+@media (min-width: 992px) {
+    .navbar-brand, .nav-link{
+        /* color: white !important; */
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+    }
+    .nav-link {
+        text-transform: uppercase;
+        margin-right: 30px;
+    }
+    .nav-link:hover::after{
+        content: '';
+        display: block;
+        border-bottom: 3px solid blue;
+        width: 50%;
+        margin : auto;
+        padding-bottom: 5px;
+        margin-top: -8px;
+    }
+    .jumbotron{
+        margin-top: -75px;
+        height: 640px;
+    }
+    .jumbotron .display-4 {
+        font-size: 62px;
+    }
+
+}

@@ -1,0 +1,135 @@
+/* Navbar*/
+.navbar {
+    position: relative;
+    z-index: 2;
+}
+.navbar-brand{
+    font-family: viga;
+    font-size: 33px;
+}
+
+/* Jumbotron */
+.jumbotron{
+    background-image: url(img/tukang2.png);
+    /* background-size: cover;
+    height: 540px;
+    text-align: center;
+    position: relative;
+     */
+    /* Full height */
+    height: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#gambar{
+    background-image: url(img/title.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 70px;
+    width: 250px;
+    position:inherit;
+}
+
+.jumbotron::after{
+    content: '';
+    display: block;
+    width:100%;
+    height:100%;
+    background-image: linear-gradient( rgba(0,0,0,0.5),rgba(200,200,200,0),rgba(220,220,220,0));
+    background-attachment:scroll;
+    position: absolute;
+    bottom: 0;
+}
+
+.jumbotron .display-4 {
+    color: white;
+    margin-top: 180px ;
+    font-weight: 200;
+    font-size: 40px;
+    text-shadow: 1px 1px 1px grey;
+    margin-bottom: 40px;
+    z-index: 1;
+}
+
+.jumbotron .container{
+    z-index: 1;
+    position: relative;
+}
+
+.info-panel {
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    margin-top:-100px;
+    background-color: white;
+    padding: 30px;
+    margin-bottom: 100px;
+}
+
+.info-panel .img{
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.info-panel h4{
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top:5px;
+}
+
+.col h2{
+    font-size: 50px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.col p{
+    font-size: large;
+    color:gray;
+    margin-bottom: 80px;
+}
+
+
+/* Utility */
+.tombol{
+    text-transform: uppercase;
+    border-radius: 40px;
+    width:170px;
+}
+
+
+
+/* DESKTOP VERSION */
+@media (min-width: 992px) {
+    .navbar-brand, .nav-link{
+        /* color: white !important; */
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+    }
+    .nav-link {
+        text-transform: uppercase;
+        margin-right: 30px;
+    }
+    .nav-link:hover::after{
+        content: '';
+        display: block;
+        border-bottom: 3px solid blue;
+        width: 50%;
+        margin : auto;
+        padding-bottom: 5px;
+        margin-top: -8px;
+    }
+    .jumbotron{
+        margin-top: -75px;
+        height: 640px;
+    }
+    .jumbotron .display-4 {
+        font-size: 62px;
+    }
+
+}
