@@ -50,13 +50,13 @@ Route::prefix("admin")->group(function(){
     {
         return view('admin.addPegawai_Admin');
     });
-    Route::get("/editPegawai/{id}",function ()
-    {
-        return view('admin.editPegawai_Admin');
-    });
+
+    Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
+    Route::any('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
+    Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
 });
 
-Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

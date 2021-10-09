@@ -19,13 +19,12 @@
             <div class="row">
                 <div class="col-sm-12">
                     {{-- <div class="form-group">
-                        <input class="form-control" type="number" name="id" placeholder="ID Employee"> </div>
-                        @error('nik')
+                        <input class="form-control" type="text" name="id" placeholder="ID Employee"> </div>
+                        @error('id')
                             <span style='color: red'>{{ $message }}</span>
-                        @enderror--}}
+                        @enderror --}}
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">

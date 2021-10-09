@@ -28,12 +28,25 @@ class HomeController extends Controller
     function home_admin(){
         return view("admin.home_admin");
     }
-<<<<<<< Updated upstream
+
     public function home_list_pegawai(){
-        $pegawai = DB::table('pegawai')->get();
+        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
-=======
+
+    function prosesDeletePegawai(Request $request){
+        $id = $request->id;
+        DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_status'=>0]);
+        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+    }
+
+    function prosesEditPegawai(Request $request){
+        // $id = $request->id;
+        // DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_status'=>0]);
+        // $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        // return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+    }
 
     function prosesAddPegawai(Request $request){
         $nik = $request->nik;
@@ -73,8 +86,9 @@ class HomeController extends Controller
         $max = 0;
         $cek = false;
         foreach ($pegawai as $peg) {
-            if((int)substr($peg->pegawai_id,1,11) > $id){
-                $max = (int)substr($peg->pegawai_id,1,11);
+            if((int)substr($peg->pegawai_id,1,11) >= $max){
+                $max = (int)substr($peg->pegawai_id,1,11) + 1;
+                $cek = true;
             }
         }
         if($cek){
@@ -96,11 +110,12 @@ class HomeController extends Controller
             'pegawai_saldo' => 0,
             'pegawai_status' => 1
         ));
-
-        return redirect("/listpegawai");
+        //return $this->home_list_pegawai();
+        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+        //return redirect("/listpegawai");
     }
 
->>>>>>> Stashed changes
     function checkLogin(Request $request){
 
         $validatedData = $request->validate([

@@ -58,8 +58,8 @@
             <td>
                 <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
                     {{-- <i class="fa fa-trash" style="font-size:18px;color:red; "></i> --}}
-                    <a href="/admin/deletePegawai/{{$p->pegawai_id}}" class="fa fa-trash" style="font-size:18px;color:red;">
-                        Edit
+                    <a href="/admin/prosesDeletePegawai/{{$p->pegawai_id}}" class="fa fa-trash" style="font-size:18px;color:red;">
+
                     </a>
                 </button>
             </td>
