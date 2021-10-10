@@ -50,7 +50,7 @@
             <td>{{$p->pegawai_status}}</td>
             <td>
                 <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                    <a href="/admin/editPegawai/{{$p->pegawai_id}}" style="text-decoration: :none; color:white;">
+                    <a href="/admin/EditPegawai/{{$p->pegawai_id}}" style="text-decoration: :none; color:white;">
                         Edit
                     </a>
                 </button>

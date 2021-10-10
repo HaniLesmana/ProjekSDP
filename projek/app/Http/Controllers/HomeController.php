@@ -42,11 +42,57 @@ class HomeController extends Controller
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
 
-    function prosesEditPegawai(Request $request){
+    function EditPegawai($id,Request $request){
+        $pegawai=DB::table('pegawai')->where('pegawai_id',$id)->get();
+        return view("admin.editPegawai_Admin",['id'=>$id],['pegawai' => $pegawai]);
+    }
+
+    function prosesEditPegawai($id,Request $request){
         // $id = $request->id;
         // DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_status'=>0]);
         // $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
         // return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+        $nik = $request->nik;
+        $email = $request->email;
+        $nama = $request->nama;
+        $telepon = $request->telepon;
+        $alamat = $request->alamat;
+        $password = $request->password;
+        $jenis = $request->jenis;
+        // $confirm = $request->confirm;
+        // $saldo = $request->saldo;
+        // $status = $request->status;
+
+        $rules = [
+            'nik' => 'required|max:16|min:16',
+            'email' => 'required',
+            'nama' => 'required',
+            'telepon' => 'required',
+            'alamat' => 'required|max:255',
+            'jenis' => 'required',
+            'password' => 'required',
+            // 'saldo' => 'required',
+            // 'status' => 'required'
+        ];
+        $message = [
+            'required' => ':attribute harus diisi',
+            // 'nik.required' => 'NIK harus diisi',
+            'nik.min' => 'NIK harus 16 karakter',
+            'nik.max' => 'NIK harus 16 karakter',
+            // 'email.required' => 'Email harus diisi',
+            // 'nama.required' => 'Nama harus diisi',
+            // 'telepon.required' => 'Telepon harus diisi',
+            // 'alamat.required' => 'Alamat harus diisi',
+            'alamat.max' => 'Alamat maximal 255 karakter',
+            'jenis.required' => 'Pilih salah satu jenis!',
+            // 'password.required' => 'Password harus diisi',
+        ];
+        $request->validate($rules, $message);
+
+        DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_nik'=>$nik,'pegawai_email'=>$email,'pegawai_nama'=>$nama,'pegawai_telepon'=>$telepon,'pegawai_alamat'=>$alamat,'pegawai_password'=>$password,'pegawai_jasa' => $jenis]);
+        // $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        // return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+        return $this->home_list_pegawai();
     }
 
     function prosesAddPegawai(Request $request){
@@ -111,9 +157,10 @@ class HomeController extends Controller
             'pegawai_saldo' => 0,
             'pegawai_status' => 1
         ));
+        return $this->home_list_pegawai();
         //return $this->home_list_pegawai();
-        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
-        return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+        // $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        // return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
         //return redirect("/listpegawai");
     }
 

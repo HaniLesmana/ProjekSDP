@@ -50,9 +50,9 @@ Route::prefix("admin")->group(function(){
     {
         return view('admin.addPegawai_Admin');
     });
-
+    Route::get('/EditPegawai/{id}', [HomeController::class, "EditPegawai"]);
     Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
-    Route::any('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
+    Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
 });
 

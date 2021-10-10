@@ -13,7 +13,7 @@
 <div class="container mt-5 mb-5 d-flex justify-content-center" style="padding-top:20px; padding-bottom:20px;background-color:#DBD0C0">
     <div class="card px-1 py-4">
         <div class="card-body" style="width:400px;padding-top:30px; padding-bottom:30px;">
-        <form action="/prosesAddPegawai" method="post">
+        <form action="prosesAddPegawai" method="post">
             @csrf
             <h5 class="card-title mb-3" style="text-align: center;">Add Pegawai</h5>
             <div class="row">
