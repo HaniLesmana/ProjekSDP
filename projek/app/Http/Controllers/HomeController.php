@@ -167,9 +167,18 @@ class HomeController extends Controller
     function checkLogin(Request $request){
         $email = $request->input("user_login_email");
         $password = $request->input("user_login_pass");
+        $validatedData = $request->validate([
+            'user_login_email' => 'required|email',
+            'user_login_pass' => 'required',
+        ],[
+            'username.email'=> "Email atau password salah",
+            'password.required' => "Email atau password salah",
+        ]);
+
 
         $users = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
         $tempPass = data_get($users,'0.admin_password');
+        $pegawai = DB::select("select * from pegawai where pegawai_status = 1 and pegawai_email = '$email'");
         if (!empty($users)) {
             if ($password == data_get($users,'0.admin_password')) {
                 $request->session()->put("loggedInUser", $email);
@@ -181,7 +190,16 @@ class HomeController extends Controller
             }
         }
         else{
-            return view('index',['error'=>'Email tidak terdaftar']);
+            if(!empty($pegawai)){
+                if ($password == data_get($users,'0.pegwai_password')) {
+                    $request->session()->put("loggedInUser", $validatedData["user_login_email"]);
+                    $request->session()->flash("welcomeUser", "Selamat datang ".data_get($users,'0.pegawai_nama'));
+                    return redirect("/home/pegawai");
+                }
+            }
+            else{
+                echo "<script>alert('Username atau password salah')</script>";
+            }
         }
     }
 
@@ -217,5 +235,13 @@ class HomeController extends Controller
             return view('index',['sukses'=>'Register berhasil!']);
         }
 
+    }
+
+    function pegawaiOrder(){
+        return view("pegawai/pesanan");
+    }
+
+    function history(){
+        return view("pegawai/history");
     }
 }

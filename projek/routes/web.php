@@ -56,7 +56,10 @@ Route::prefix("admin")->group(function(){
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
 });
 
-
+Route::prefix("pegawai")->group(function(){
+    Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
+    Route::get('/history', [HomeController::class, "history"]);
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
