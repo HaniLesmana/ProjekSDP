@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\cek_password;
+use App\Rules\cek_uniq;
 use App\Rules\cekPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,7 @@ class HomeController extends Controller
     }
 
     function home_pegawai(){
-        return view("home_pegawai");
+        return view("pegawai.home_pegawai");
     }
 
     function home_admin(){
@@ -105,9 +107,15 @@ class HomeController extends Controller
         $password = $request->password;
         $confirm = $request->confirm;
 
+        $user = DB::select("select * from user where user_status = 1 and user_email = '$email'");
+        $pegawai = DB::select("select * from pegawai where pegawai_status = 1 and pegawai_email = '$email'");
+        $admin = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
+
         $rules = [
-            'nik' => 'required|max:16|min:16',
-            'email' => 'required',
+            //'nik' => ['required','max:16','min:16',new cek_uniq($pegawai,$user,$admin,"nik",$request->nik,"add")],
+            'nik' => ['required','max:16','min:16'],
+            //'email' => ['required','email',new cek_uniq($pegawai,$user,$admin,"email",$request->nik,"add")],
+            'email' => ['required','email'],
             'nama' => 'required',
             'telepon' => 'required',
             'alamat' => 'required|max:255',
@@ -119,6 +127,7 @@ class HomeController extends Controller
             'nik.min' => 'NIK harus 16 karakter',
             'nik.max' => 'NIK harus 16 karakter',
             'email.required' => 'Email harus diisi',
+            'email.email' => 'Format email salah',
             'nama.required' => 'Nama harus diisi',
             'telepon.required' => 'Telepon harus diisi',
             'alamat.required' => 'Alamat harus diisi',
@@ -167,39 +176,57 @@ class HomeController extends Controller
     function checkLogin(Request $request){
         $email = $request->input("user_login_email");
         $password = $request->input("user_login_pass");
-        $validatedData = $request->validate([
-            'user_login_email' => 'required|email',
-            'user_login_pass' => 'required',
-        ],[
-            'username.email'=> "Email atau password salah",
-            'password.required' => "Email atau password salah",
-        ]);
 
-
-        $users = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
-        $tempPass = data_get($users,'0.admin_password');
+        $user = DB::select("select * from user where user_status = 1 and user_email = '$email'");
         $pegawai = DB::select("select * from pegawai where pegawai_status = 1 and pegawai_email = '$email'");
-        if (!empty($users)) {
-            if ($password == data_get($users,'0.admin_password')) {
-                $request->session()->put("loggedInUser", $email);
-                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($users,'0.admin_nama'));
+        $admin = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
+
+
+
+
+        if (!empty($user) || !empty($pegawai) || !empty($admin)) {
+            if(!empty($user)){
+                $validatedData = $request->validate([
+                    'user_login_email' => ['required','email'],
+                    'user_login_pass' => ['required',new cek_password($user,$email,"user")],
+                ],[
+                    'username.email'=> "Email atau password salah",
+                    'password.required' => "Email atau password salah",
+                ]);
+                $request->session()->put("loggedIn", $email);
+                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($user,'0.user_nama'));
+                return redirect("/home/user");
+            }
+            else if(!empty($pegawai)){
+                $validatedData = $request->validate([
+                    'user_login_email' => 'required|email',
+                    'user_login_pass' => ['required',new cek_password($pegawai,$email,"pegawai")],
+                ],[
+                    'username.email'=> "Email atau password salah",
+                    'password.required' => "Email atau password salah",
+                ]);
+                $request->session()->put("loggedIn", $email);
+                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($pegawai,'0.pegawai_nama'));
+                return redirect("/home/pegawai");
+            }
+            else if(!empty($admin)){
+                $validatedData = $request->validate([
+                    'user_login_email' => 'required|email',
+                    'user_login_pass' => ['required',new cek_password($admin,$email,"admin")]
+                ],[
+                    'username.email'=> "Email atau password salah",
+                    'password.required' => "Email atau password salah",
+                ]);
+                $request->session()->put("loggedIn", $email);
+                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($admin,'0.admin_nama'));
                 return redirect("/home/admin");
             }
-            else{
-                return view('index',['error'=>'Password Anda salah!']);
+            else {
+                return view('index',['error'=>'ERROR']);
             }
         }
         else{
-            if(!empty($pegawai)){
-                if ($password == data_get($users,'0.pegwai_password')) {
-                    $request->session()->put("loggedInUser", $validatedData["user_login_email"]);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".data_get($users,'0.pegawai_nama'));
-                    return redirect("/home/pegawai");
-                }
-            }
-            else{
-                echo "<script>alert('Username atau password salah')</script>";
-            }
+            return view('index',['error'=>'Email not registered!']);
         }
     }
 
@@ -236,7 +263,12 @@ class HomeController extends Controller
         }
 
     }
-
+    function ajax($jasa){
+        $jasa=str_replace('{', '', $jasa);
+        $jasa=str_replace('}', '', $jasa);
+        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->where('pegawai_jasa',$jasa)->get();
+        return view("script",['pegawai' => $pegawai],['jasa'=>$jasa]);
+    }
     function pegawaiOrder(){
         return view("pegawai/pesanan");
     }
