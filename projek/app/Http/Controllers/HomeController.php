@@ -31,7 +31,16 @@ class HomeController extends Controller
     function home_admin(){
         return view("admin.home_admin");
     }
+    public function listRequest()
+    {
+        return view("admin.listRequest");
 
+    }
+    public function listWithdraw()
+    {
+        return view("admin.listWithdraw");
+
+    }
     public function home_list_pegawai(){
         $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);

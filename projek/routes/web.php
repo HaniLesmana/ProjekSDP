@@ -18,6 +18,8 @@ Route::get('/',[HomeController::class,"home"]);
 
 Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
 Route::post('/register', [HomeController::class, "register"]);
+Route::get('/listRequest', [HomeController::class, "listRequest"]);
+Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
 
 
 
@@ -59,6 +61,10 @@ Route::prefix("admin")->group(function(){
     Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
     Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
+    Route::get("/detailTopUp/{id}",function ()
+    {
+        return view('admin.detailTopUp');
+    });
 });
 
 Route::prefix("pegawai")->group(function(){
