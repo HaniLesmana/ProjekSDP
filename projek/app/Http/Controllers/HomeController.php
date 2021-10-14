@@ -244,7 +244,7 @@ class HomeController extends Controller
         }
     }
 
-    function register(Request $request){
+        function register(Request $request){
 
         $rules = $request->validate([
 			'nama_user' => 'required|string|min:3|max:30',
@@ -310,11 +310,36 @@ class HomeController extends Controller
         $pegawai = DB::table('pegawai')->where('pegawai_status','1')->where('pegawai_jasa',$jasa)->get();
         return view("script",['pegawai' => $pegawai],['jasa'=>$jasa]);
     }
+    function ajax1($data){
+        //dd($data);
+        return view('user.user_cart');
+    }
     function pegawaiOrder(){
         return view("pegawai/pesanan");
     }
 
     function history(){
         return view("pegawai/history");
+    }
+    function gotocart(Request $request){
+        $hid10k=array('nama' => 'Rp10.000', 'jumlah' => $request->hid10k,'id'=>'btn10');
+        $hid20k=array('nama' => 'Rp20.000', 'jumlah' => $request->hid20k,'id'=>'btn20');
+        $hid50k=array('nama' => 'Rp50.000', 'jumlah' => $request->hid50k,'id'=>'btn50');
+        $hid75k=array('nama' => 'Rp75.000', 'jumlah' => $request->hid75k,'id'=>'btn75');
+        $hid100k=array('nama' => 'Rp100.000', 'jumlah' => $request->hid100k,'id'=>'btn100');
+        $hid125k=array('nama' => 'Rp125.000', 'jumlah' => $request->hid125k,'id'=>'btn125');
+        $hid190k=array('nama' => 'Rp190.000', 'jumlah' => $request->hid190k,'id'=>'btn190');
+        $hid250k=array('nama' => 'Rp250.000', 'jumlah' => $request->hid250k,'id'=>'btn250');
+        $arr=array();
+        array_push($arr,$hid10k);
+        array_push($arr,$hid20k);
+        array_push($arr,$hid50k);
+        array_push($arr,$hid75k);
+        array_push($arr,$hid100k);
+        array_push($arr,$hid125k);
+        array_push($arr,$hid190k);
+        array_push($arr,$hid250k);
+
+        return view('user.user_cart',['data'=>json_encode($arr)]);
     }
 }

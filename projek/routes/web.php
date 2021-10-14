@@ -67,6 +67,12 @@ Route::prefix("user")->group(function(){
     {
         return view('user.user_topup');
     });
+    Route::get("/cart",function ()
+    {
+        return view('user.user_cart');
+    });
+    // Route::get("/ajax1", [HomeController::class, "ajax1"]);
+    Route::post("/gotocart", [HomeController::class, "gotocart"]);
 });
 Route::prefix("pegawai")->group(function(){
     Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);

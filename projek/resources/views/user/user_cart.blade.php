@@ -101,9 +101,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+<<<<<<< Updated upstream
             alert("a");
             $("#btn10").mousedown(function(){
                 alert("b");
+=======
+            $("#btn10").mousedown(function(){
+>>>>>>> Stashed changes
                 var total = $("#total").val();
                 //var totalInt = parseInt(total)+10;
                 alert(total);
