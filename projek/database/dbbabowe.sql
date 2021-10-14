@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2021 at 01:20 PM
+-- Generation Time: Oct 14, 2021 at 08:46 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -119,7 +119,7 @@ CREATE TABLE `dtranssewa` (
 --
 
 CREATE TABLE `dtranstpwd` (
-  `htranstpwd_id` varchar(12) NOT NULL,
+  `htranstpwd_id` int(12) NOT NULL,
   `dtranstpwd_nominal` bigint(12) NOT NULL,
   `dtranstpwd_jumlah` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -203,13 +203,22 @@ CREATE TABLE `htranssewa` (
 --
 
 CREATE TABLE `htranstpwd` (
-  `htranstpwd_id` varchar(12) NOT NULL,
+  `htranstpwd_id` int(12) NOT NULL,
   `user_id` varchar(12) NOT NULL,
   `htranstpwd_tanggal` date NOT NULL,
   `htranstpwd_total` bigint(12) NOT NULL,
   `htranstpwd_tipe` varchar(10) NOT NULL,
   `htranstpwd_status` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `htranstpwd`
+--
+
+INSERT INTO `htranstpwd` (`htranstpwd_id`, `user_id`, `htranstpwd_tanggal`, `htranstpwd_total`, `htranstpwd_tipe`, `htranstpwd_status`) VALUES
+(1, 'U00000000001', '2021-10-14', 350000, 'topup', 2),
+(2, 'U00000000001', '2021-10-14', 255000, 'topup', 2),
+(3, 'U00000000001', '2021-10-14', 30000, 'topup', 2);
 
 -- --------------------------------------------------------
 
@@ -265,7 +274,8 @@ INSERT INTO `pegawai` (`pegawai_id`, `pegawai_nik`, `pegawai_email`, `pegawai_na
 ('P00000000001', '2222222222221122', 'dsa@a.c', 'dsa', '123123123123', 'dsa', 'dsa', 'tukang', 0, 0),
 ('P00000000002', '2222222222221133', 'aaa@a.a', 'aaa', '123123123123', 'aaa', 'aaa', 'art', 0, 0),
 ('P00000000003', '2222222222221144', 'bbb@b.c', 'bbb', '234234234234', 'bbb', 'bbb', 'tukang', 0, 0),
-('P00000000004', '2222222222221155', 'ccc@c.c', 'ccc', '123123123123', 'ccc', 'ccc', 'art', 0, 0);
+('P00000000004', '2222222222221155', 'ccc@c.c', 'ccc', '123123123123', 'ccc', 'ccc', 'art', 0, 0),
+('P00000000005', '2222222211111111', 'ggg@g.com', 'ggg', '123123123123', 'ggg', 'ggg', 'art', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -311,6 +321,14 @@ CREATE TABLE `user` (
   `user_poin` int(10) NOT NULL DEFAULT 0,
   `user_status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `user_email`, `user_nama`, `user_telepon`, `user_alamat`, `user_password`, `user_saldo`, `user_poin`, `user_status`) VALUES
+('U00000000000', 'yyy@y.y', 'yyy', '123123123123', 'yyy', '12345678', 0, 0, 1),
+('U00000000001', 'zzz@z.com', 'zzz', '089777777777', 'zzz', '12345678', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -375,6 +393,12 @@ ALTER TABLE `htranssewa`
   ADD PRIMARY KEY (`hSewa_id`);
 
 --
+-- Indexes for table `htranstpwd`
+--
+ALTER TABLE `htranstpwd`
+  ADD PRIMARY KEY (`htranstpwd_id`);
+
+--
 -- Indexes for table `htransvoucher`
 --
 ALTER TABLE `htransvoucher`
@@ -418,6 +442,16 @@ ALTER TABLE `user`
 --
 ALTER TABLE `voucher`
   ADD PRIMARY KEY (`voucher_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `htranstpwd`
+--
+ALTER TABLE `htranstpwd`
+  MODIFY `htranstpwd_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

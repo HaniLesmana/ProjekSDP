@@ -69,47 +69,20 @@
         </div>
     </nav>
     <!-- Akhir Navbar -->
-    <div class="container">
-        <form action="{{ url('/user/gotocheckout') }}" method="post">
-            @csrf
-        <div class="table-responsive">
-            <table class="table table-striped" id="divBod">
-                <thead style="background-color:#E8D0B3;">
-                    <tr>
-                        <th>Nominal</th>
-                        <th>Jumlah</th>
-                    </tr>
-                </thead>
-                    @foreach(json_decode($data,true) as $dat)
-                    <tbody>
-                        @if($dat['jumlah'] != 0)
-                        <div id="tester">
-                            <td><p for="" value="{{$dat['id']}}" id="{{$dat['id']}}" style="">{{ $dat['nama'] }} </p></td>
-                            <td><input type="number" name="{{$dat['id']}}" id="{{$dat['id']}}" onchange="numberclick('{{ $dat['id'] }}','{{ $dat['jumlah'] }}')" class="btnclick" style="width:50px;margin-left:10px;" value ="{{ $dat['jumlah'] }}" readonly></td>
-                        </div>
-
-                        @endif
-                    </tbody>
-                    @endforeach
-
-        </table>
-        <label for="">Total : </label>
-        <label for="" id="total">{{ $total }}</label>
-
-        <div class="row">
-
-        </div>
-
-        <div style="display:inline-block;width:250px;margin-top:20px;margin-bottom:25px;">
-            <a href="{{ url('/home/user_topup') }}"><button type="submit" class="btnBottom">Back</button></a>
-
-                <!-- <button type="submit" class="btnBottom" id="btncart" style="margin-left:10px;">Next</button> -->
-                <button type="submit" class="btnBottom" id="btncart" style="margin-left:10px;">Checkout</button>
-                <input type="hidden" name="total" value="{{ $total }}">
-
-
+    <div class="container" style="margin-top : 20px;">
+        <h2>Total : Rp {{ $total }}</h2>
+        <div class="card">
+            <div class="card-body"  style="font-size: 15px;">
+                Berikut Total yang harus dibayarkan, mohon transfer ke <br>
+                rekening BCA 7880067997 atas nama PT. Babowe Indonesia <br>
+                dengan berita "top up : {{ $email }}"
             </div>
-        </form>
+            <form action="/home/user" method="get">
+            <button type="submit" style="border:0px;border-radius:2px;text-align:center;margin-left : 18px;font-size:15px;float:left;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
+                Selesai
+            </button>
+            </form>
+          </div>
     </div>
 
     <!-- <script type="text/javascript" src="/js/functions.js"></script> -->
@@ -117,58 +90,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            hitungUlang();
-            total = document.getElementById("total");
-            // btn10 = $("#btn10").get();
-            // btn20 = $("#btn20").get();
-            // btn50 = $("#btn50").get();
-            // btn75 = $("#btn75").get();
-            // $(".btnclick").click(function(){
-            //     //alert($("#btn10").html());
-            //     if($("#btn10").html()==){}
-            //     // var replace=str_replace();
-            //     var total = $("#total").html();
-            //     $("#total").val(totalInt+"");
-            // });
 
-        });
-
-        function hitungUlang(){
-            var temp = $("#btn10").parent().prop("id");
-            // var tempe2 = $("#".concat(temp)).parent().prop("id");
-            // alert(temp);
-            // alert(tempe2);
-        }
-
-        function numberclick(id,jumlah){
-            // $("#").children();
-            // var a=0;
-            // if(id == "btn10"){
-            //     //var b=  //nominal
-            //     //var c= //jumlah
-            //     a=a+(b*c);
-            //     var inp = $(id).html();
-            //     var temp = $('#total').html();
-            //     total = parseInt(temp) + (inp * jumlah);
-            //     alert(total);
-
-            // }
-            // else if(id == "btn20"){
-            //     var temp = $('#total').html();
-            //     total = parseInt(temp) + 20000;
-            //     alert(total);
-            //     $("#total").html(total+"");
-            // }
-            // else if(id == "btn50"){
-            //     var temp = $('#total').html();
-            //     total = parseInt(temp) + 20000;
-            //     alert(total);
-            //     $("#total").html(total+"");
-            // }
-            // $("#total").html(total+"");
-        }
-    </script>
 </body>
 </html>

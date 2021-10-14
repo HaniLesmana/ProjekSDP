@@ -78,7 +78,7 @@
                 <div class="col-md-3">
                     <div class="card" style="text-align:center;font-size:25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                         <div class="card-body" >Rp. 10.000</div>
-                        <input type="hidden" name="hid10k" id="hid10k" value="0">
+                        <input type="text" readonly name="hid10k" id="hid10k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                         <button class="btnAdd" type="button" id="btntambah10k" onmouseover="" style="margin-bottom:-10px;">+</button>
                     </div>
                 </div>
@@ -86,21 +86,21 @@
                 <div class="col-md-3">
                     <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                         <div class="card-body" >Rp. 20.000</div>
-                        <input type="hidden" name="hid20k" id="hid20k" value="0">
+                        <input type="text" name="hid20k" id="hid20k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                         <button class="btnAdd" type="button" id="btntambah20k" style = "margin-bottom:-10px;">+</button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                         <div class="card-body" >Rp. 50.000</div>
-                        <input type="hidden" name="hid50k" id="hid50k" value="0">
+                        <input type="text" name="hid50k" id="hid50k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                         <button class="btnAdd" type="button" id="btntambah50k" style = "margin-bottom:-10px;">+</button>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                         <div class="card-body" >Rp. 75.000</div>
-                        <input type="hidden" name="hid75k" id="hid75k" value="0">
+                        <input type="text" name="hid75k" id="hid75k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                         <button class="btnAdd" type="button" id="btntambah75k"style = "margin-bottom:-10px;">+</button>
                     </div>
                 </div>
@@ -112,27 +112,28 @@
                 <div class="col-md-3">
                 <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                     <div class="card-body" >Rp. 100.000</div>
+                    <input type="text" name="hid100k" id="hid100k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                     <button class="btnAdd" id="btntambah100k" type="button" onmouseover="" style = "margin-bottom:-10px;">+</button>
                 </div>
                 </div>
                 <div class="col-md-3">
                 <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                     <div class="card-body" >Rp. 125.000</div>
-                    <input type="hidden" name="hid125k" id="hid125k" value="0">
+                    <input type="text" name="hid125k" id="hid125k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                     <button class="btnAdd" id="btntambah125k" type="button" style = "margin-bottom:-10px;">+</button>
                 </div>
                 </div>
                 <div class="col-md-3">
                 <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                     <div class="card-body" >Rp. 190.000</div>
-                    <input type="hidden" name="hid190k" id="hid190k" value="0">
+                    <input type="text" name="hid190k" id="hid190k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                     <button class="btnAdd" id="btntambah190k" type="button" style = "margin-bottom:-10px;">+</button>
                 </div>
                 </div>
                 <div class="col-md-3">
                 <div class="card" style="text-align:center;font-size: 25px;float:left;margin-left : 20px;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
                     <div class="card-body" >Rp. 250.000</div>
-                    <input type="hidden" name="hid250k" id="hid250k" value="0">
+                    <input type="text" name="hid250k" id="hid250k" value="0" style="text-align:center;color:white;background:transparent;border:none;">
                     <button class="btnAdd" type="button" id="btntambah250k" style = "margin-bottom:-10px;">+</button>
                 </div>
                 </div>
@@ -172,7 +173,6 @@
                 var temp=$('#hid10k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid10k').val(temp1);
-                alert("berhasil menambahkan 10k ke cart");
                 // data.push("10k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -181,7 +181,6 @@
                 var temp=$('#hid20k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid20k').val(temp1);
-                alert("berhasil menambahkan 20k ke cart");
                 // data.push("20k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -190,7 +189,6 @@
                 var temp=$('#hid50k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid50k').val(temp1);
-                alert("berhasil menambahkan 50k ke cart");
                 // data.push("50k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -199,7 +197,6 @@
                 var temp=$('#hid75k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid75k').val(temp1);
-                alert("berhasil menambahkan 75k ke cart");
                 // data.push("75k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -208,7 +205,6 @@
                 var temp=$('#hid100k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid100k').val(temp1);
-                alert("berhasil menambahkan 100k ke cart");
                 // data.push("100k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -217,7 +213,6 @@
                 var temp=$('#hid125k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid125k').val(temp1);
-                alert("berhasil menambahkan 125k ke cart");
                 // data.push("100k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -226,7 +221,6 @@
                 var temp=$('#hid190k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid190k').val(temp1);
-                alert("berhasil menambahkan 190k ke cart");
                 // data.push("100k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);
@@ -235,7 +229,6 @@
                 var temp=$('#hid250k').val();
                 var temp1 = parseInt(temp) + 1;
                 $('#hid250k').val(temp1);
-                alert("berhasil menambahkan 250k ke cart");
                 // data.push("100k");
                 // sessionStorage.clear();
                 // sessionStorage.setItem("data",data);

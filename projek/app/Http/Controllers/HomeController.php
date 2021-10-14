@@ -285,9 +285,6 @@ class HomeController extends Controller
             else{
                 $id = "U00000000000";
             }
-
-
-
             DB::table('user')->insert([
                 'user_id' => $id,
                 'user_email' => $email,
@@ -339,7 +336,75 @@ class HomeController extends Controller
         array_push($arr,$hid125k);
         array_push($arr,$hid190k);
         array_push($arr,$hid250k);
+        $total=(10000*$request->hid10k)+(20000*$request->hid20k)+(50000*$request->hid50k)+(75000*$request->hid75k)+(100000*$request->hid100k)+(125000*$request->hid125k)+(190000*$request->hid190k)+(250000*$request->hid250k);
+        return view('user.user_cart',['data'=>json_encode($arr)],['total'=>$total]);
+    }
 
-        return view('user.user_cart',['data'=>json_encode($arr)]);
+    function gotocheckout(Request $request){
+        $hid10k = $request->btn10k;
+        $hid20k= $request->btn20k;
+        $hid50k= $request->btn50k;
+        $hid75k= $request->btn75k;
+        $hid100k= $request->btn100k;
+        $hid125k= $request->btn125k;
+        $hid190k= $request->btn190k;
+        $hid250k= $request->btn250k;
+
+        $arr = array();
+        if($hid10k!=null){
+            $temp = ['nominal' => 10000,'jumlah' => $hid10k];
+            array_push($arr,$temp);
+        }
+        if($hid20k!=null){
+            $temp = ['nominal' => 20000,'jumlah' => $hid20k];
+            array_push($arr,$temp);
+        }
+        if($hid50k!=null){
+            $temp = ['nominal' => 50000,'jumlah' => $hid50k];
+            array_push($arr,$temp);
+        }
+        if($hid75k!=null){
+            $temp = ['nominal' => 75000,'jumlah' => $hid75k];
+            array_push($arr,$temp);
+        }
+        if($hid100k!=null){
+            $temp = ['nominal' => 100000,'jumlah' => $hid100k];
+            array_push($arr,$temp);
+        }
+        if($hid125k!=null){
+            $temp = ['nominal' => 125000,'jumlah' => $hid125k];
+            array_push($arr,$temp);
+        }
+        if($hid190k!=null){
+            $temp = ['nominal' => 190000,'jumlah' => $hid190k];
+            array_push($arr,$temp);
+        }
+        if($hid250k!=null){
+            $temp = ['nominal' => 250000,'jumlah' => $hid250k];
+            array_push($arr,$temp);
+        }
+        $total = $request->total;
+        $rand = rand(0,100);
+        $user = DB::table('user')->where('user_id',session('loggedIn'))->get();
+        $email = data_get($user,'0.user_email');
+        $id = data_get($user,'0.user_id');
+        DB::table('htranstpwd')->insert([
+            'user_id' => $id,
+            'htranstpwd_tanggal' => date("Y/m/d"),
+            'htranstpwd_total' => $total,
+            'htranstpwd_tipe' => 'topup',
+            'htranstpwd_status' => 2,
+        ]);
+         //status = 0:declined, 1:accepted, 2=pending
+
+        $mx = DB::select("select max(user_id) from user");
+        foreach ($arr as $ar) {
+            DB::table('dtranstpwd')->insert([
+                'htranstpwd_id' => $mx,
+                'dtranstpwd_nominal' => $ar['nominal'],
+                'dtranstpwd_jumlah' => $ar['jumlah'],
+            ]);
+        }
+        return view('user.user_checkout',['total'=>$total,'rand'=>$rand, 'email'=>$email]);
     }
 }
