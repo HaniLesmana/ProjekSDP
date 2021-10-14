@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\htransTopup;
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
 use App\Rules\ConfirmPassword;
@@ -34,7 +35,10 @@ class HomeController extends Controller
     }
     public function listRequest()
     {
-        return view("admin.listRequest");
+        $data = htransTopup::all();
+        $data = json_encode($data);
+        // dd($data);
+        return view("admin.listRequest",['data'=> $data]);
 
     }
     public function listWithdraw()
