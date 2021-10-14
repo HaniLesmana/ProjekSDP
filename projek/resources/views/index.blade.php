@@ -85,7 +85,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="/register" method="post">
+        <form action="{{ url('/register')}}" method="post">
             @csrf
           <div class="modal-body">
             Name : <br>

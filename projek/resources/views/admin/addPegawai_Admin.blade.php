@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     {{-- <div class="form-group">
-                        <input class="form-control" type="text" name="id" placeholder="ID Employee"> </div>
+                        <input class="form-control" type="text" name="id" placeholder="ID Employee" value="{{ old('id') }}"> </div>
                         @error('id')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror --}}
@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" name="nik" type="text" placeholder="NIK"> </div>
+                        <div class="input-group"> <input class="form-control" name="nik" type="text" placeholder="NIK" value="{{ old('nik') }}"> </div>
                         @error('nik')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" name="email" type="email" placeholder="Email"> </div>
+                        <div class="input-group"> <input class="form-control" name="email" type="email" placeholder="Email" value="{{ old('email') }}"> </div>
                         @error('email')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" type="text" name="nama" placeholder="Nama"> </div>
+                        <div class="input-group"> <input class="form-control" type="text" name="nama" placeholder="Nama" value="{{ old('nama')}}"> </div>
                         @error('nama')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" type="text" name="telepon" placeholder="No. Telp"> </div>
+                        <div class="input-group"> <input class="form-control" type="text" name="telepon" placeholder="No. Telp" value="{{ old('telepon')}}"> </div>
                         @error('telepon')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -72,7 +72,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" type="text" name="alamat" placeholder="Alamat"> </div>
+                        <div class="input-group"> <input class="form-control" type="text" name="alamat" placeholder="Alamat" value="{{ old('alamat')}}"> </div>
                         @error('alamat')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -99,7 +99,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" type="password" name="password" placeholder="Password"> </div>
+                        <div class="input-group"> <input class="form-control" type="password" name="password" placeholder="Password" value="{{ old('password')}}"> </div>
                         @error('password')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -110,7 +110,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" type="password" name="confirm" placeholder="Confirm Password"> </div>
+                        <div class="input-group"> <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" value="{{ old('password_confirmation')}}"> </div>
                         @error('confirm')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror

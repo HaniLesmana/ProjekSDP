@@ -92,11 +92,12 @@
                     <label for="" style="font-size: 1.7rem;border-radius: 12px;color: rgba(49, 53, 59, 0.68);">Saldo</label>
                 </div>
                 <div class="col-lg-6" style="float: left;padding-left:67.5px;">
-                    <button type="submit" class="btn btn-lg mb-1 align-bottom" style="color:white;outline:none;box-shadow:none;width:150px;background-color:#d9a73d">Top Up</button><br>
+                <a href="/user/topUp" class="btn btn-primary stretched-link" style="color:white;outline:none;box-shadow:none;width:150px;background-color:#d9a73d">Top Up</a> <br>
+                    <!-- <button type="submit" class="btn btn-lg mb-1 align-bottom" style="color:white;outline:none;box-shadow:none;width:150px;background-color:#d9a73d">Top Up</button><br> -->
                 </div>
                 <div style="clear:both"></div>
                 <div class="col-sm-6" style="background-color:lightgray;float:left;border-radius: 5px;">
-                    <label for="" style="font-size: 1.2rem;color: rgba(49, 53, 59, 0.68);font-family:Nunito Sans, -apple-system, sans-serif;">Rp. 0</label>
+                    <label for="" style="font-size: 1.2rem;color: rgba(49, 53, 59, 0.68);font-family:Nunito Sans, -apple-system, sans-serif;">Rp.{{ $saldo }}</label>
                 </div>
                 <div class="col-sm-6" style="float: left;padding-left:67.5px;">
                     <button type="submit" class="btn btn-lg align-middle" style="color:white;outline:none;box-shadow:none;width:150px;background-color:#d9a73d">Withdraw</button>

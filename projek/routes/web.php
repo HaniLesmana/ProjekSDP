@@ -22,16 +22,12 @@ Route::get('/listRequest', [HomeController::class, "listRequest"]);
 Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
 
 
-
 Route::prefix("home")->group(function(){
     Route::get("/user", [HomeController::class, "home_user"]);
     Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
     Route::get("/admin", [HomeController::class, "home_admin"]);
     Route::get("/ajax/{jasa}", [HomeController::class, "ajax"]);
-    // Route::get("/ajax",function ()
-    // {
-    //     return view('script');
-    // });
+
 });
 Route::prefix("admin")->group(function(){
     //Route::get("/listpegawai",function ()
@@ -66,7 +62,12 @@ Route::prefix("admin")->group(function(){
         return view('admin.detailTopUp');
     });
 });
-
+Route::prefix("user")->group(function(){
+    Route::get("/topUp",function ()
+    {
+        return view('user.user_topup');
+    });
+});
 Route::prefix("pegawai")->group(function(){
     Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
     Route::get('/history', [HomeController::class, "history"]);

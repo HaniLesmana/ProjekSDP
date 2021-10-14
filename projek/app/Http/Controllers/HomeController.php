@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
-use App\Rules\cekPassword;
+use App\Rules\ConfirmPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,8 +20,9 @@ class HomeController extends Controller
         return view("index");
     }
 
-    function home_user(){
-        return view("home_user");
+    function home_user(Request $request){
+        $user=DB::table('user')->where('user_id',session('loggedIn'))->get();
+        return view("home_user",['saldo' => data_get($user,'0.user_saldo')]);
     }
 
     function home_pegawai(){
@@ -75,8 +76,8 @@ class HomeController extends Controller
         // $status = $request->status;
 
         $rules = [
-            'nik' => 'required|max:16|min:16',
-            'email' => 'required',
+            'nik' => ['required','max:16','min:16',new cek_uniq($nik,'nik')],
+            'email' => ['required','max:16',new cek_uniq($email,'email')],
             'nama' => 'required',
             'telepon' => 'required',
             'alamat' => 'required|max:255',
@@ -121,15 +122,15 @@ class HomeController extends Controller
         $admin = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
 
         $rules = [
-            //'nik' => ['required','max:16','min:16',new cek_uniq($pegawai,$user,$admin,"nik",$request->nik,"add")],
-            'nik' => ['required','max:16','min:16'],
-            //'email' => ['required','email',new cek_uniq($pegawai,$user,$admin,"email",$request->nik,"add")],
-            'email' => ['required','email'],
+            'nik' => ['required','max:16','min:16',new cek_uniq('nik')],
+            //'nik' => ['required','max:16','min:16'],
+            'email' => ['required','email',new cek_uniq('email')],
+            //'email' => ['required','email'],
             'nama' => 'required',
-            'telepon' => 'required',
+            'telepon' => ['required','max:15'],
             'alamat' => 'required|max:255',
             'jenis' => 'required',
-            'password' => 'required'
+            'password' => ['required','confirmed']
         ];
         $message = [
             'nik.required' => 'NIK harus diisi',
@@ -202,7 +203,7 @@ class HomeController extends Controller
                     'username.email'=> "Email atau password salah",
                     'password.required' => "Email atau password salah",
                 ]);
-                $request->session()->put("loggedIn", $email);
+                $request->session()->put("loggedIn", data_get($user,'0.user_id'));
                 $request->session()->flash("welcomeUser", "Selamat datang ".data_get($user,'0.user_nama'));
                 return redirect("/home/user");
             }
@@ -214,7 +215,7 @@ class HomeController extends Controller
                     'username.email'=> "Email atau password salah",
                     'password.required' => "Email atau password salah",
                 ]);
-                $request->session()->put("loggedIn", $email);
+                $request->session()->put("loggedIn", data_get($pegawai,'0.pegawai_id'));
                 $request->session()->flash("welcomeUser", "Selamat datang ".data_get($pegawai,'0.pegawai_nama'));
                 return redirect("/home/pegawai");
             }
@@ -226,7 +227,7 @@ class HomeController extends Controller
                     'username.email'=> "Email atau password salah",
                     'password.required' => "Email atau password salah",
                 ]);
-                $request->session()->put("loggedIn", $email);
+                $request->session()->put("loggedIn", data_get($admin,'0.admin_id'));
                 $request->session()->flash("welcomeUser", "Selamat datang ".data_get($admin,'0.admin_nama'));
                 return redirect("/home/admin");
             }
@@ -245,20 +246,46 @@ class HomeController extends Controller
 			'nama_user' => 'required|string|min:3|max:30',
             'telp_user' => 'required|numeric',
 			'email_user' => 'required|email',
+            'alamat_user'=>'required',
 			'password_user' => 'required|min:8|required_with:confirm_password|same:confirm_password',
             'confirm_password'=> 'min:8',
 		]);
 
+        //dd($rules);//dd($rules);
         $email = $request->input("email_user");
         $users = DB::select("select * from user where user_status = 1 and user_email = '$email'");
+
         if (!empty($users)) {
+
             return view('index',['errorEmail'=>'Email telah terdaftar']);
         }
         else{
             $nama = $request ->input("nama_user");
             $password = $request ->input("password_user");
             $telp = $request ->input("telp_user");
+
+            $user = DB::table('user')->get();
+
+            $id = "";
+            $max = 0;
+            $cek = false;
+            foreach ($user as $u) {
+                if((int)substr($u->user_id,1,11) >= $max){
+                    $max = (int)substr($u->user_id,1,11) + 1;
+                    $cek = true;
+                }
+            }
+            if($cek){
+                $id = "U".str_pad($max, 11, "0", STR_PAD_LEFT);
+            }
+            else{
+                $id = "U00000000000";
+            }
+
+
+
             DB::table('user')->insert([
+                'user_id' => $id,
                 'user_email' => $email,
                 'user_nama' => $nama,
                 'user_telepon' => $telp,
@@ -269,6 +296,7 @@ class HomeController extends Controller
                 'user_status' => 1,
             ]);
             return view('index',['sukses'=>'Register berhasil!']);
+            // return redirect('index',['sukses'=>'Register berhasil!']);
         }
 
     }
