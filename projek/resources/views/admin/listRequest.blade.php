@@ -28,13 +28,15 @@
                     echo'<td>'.data_get($temp,'0.user_nama').'</td>';
                     echo'<td>'.$data->htranstpwd_total.'</td>';
                     echo'<td>'.$data->htranstpwd_tipe.'</td>';
-                    echo'<td>
+                    ?>
+                    <td>
                         <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                            <a href="/admin/detailTopUp/{id}" style="text-decoration: :none; color:white;">
+                            <a href="{{ url('/admin/detailTopUp/'.$data->htranstpwd_id)}}" style="text-decoration: :none; color:white;">
                                 Detail
                             </a>
                         </button>
-                        </td>';
+                    </td>
+                    <?php
                 echo '</tbody>';
             }
         }

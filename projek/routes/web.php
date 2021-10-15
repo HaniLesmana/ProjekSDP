@@ -57,10 +57,12 @@ Route::prefix("admin")->group(function(){
     Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
     Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
-    Route::get("/detailTopUp/{id}",function ()
+    Route::get("/detailTopUp/{id}",function ($id)
     {
-        return view('admin.detailTopUp');
+        return view('admin.detailTopUp',['id'=>$id]);
     });
+    Route::post('/detailTopUp/actionAccept/{id}', [HomeController::class, "prosesAcc"]);
+    Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);
 });
 Route::prefix("user")->group(function(){
     Route::get("/topUp",function ()

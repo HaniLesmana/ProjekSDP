@@ -86,6 +86,7 @@
                         <div id="tester">
                             <td><p for="" value="{{$dat['id']}}" id="{{$dat['id']}}" style="">{{ $dat['nama'] }} </p></td>
                             <td><input type="number" name="{{$dat['id']}}" id="{{$dat['id']}}" onchange="numberclick('{{ $dat['id'] }}','{{ $dat['jumlah'] }}')" class="btnclick" style="width:50px;margin-left:10px;" value ="{{ $dat['jumlah'] }}" readonly></td>
+                            <input type="hidden" name="data" value="{{$data}}">
                         </div>
 
                         @endif

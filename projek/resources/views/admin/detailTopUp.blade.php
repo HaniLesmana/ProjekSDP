@@ -22,12 +22,19 @@
             <div class="row">
                 FOTO BUKTI TF
             </div>
-            <button style="color:white; width: 185px;border-radius:3px;border:1px solid black; background-color:#FACE7F;text-align:center;">
-            <a href="#" style="text-decoration: none;color:white">Accept</a>
-            </button>
-            <button style="color:white; width: 185px;border-radius:3px;border:1px solid black; background-color:Red;text-align:center;">
-            <a href="#" style="text-decoration: none;color:white">Decline</a>
-            </button>
+            <form action="{{ url('/actionAccept/'.$id)}}" method="post">
+                @csrf
+                <button style="color:white; width: 185px;border-radius:3px;border:1px solid black; background-color:#FACE7F;text-align:center;">
+                <a href="#" style="text-decoration: none;color:white">Accept</a>
+                Accept
+                </button>
+            </form>
+            <form action="{{ url('/actionDecline/'.$id)}}" method="post">
+                @csrf
+                <button style="color:white; width: 185px;border-radius:3px;border:1px solid black; background-color:Red;text-align:center;">
+                <a href="#" style="text-decoration: none;color:white">Decline</a>
+                </button>
+            </form>
             {{-- </form> --}}
         </div>
     </div>

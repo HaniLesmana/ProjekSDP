@@ -7,6 +7,7 @@ use App\Rules\cek_password;
 use App\Rules\cek_uniq;
 use App\Rules\ConfirmPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -341,48 +342,51 @@ class HomeController extends Controller
     }
 
     function gotocheckout(Request $request){
-        $hid10k = $request->btn10k;
-        $hid20k= $request->btn20k;
-        $hid50k= $request->btn50k;
-        $hid75k= $request->btn75k;
-        $hid100k= $request->btn100k;
-        $hid125k= $request->btn125k;
-        $hid190k= $request->btn190k;
-        $hid250k= $request->btn250k;
+        $data=json_decode($request->data);
+        // $hid10k = $request->btn10k;
+        // $hid20k= $request->btn20k;
+        // $hid50k= $request->btn50k;
+        // $hid75k= $request->btn75k;
+        // $hid100k= $request->btn100k;
+        // $hid125k= $request->btn125k;
+        // $hid190k= $request->btn190k;
+        // $hid250k= $request->btn250k;
 
-        $arr = array();
-        if($hid10k!=null){
-            $temp = ['nominal' => 10000,'jumlah' => $hid10k];
-            array_push($arr,$temp);
-        }
-        if($hid20k!=null){
-            $temp = ['nominal' => 20000,'jumlah' => $hid20k];
-            array_push($arr,$temp);
-        }
-        if($hid50k!=null){
-            $temp = ['nominal' => 50000,'jumlah' => $hid50k];
-            array_push($arr,$temp);
-        }
-        if($hid75k!=null){
-            $temp = ['nominal' => 75000,'jumlah' => $hid75k];
-            array_push($arr,$temp);
-        }
-        if($hid100k!=null){
-            $temp = ['nominal' => 100000,'jumlah' => $hid100k];
-            array_push($arr,$temp);
-        }
-        if($hid125k!=null){
-            $temp = ['nominal' => 125000,'jumlah' => $hid125k];
-            array_push($arr,$temp);
-        }
-        if($hid190k!=null){
-            $temp = ['nominal' => 190000,'jumlah' => $hid190k];
-            array_push($arr,$temp);
-        }
-        if($hid250k!=null){
-            $temp = ['nominal' => 250000,'jumlah' => $hid250k];
-            array_push($arr,$temp);
-        }
+        // $arr = array();
+        // if($hid10k!=null){
+        //     $temp =['nominal' => 10000,'jumlah' => $hid10k];
+        //     array_push($arr,$temp);
+        // }
+
+        // if($hid20k!=null){
+        //     $temp =['nominal' => 20000,'jumlah' => $hid20k];
+        //     array_push($arr,$temp);
+        // }
+        // if($hid50k!=null){
+        //     $temp = ['nominal' => 50000,'jumlah' => $hid50k];
+        //     array_push($arr,$temp);
+        // }
+        // if($hid75k!=null){
+        //     $temp = ['nominal' => 75000,'jumlah' => $hid75k];
+        //     array_push($arr,$temp);
+        // }
+        // if($hid100k!=null){
+        //     $temp = ['nominal' => 100000,'jumlah' => $hid100k];
+        //     array_push($arr,$temp);
+        // }
+        // if($hid125k!=null){
+        //     $temp = ['nominal' => 125000,'jumlah' => $hid125k];
+        //     array_push($arr,$temp);
+        // }
+        // if($hid190k!=null){
+        //     $temp = ['nominal' => 190000,'jumlah' => $hid190k];
+        //     array_push($arr,$temp);
+        // }
+        // if($hid250k!=null){
+        //     $temp = ['nominal' => 250000,'jumlah' => $hid250k];
+        //     array_push($arr,$temp);
+        // }
+
         $total = $request->total;
         $rand = rand(0,100);
         $user = DB::table('user')->where('user_id',session('loggedIn'))->get();
@@ -396,15 +400,30 @@ class HomeController extends Controller
             'htranstpwd_status' => 2,
         ]);
          //status = 0:declined, 1:accepted, 2=pending
+        //$mx = DB::select("select max(user_id) from user");
+        $mx = DB::select("select max(htranstpwd_id) from htranstpwd");
 
-        $mx = DB::select("select max(user_id) from user");
-        foreach ($arr as $ar) {
-            DB::table('dtranstpwd')->insert([
-                'htranstpwd_id' => $mx,
-                'dtranstpwd_nominal' => $ar['nominal'],
-                'dtranstpwd_jumlah' => $ar['jumlah'],
-            ]);
+        foreach ($data as $ar) {
+            if($ar->jumlah!=0){
+                $tes=$ar->nama;
+                $nominal=str_replace('Rp','',$tes);
+                $nominal=str_replace('.','',$nominal);
+                $tes=$ar->jumlah;
+                DB::table('dtranstpwd')->insert([
+                    'htranstpwd_id' => (int)$mx,
+                    'dtranstpwd_nominal' => (int)$nominal,
+                    'dtranstpwd_jumlah' => (int)$tes,
+                ]);
+            }
         }
         return view('user.user_checkout',['total'=>$total,'rand'=>$rand, 'email'=>$email]);
+    }
+    function prosesAcc($id){
+        $status=DB::update('update htranstpwd set htranstpwd_status = 3 where htranstpwd_id = ?', [$id]);
+        dd($id);
+        return view('admin.home_admin');
+    }
+    function prosesDecline($id){
+
     }
 }
