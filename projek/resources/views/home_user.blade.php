@@ -1,23 +1,5 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+@extends('user.base-layout')
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!-- My Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Viga&display=swap" rel="stylesheet">
-
-    <!-- My CSS -->
-    <link rel="stylesheet" href="{{asset('style_user_home.css')}}">
-
-
-    <title>Babowe</title>
-  </head>
-  <body>
     {{-- LOGIN SUCCESS --}}
     @if (session("welcomeUser"))
         <script>
@@ -26,28 +8,11 @@
     @endif
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));">
-        <div class="container">
-            <a class="navbar-brand" id="logo" href="#"></a>
-            <button class="navbar-toggler" type="button"
-            data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link active" href="#">HOME <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">PROFILE</a>
-                    <a class="nav-item nav-link" href="#About" id="tes">CART</a>
-                    <a class="nav-item nav-link" href="#About">HISTORY</a>
-                    <button type ="button" class="btn btn-primary tombolSignOut" data-toggle="modal" data-target="#SignInModal">Sign Out</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+    @section("header")
+        @include('user.navbarUser')
+    @endsection
     <!-- Akhir Navbar -->
-
+@section('main')
 
     <!-- Jumbotron -->
     <div class="container mb-3">
@@ -60,13 +25,13 @@
                 </ol>
                 <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block img-fluid ads" src="https://pbs.twimg.com/media/EF7pxQ0UcAETWZC.jpg" alt="First slide">
+                    <img class="d-block img-fluid ads" src="{{asset('img/iklan1.png')}}" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block img-fluid ads" src="https://ecs7.tokopedia.net/img/kjjBfF/2021/2/9/7621c986-da97-48e2-a389-31ca5f1d228b.png" alt="Second slide">
+                    <img class="d-block img-fluid ads" src="{{asset('img/iklan2.png')}}" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block img-fluid ads" src="https://esports.id/img/article/76320210531063444.jpg" alt="Third slide">
+                    <img class="d-block img-fluid ads" src="{{asset('img/iklan3.png')}}" alt="Third slide">
                 </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -85,7 +50,7 @@
     <!-- Container -->
     <div class="container ">
         <!-- bagian Work like at home -->
-        <div class="row mr-5" style="width:1110px;">
+        <div class="row mr-5" style="width:1130px;">
             <div class="col-lg" style="border-radius:12px;box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;font-family:Nunito Sans, -apple-system, sans-serif;">
             {{-- <img src="../img/workingspace.png" alt="workingspace" class="img-fluid"> --}}
                 <div class="col-sm-6" style="border-radius:5px;float:left;">
@@ -103,12 +68,12 @@
                     <button type="submit" class="btn btn-lg align-middle" style="color:white;outline:none;box-shadow:none;width:150px;background-color:#d9a73d">Withdraw</button>
                 </div>
             </div>
-        <div class="col-lg" style="padding:0px;">
+        <div class="col-xl" style="padding:0px;">
             {{-- <button type="submit" class="align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.color='#d9a73d';" onMouseOut="" id="button_art" style=""> --}}
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.border='2px solid #d9a73d';this.style.color='white';" onMouseOut="this.style.backgroundColor='lightgray';this.style.border='none';this.style.color='gray';" id="button_art" style="outline:none;box-shadow: none;border-radius:10px;">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.border='2px solid #d9a73d';this.style.color='white';" onMouseOut="this.style.backgroundColor='lightgray';this.style.border='none';this.style.color='gray';" id="button_art" style="outline:none;box-shadow: none;border-radius:10px; width: 252px;">
                 <img src="{{asset('img/art.png')}}" style="height=50px;width:100px;">ART
             </button>
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.border='2px solid #d9a73d';this.style.color='white';" onMouseOut="this.style.backgroundColor='lightgray';this.style.border='none';this.style.color='gray';" id="button_tukang" style="outline:none;box-shadow:none;border-radius:10px;">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.border='2px solid #d9a73d';this.style.color='white';" onMouseOut="this.style.backgroundColor='lightgray';this.style.border='none';this.style.color='gray';" id="button_tukang" style="outline:none;box-shadow:none;border-radius:10px;margin-left:10px;">
                 <img src="{{asset('img/worker.png')}}" style="height=50px;width:100px;">Tukang
             </button>
 
@@ -125,12 +90,6 @@
         </div>
     </div>
     <!-- akhir container -->
-
-
-
-
-
-
 
 
     <!-- Optional JavaScript -->
@@ -168,5 +127,4 @@
         });
     </script>
 
-</body>
-</html>
+@endsection

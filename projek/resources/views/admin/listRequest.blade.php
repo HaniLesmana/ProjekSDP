@@ -31,7 +31,7 @@
                     ?>
                     <td>
                         <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                            <a href="{{ url('/admin/detailTopUp/'.$data->htranstpwd_id)}}" style="text-decoration: :none; color:white;">
+                            <a href="{{ url('/admin/detailTopUp/'.$data->htranstpwd_id.'/'.data_get($temp,'0.user_email') )}}" style="text-decoration: :none; color:white;">
                                 Detail
                             </a>
                         </button>

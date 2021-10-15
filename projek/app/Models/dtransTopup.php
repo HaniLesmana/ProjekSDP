@@ -10,7 +10,7 @@ class dtransTopup extends Model
 {
     use HasFactory;
     protected $table = "dtranstpwd";
-    protected $primaryKey = "htranstpwd_id";
+    //protected $primaryKey = "htranstpwd_id";
     // protected $fillable = ["htranstpwd_id","user_id", "htranstpwd_tanggal", "htranstpwd_total", "htranstpwd_tipe", "htranstpwd_status"];
 
     public function dh_trans()

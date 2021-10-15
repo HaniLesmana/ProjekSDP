@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,9 +57,11 @@ Route::prefix("admin")->group(function(){
     Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
     Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
-    Route::get("/detailTopUp/{id}",function ($id)
+    Route::get("/detailTopUp/{id}/{email}",function ($id,$email)
     {
-        return view('admin.detailTopUp',['id'=>$id]);
+        $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
+        $dtranstpwd = DB::select("select * from dtranstpwd where htranstpwd_id = '$id'");
+        return view('admin.detailTopUp',['id'=>$id,'email'=>$email,'dataheader'=>$htranstpwd,'datadetail'=>$dtranstpwd]);
     });
     Route::post('/detailTopUp/actionAccept/{id}', [HomeController::class, "prosesAcc"]);
     Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);

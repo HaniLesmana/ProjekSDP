@@ -36,7 +36,7 @@ class HomeController extends Controller
     }
     public function listRequest()
     {
-        $data = htransTopup::all();
+        $data = DB::select("select * from htranstpwd where htranstpwd_status = 2");
         $data = json_encode($data);
         // dd($data);
         return view("admin.listRequest",['data'=> $data]);
@@ -82,7 +82,7 @@ class HomeController extends Controller
 
         $rules = [
             'nik' => ['required','max:16','min:16',new cek_uniq($nik,'nik')],
-            'email' => ['required','max:16',new cek_uniq($email,'email')],
+            'email' => ['required','max:16'],
             'nama' => 'required',
             'telepon' => 'required',
             'alamat' => 'required|max:255',
@@ -388,7 +388,7 @@ class HomeController extends Controller
         // }
 
         $total = $request->total;
-        $rand = rand(0,100);
+        // $rand = rand(0,100);
         $user = DB::table('user')->where('user_id',session('loggedIn'))->get();
         $email = data_get($user,'0.user_email');
         $id = data_get($user,'0.user_id');
@@ -401,29 +401,48 @@ class HomeController extends Controller
         ]);
          //status = 0:declined, 1:accepted, 2=pending
         //$mx = DB::select("select max(user_id) from user");
-        $mx = DB::select("select max(htranstpwd_id) from htranstpwd");
-
+        $mx = DB::select("select * from htranstpwd");
+        //$mx = DB::select("select max(htranstpwd_id) from htranstpwd");
+        //$mxx = data_get($mx,'0.htranstpwd_id');
+        $max=0;
+        foreach ($mx as $key => $value) {
+            if((int)$value->htranstpwd_id>=$max){
+                $max=(int)$value->htranstpwd_id;
+            }
+        }
         foreach ($data as $ar) {
             if($ar->jumlah!=0){
+                // dd($mx);
                 $tes=$ar->nama;
                 $nominal=str_replace('Rp','',$tes);
                 $nominal=str_replace('.','',$nominal);
                 $tes=$ar->jumlah;
-                DB::table('dtranstpwd')->insert([
-                    'htranstpwd_id' => (int)$mx,
-                    'dtranstpwd_nominal' => (int)$nominal,
-                    'dtranstpwd_jumlah' => (int)$tes,
-                ]);
+
+                // DB::table('dtranstpwd')->insert([
+                //     'htranstpwd_id' => (int)$mx,
+                //     'dtranstpwd_nominal' => (int)$nominal,
+                //     'dtranstpwd_jumlah' => (int)$tes,
+                // ]);
+                DB::insert('insert into dtranstpwd (htranstpwd_id, dtranstpwd_nominal,dtranstpwd_jumlah) values (?, ?, ?)', [$max, (int)$nominal,(int)$tes]);
             }
         }
-        return view('user.user_checkout',['total'=>$total,'rand'=>$rand, 'email'=>$email]);
+        return view('user.user_checkout',['total'=>$total, 'email'=>$email]);
     }
     function prosesAcc($id){
-        $status=DB::update('update htranstpwd set htranstpwd_status = 3 where htranstpwd_id = ?', [$id]);
-        dd($id);
+        $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
+        $total = (int)data_get($htranstpwd,'0.htranstpwd_total');
+        $status = DB::update('update htranstpwd set htranstpwd_status = 1 where htranstpwd_id = ?', [$id]);
+
+        $userID = data_get($htranstpwd,'0.user_id');
+        $users = DB::select("select * from user where user_id = '$userID'");
+        $saldo = (int)data_get($users,'0.user_saldo');
+
+        $saldo = $saldo + $total;
+        $status = DB::update("update user set user_saldo = '$saldo' where user_id = '$userID'");
         return view('admin.home_admin');
     }
     function prosesDecline($id){
-
+        $status = DB::update('update htranstpwd set htranstpwd_status = 0 where htranstpwd_id = ?', [$id]);
+        return view('admin.home_admin');
     }
 }

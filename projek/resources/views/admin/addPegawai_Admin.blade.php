@@ -111,7 +111,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <div class="input-group"> <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" value="{{ old('password_confirmation')}}"> </div>
-                        @error('confirm')
+                        @error('password_confirmation')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
                     </div>
