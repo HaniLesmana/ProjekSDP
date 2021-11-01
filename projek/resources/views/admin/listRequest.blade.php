@@ -15,6 +15,8 @@
         <th>Nama</th>
         <th>Jumlah Top Up</th>
         <th>Jenis</th>
+        <th>Tanggal</th>
+        <th>Status</th>
         <th></th>
       </tr>
     </thead>
@@ -28,6 +30,19 @@
                     echo'<td>'.data_get($temp,'0.user_nama').'</td>';
                     echo'<td>'.$data->htranstpwd_total.'</td>';
                     echo'<td>'.$data->htranstpwd_tipe.'</td>';
+                    $myDateTime = DateTime::createFromFormat('Y-m-d',$data->htranstpwd_tanggal);
+                    $formatteddate = $myDateTime->format('d-m-Y h:m:s');
+                    echo'<td>'.$formatteddate.'</td>';
+                    //status = 0:declined, 1:accepted, 2=pending
+                    if($data->htranstpwd_status == "0"){
+                        echo'<td>Declined</td>';
+                    }
+                    else if($data->htranstpwd_status == "1"){
+                        echo'<td>Accepted</td>';
+                    }
+                    else{
+                        echo'<td>Pending</td>';
+                    }
                     ?>
                     <td>
                         <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
