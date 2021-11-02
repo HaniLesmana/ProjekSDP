@@ -36,27 +36,49 @@ Route::prefix("admin")->group(function(){
         //Route::get("/listPegawai_Admin", [HomeController::class, "home_list_pegawai"]);
     //});
 
-    Route::get("/listpegawai", [HomeController::class, "home_list_pegawai"]);
-    Route::get("/listbarang",function ()
+
+    //MASTER KATEGORI
+    Route::get('/listkategori', [HomeController::class, "listKategori"]);
+    Route::get("/addKategori",function ()
     {
-        return view('admin.listBarang_Admin');
+        return view('admin.addKategori_Admin');
     });
-    Route::get("/addBarang",function ()
+    Route::get("/editKategori",function ()
     {
-        return view('admin.addBarang_Admin');
+        return view('admin.editKategori_Admin');
     });
+    Route::post('/prosesAddKategori', [HomeController::class, "prosesAddKategori"]);
+    Route::post('/prosesEditKategori/{id}', [HomeController::class, "prosesEditKategori"]);
+    Route::post('/prosesDeleteKategori/{id}', [HomeController::class, "prosesDeleteKategori"]);
+    //MASTER KATEGORI
+
+
+    //MASTER BARANG
+    Route::get('/listbarang', [HomeController::class, "listBarang"]);
+    Route::get('/addBarang', [HomeController::class, "addBarang"]);
     Route::get("/editBarang",function ()
     {
         return view('admin.editBarang_Admin');
     });
+    Route::post('/prosesAddBarang', [HomeController::class, "prosesAddBarang"]);
+    Route::post('/prosesEditBarang/{id}', [HomeController::class, "prosesEditBarang"]);
+    Route::post('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);
+    //MASTER BARANG
+
+
+    //MASTER PEGAWAI
+    Route::get("/listpegawai", [HomeController::class, "home_list_pegawai"]);
+    Route::get('/EditPegawai/{id}', [HomeController::class, "EditPegawai"]);
     Route::get("/addPegawai",function ()
     {
         return view('admin.addPegawai_Admin');
     });
-    Route::get('/EditPegawai/{id}', [HomeController::class, "EditPegawai"]);
     Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
     Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
+    //MASTER PEGAWAI
+
+    //TRANSAKSI TOPUP WITHDRAW
     Route::get("/detailTopUp/{id}/{email}",function ($id,$email)
     {
         $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
@@ -65,6 +87,9 @@ Route::prefix("admin")->group(function(){
     });
     Route::post('/detailTopUp/actionAccept/{id}', [HomeController::class, "prosesAcc"]);
     Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);
+    //TRANSAKSI TOPUP WITHDRAW
+
+
 });
 Route::prefix("user")->group(function(){
     Route::get("/topUp",function ()

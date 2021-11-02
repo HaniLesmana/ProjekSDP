@@ -47,14 +47,75 @@ class HomeController extends Controller
         return view("admin.listWithdraw");
 
     }
-    public function home_list_pegawai(){
-        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
-        return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
+
+
+    // MASTER KATEGORI
+    function listKategori(){
+        $kategori = DB::select('select * from kategori');
+        return view('admin.listKategori_Admin',['kategori'=>$kategori]);
+    }
+    public function prosesAddKategori(Request $request){
+
     }
 
-    function prosesDeletePegawai(Request $request){
-        $id = $request->id;
-        DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_status'=>0]);
+    public function prosesEditKategori(){
+
+    }
+
+    public function prosesDeleteKategori(){
+
+    }
+    // MASTER KATEGORI
+
+
+    // MASTER BARANG
+    function listBarang(){
+        $barang = DB::select('select * from barang b
+                            left join kategori k
+                            on b.barang_kategori=k.kategori_id
+                            where b.barang_status != 0');
+        return view('admin.listBarang_Admin',['barang'=>$barang]);
+    }
+    public function addBarang(){
+        $kat = DB::select('select * from kategori');
+        return view('admin.addBarang_Admin',['kategori'=>$kat]);
+    }
+    public function prosesAddBarang(Request $request){
+        $barang = DB::table('barang')->get();
+        $id = "";
+        $max = 0;
+        $cek = false;
+        foreach ($barang as $b) {
+            if((int)substr($b->barang_id,1,11) >= $max && substr($b->barang_id,0,1) == strtoupper(substr($request->nama,0,1))){
+                $max = (int)substr($b->barang_id,1,11) + 1;
+                $cek = true;
+            }
+        }
+        if($cek){
+            $id = substr($request->nama,0,1).str_pad($max, 11, "0", STR_PAD_LEFT);
+        }
+        else{
+            $id = substr($request->nama,0,1)."00000000000";
+        }
+
+        DB::table('barang')->insert(
+            ['barang_id' => $id, 'barang_kategori' => $request->kategori, 'barang_nama' => $request->nama, 'barang_harga' => $request->harga, 'barang_stok' => $request->stok, 'barang_status' => 1]
+        );
+        return redirect('/admin/listbarang');
+    }
+
+    public function prosesEditBarang(){
+
+    }
+
+    public function prosesDeleteBarang(){
+
+    }
+    // MASTER BARANG
+
+
+    //MASTER PEGAWAI
+    public function home_list_pegawai(){
         $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
@@ -62,6 +123,13 @@ class HomeController extends Controller
     function EditPegawai($id,Request $request){
         $pegawai=DB::table('pegawai')->where('pegawai_id',$id)->get();
         return view("admin.editPegawai_Admin",['id'=>$id],['pegawai' => $pegawai]);
+    }
+
+    function prosesDeletePegawai(Request $request){
+        $id = $request->id;
+        DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_status'=>0]);
+        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
 
     function prosesEditPegawai($id,Request $request){
@@ -187,6 +255,7 @@ class HomeController extends Controller
         // return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
         //return redirect("/listpegawai");
     }
+    //MASTER PEGAWAI
 
     function checkLogin(Request $request){
         $email = $request->input("user_login_email");
