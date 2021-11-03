@@ -13,7 +13,7 @@
                 </button>
             </form>
             <form method="get" action="{{ url('/admin/addBarang') }}" style="float: left;margin-left: 5px;margin-bottom: 10px;">
-                <button type="submit" style="height:35px;color:white;align:right;border-radius:3px;border:1px solid black; background-color:#FACE7F;align:right; width:80px; font-size:9.5px;">
+                <button type="submit" style="height:35px;color:white;align:right;border-radius:3px;border:1px solid black; background-color:black;align:right; width:80px; font-size:9.5px;">
                     Add Barang
                 </button>
             </form>
@@ -21,7 +21,8 @@
     </div>
   <div class="table-responsive">
   <table class="table table-striped">
-    <thead style="background-color:#E8D0B3;">
+    {{-- <thead style="background-color:#E8D0B3;"> --}}
+    <thead style="background-color:black;color:white;">
       <tr>
         <th>No</th>
         <th>ID</th>
