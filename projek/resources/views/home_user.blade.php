@@ -50,7 +50,7 @@
     <!-- Container -->
     <div class="container ">
         <!-- bagian Work like at home -->
-        <div class="row mr-5" style="width:1130px;">
+        <div class="row mr-5">
             <div class="col-lg" style="border-radius:12px;box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;font-family:Nunito Sans, -apple-system, sans-serif;">
             {{-- <img src="../img/workingspace.png" alt="workingspace" class="img-fluid"> --}}
                 <div class="col-sm-6" style="border-radius:5px;float:left;">
@@ -68,26 +68,41 @@
                     <button type="submit" class="btn btn-lg align-middle" style="color:white;outline:none;box-shadow:none;width:150px;background-color:#d9a73d">Withdraw</button>
                 </div>
             </div>
-        <div class="col-xl" style="padding:0px;">
-            {{-- <button type="submit" class="align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.color='#d9a73d';" onMouseOut="" id="button_art" style=""> --}}
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.border='2px solid #d9a73d';this.style.color='white';" onMouseOut="this.style.backgroundColor='lightgray';this.style.border='none';this.style.color='gray';" id="button_art" style="outline:none;box-shadow: none;border-radius:10px; width: 252px;">
-                <img src="{{asset('img/art.png')}}" style="height=50px;width:100px;">ART
+      </div>
+      <div class="container2" style="margin-top: 30px; border-radius:12px;box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;height:160px; width:1110px; padding:7px 5px 0 5px;">
+        <div class="row">
+          <div class="col-sm">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
+                <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;"> <br>
+                <label>Cleaning</label>
             </button>
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.backgroundColor='#d9a73d';this.style.border='2px solid #d9a73d';this.style.color='white';" onMouseOut="this.style.backgroundColor='lightgray';this.style.border='none';this.style.color='gray';" id="button_tukang" style="outline:none;box-shadow:none;border-radius:10px;margin-left:10px;">
-                <img src="{{asset('img/worker.png')}}" style="height=50px;width:100px;">Tukang
+          </div>
+          <div class="col-sm">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
+                <img src="{{asset('img/paint-roller.png')}}" style="height=50px;width:100px;"> <br>
+                <label>Painting</label>
             </button>
-
-          {{-- <h2>You <b>Work</b> Like at <b>Home</b></h2>
-          <p>Bekerja dengan suasana hati yang lebih asik dan mempelajari hal baru setiap harinya</p>
-          <a class="nav-item btn btn-primary tombol" href="#">GALLERY</a> --}}
+          </div>
+          <div class="col-sm">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
+                <img src="{{asset('img/plumbing.png')}}" style="height=50px;width:100px;"> <br>
+                <label>Plumbing</label>
+            </button>
+          </div>
+          <div class="col-sm">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
+                <img src="{{asset('img/listrik.png')}}" style="height=50px;width:100px;"> <br>
+                <label>Electrical</label>
+            </button>
+          </div>
+          <div class="col-sm">
+            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
+                <img src="{{asset('img/tools.png')}}" style="height=50px;width:100px;"> <br>
+                <label>Repair etc</label>
+            </button>
+          </div>
         </div>
       </div>
-      <!-- Akhir work like at home -->
-
-      {{-- <a id="About">About</a> --}}
-        <div class="row mt-3" style="border:2px solid white;border-radius:5px;width:1110px;" id="daftar" >
-
-        </div>
     </div>
     <!-- akhir container -->
 
