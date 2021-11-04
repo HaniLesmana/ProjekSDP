@@ -56,10 +56,11 @@ Route::prefix("admin")->group(function(){
     //MASTER BARANG
     Route::get('/listbarang', [HomeController::class, "listBarang"]);
     Route::get('/addBarang', [HomeController::class, "addBarang"]);
-    Route::get("/editBarang",function ()
-    {
-        return view('admin.editBarang_Admin');
-    });
+    // Route::get("/editBarang/{id}",function ()
+    // {
+    //     return view('admin.editBarang_Admin');
+    // });
+    Route::get('/editBarang/{id}', [HomeController::class, "EditBarang"]);
     Route::post('/prosesAddBarang', [HomeController::class, "prosesAddBarang"]);
     Route::post('/prosesEditBarang/{id}', [HomeController::class, "prosesEditBarang"]);
     Route::post('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);

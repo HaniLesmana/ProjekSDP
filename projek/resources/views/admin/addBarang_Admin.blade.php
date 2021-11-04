@@ -30,9 +30,9 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="input-group"> <input class="form-control" name="nama" type="text" placeholder="Nama Barang" required> </div>
-                            {{-- @error('usern')
+                            @error('nama')
                                 <span style='color: red'>{{ $message }}</span>
-                            @enderror --}}
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -40,9 +40,9 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="input-group"> <input class="form-control" type="number" name="harga" placeholder="Harga" required> </div>
-                            {{-- @error('pass')
+                            @error('harga')
                                 <span style='color: red'>{{ $message }}</span>
-                            @enderror --}}
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -51,9 +51,9 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="input-group"> <input class="form-control" type="number" name="stok" placeholder="Stok" required> </div>
-                            {{-- @error('namaLengkap')
+                            @error('stok')
                                 <span style='color: red'>{{ $message }}</span>
-                            @enderror --}}
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,9 @@
                                 @endif
                             </select>
                             {{-- <div class="input-group"> <input class="form-control" type="text" name="kategori" placeholder="Kategori"> </div> --}}
-                            {{-- @error('nomorTelepon')
+                            @error('kategori')
                                 <span style='color: red'>{{ $message }}</span>
-                            @enderror --}}
+                            @enderror
                         </div>
                     </div>
                 </div>

@@ -86,30 +86,65 @@ class HomeController extends Controller
         $max = 0;
         $cek = false;
         foreach ($barang as $b) {
-            if((int)substr($b->barang_id,1,11) >= $max && substr($b->barang_id,0,1) == strtoupper(substr($request->nama,0,1))){
+            if((int)substr($b->barang_id,1,11) >= $max && strtoupper(substr($b->barang_id,0,1)) == strtoupper(substr($request->nama,0,1))){
                 $max = (int)substr($b->barang_id,1,11) + 1;
                 $cek = true;
             }
         }
         if($cek){
-            $id = substr($request->nama,0,1).str_pad($max, 11, "0", STR_PAD_LEFT);
+            $id = strtoupper(substr($request->nama,0,1)).str_pad($max, 11, "0", STR_PAD_LEFT);
         }
         else{
-            $id = substr($request->nama,0,1)."00000000000";
+            $id = strtoupper(substr($request->nama,0,1))."00000000000";
         }
-
+        $rules = $request->validate([
+			'nama' => 'required|string|min:3|max:30',
+            'harga' => 'required|numeric',
+			'stok' => 'required|numeric',
+            'kategori'=>'required',
+		],
+        [
+            'required' => ':attribute harus diisi',
+            'min' => ':attribute harus 3 karakter',
+            'max' => ':attribute maksimal 30 karakter',
+            'numeric' => ':attribute harus berupa angka',
+        ]);
         DB::table('barang')->insert(
             ['barang_id' => $id, 'barang_kategori' => $request->kategori, 'barang_nama' => $request->nama, 'barang_harga' => $request->harga, 'barang_stok' => $request->stok, 'barang_status' => 1]
         );
         return redirect('/admin/listbarang');
     }
-
-    public function prosesEditBarang(){
-
+    public function EditBarang($id){
+        $barang = DB::table('barang')->where('barang_id',$id)->get();
+        return view("admin.editBarang_Admin",['id'=>$id],['barang'=>$barang]);
+    }
+    public function prosesEditBarang(Request $request,$id){
+        // $id=$request->id;
+        $nama=$request->nama;
+        $harga=$request->harga;
+        $stok=$request->stok;
+        $statusbarang=$request->statusBarang;
+        $kategori=$request->kategori;
+        $rules = $request->validate([
+			'nama' => 'required|string|min:3|max:30',
+            'harga' => 'required|numeric',
+			'stok' => 'required|numeric',
+            'kategori'=>'required',
+		],
+        [
+            'required' => ':attribute harus diisi',
+            'min' => ':attribute harus 3 karakter',
+            'max' => ':attribute maksimal 30 karakter',
+            'numeric' => ':attribute harus berupa angka',
+        ]);
+        DB::table('barang')->where('barang_id', $id)->update(['barang_nama'=>$nama,'barang_harga'=>$harga,'barang_stok'=>$stok,'barang_status'=>$statusbarang,'barang_kategori'=>$kategori]);
+        return $this->listBarang();
     }
 
-    public function prosesDeleteBarang(){
-
+    public function prosesDeleteBarang($id){
+        DB::table('barang')->where('barang_id', $id)->update(['barang_status'=>0]);
+        $barang = DB::table('barang')->where('barang_status','1')->get();
+        return view("admin.listBarang_Admin",['barang' => $barang]);
     }
     // MASTER BARANG
 
