@@ -10,6 +10,7 @@
             <a class="nav-item nav-link active" href="/listRequest">Top Up</a>
             <a class="nav-item nav-link active" href="/listWithdraw">Withdraw</a>
           <a class="nav-item nav-link active" href="/admin/listpegawai">Pegawai</a>
+          <a class="nav-item nav-link" href="/admin/listKategori">Kategori</a>
           <a class="nav-item nav-link " href="/admin/listbarang" >Barang</a>
           <a class="nav-item nav-link" href="/admin/listVoucher">Voucher</a>
           <button type ="submit" class="btn btn-primary tombol" style="align:right;"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>

@@ -50,21 +50,96 @@ class HomeController extends Controller
 
 
     // MASTER KATEGORI
-    function listKategori(){
-        $kategori = DB::select('select * from kategori');
-        return view('admin.listKategori_Admin',['kategori'=>$kategori]);
+    public function listKategori()
+    {
+        $kategori = DB::table('kategori')->get();
+        return view('admin.kategori.listKategori_Admin',['kategori'=>$kategori]);
     }
-    public function prosesAddKategori(Request $request){
+    public function editKategori($id){
+        $kategori = DB::table('kategori')->where('kategori_id',$id)->get();
+        return view('admin.kategori.editKategori_Admin',['id'=>$id],['kategori'=>$kategori]);
+    }
+    public function prosesAddKategori(Request $request)
+    {
+        $rules = [
+            'nama' => 'required'
+        ];
+        $message = [
+            'required'=>':attribute harus diisi'
+        ];
+        $request->validate($rules, $message);
+
+        $ambil_kode = DB::table('kategori')->select("kategori_id")->get();
+        $ctr = 0;
+        for ($i = 0 ; $i < sizeof($ambil_kode) ; $i++){
+            $kodeb = (int)substr($ambil_kode,3);
+            if($ctr <= $kodeb){
+                $ctr++;
+            }
+        }
+        $urutan = str_pad($ctr,4,'0',STR_PAD_LEFT);
+        $kodeconcate = "K".$urutan;
+        try {
+            DB::table('kategori')->insert(
+                [
+                    'kategori_id' => $kodeconcate,
+                    'kategori_nama' => $request->nama,
+                    'kategori_status'=>1
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+
+        return $this->listKategori();
 
     }
+    public function prosesEditKategori(Request $request, $id)
+    {
 
-    public function prosesEditKategori(){
+        $rules = [
+            'nama' => 'required'
+        ];
+        $message = [
+            'required'=>':attribute harus diisi'
+        ];
+        $request->validate($rules, $message);
+        if($request->status=='Active'){
+            $status=1;
+        }else{
+            $status=0;
+        }
+        try {
+            DB::table('kategori')->where('kategori_id',$id)->update(
+                [
+                    'kategori_nama' => $request->nama,
+                    'kategori_status'=>$status
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
 
+        return $this->listKategori();
+    }
+    public function prosesDeleteKategori($id)
+    {
+        $cekada = false;
+        $kat = DB::table('kategori')->where('kategori_id',$id)->first();
+        $barang = DB::table('barang')->get();
+        foreach($barang as $i =>$item){
+            if($item->barang_kategori == $kat->kategori_nama){
+                $cekada=true;
+            }
+        }
+        if($cekada){
+            return back()->with('msg',"gagal delete! kategori sedang digunakan!");
+        }else if(!$cekada){
+            DB::table('kategori')->where('kategori_id',$id)->delete();
+            return redirect('/admin/listKategori');
+        }
     }
 
-    public function prosesDeleteKategori(){
-
-    }
     // MASTER KATEGORI
 
 

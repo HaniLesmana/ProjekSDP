@@ -39,18 +39,15 @@ Route::prefix("admin")->group(function(){
 
 
     //MASTER KATEGORI
-    Route::get('/listkategori', [HomeController::class, "listKategori"]);
+    Route::get('/listKategori', [HomeController::class, "listKategori"]);
     Route::get("/addKategori",function ()
     {
-        return view('admin.addKategori_Admin');
+        return view('admin.kategori.addKategori_Admin');
     });
-    Route::get("/editKategori",function ()
-    {
-        return view('admin.editKategori_Admin');
-    });
+    Route::get('/editKategori/{id}', [HomeController::class, "editKategori"]);
     Route::post('/prosesAddKategori', [HomeController::class, "prosesAddKategori"]);
     Route::post('/prosesEditKategori/{id}', [HomeController::class, "prosesEditKategori"]);
-    Route::post('/prosesDeleteKategori/{id}', [HomeController::class, "prosesDeleteKategori"]);
+    Route::any('/prosesDeleteKategori/{id}', [HomeController::class, "prosesDeleteKategori"]);
     //MASTER KATEGORI
 
 
@@ -64,7 +61,7 @@ Route::prefix("admin")->group(function(){
     Route::get('/editBarang/{id}', [HomeController::class, "EditBarang"]);
     Route::post('/prosesAddBarang', [HomeController::class, "prosesAddBarang"]);
     Route::post('/prosesEditBarang/{id}', [HomeController::class, "prosesEditBarang"]);
-    Route::post('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);
+    Route::any('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);
     //MASTER BARANG
 
 
