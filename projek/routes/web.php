@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\voucherController;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,18 @@ Route::prefix("admin")->group(function(){
     Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
     Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
     //MASTER PEGAWAI
+
+    //MASTER VOUCHER
+    Route::get("/listVoucher", [voucherController::class, "listVoucher"]);
+    Route::get('/editVoucher/{id}', [voucherController::class, "editVoucher"]);
+    Route::get("/addVoucher",function ()
+    {
+        return view('admin.voucher.addVoucher');
+    });
+    Route::post('/prosesAddVoucher', [voucherController::class, "prosesAddVoucher"]);
+    Route::post('/prosesEditVoucher/{id}', [voucherController::class, "prosesEditVoucher"]);
+    Route::any('/prosesDeleteVoucher/{id}', [voucherController::class, "prosesDeleteVoucher"]);
+    //MASTER VOUCHER
 
     //TRANSAKSI TOPUP WITHDRAW
     Route::get("/detailTopUp/{id}/{email}",function ($id,$email)
