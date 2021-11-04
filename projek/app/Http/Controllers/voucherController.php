@@ -68,7 +68,7 @@ class voucherController extends Controller
             return response()->json($e->getMessage());
         }
 
-        return redirect("/listVoucher");
+        return $this->listVoucher();
 
     }
     public function prosesEditVoucher(Request $request, $id)
@@ -103,12 +103,12 @@ class voucherController extends Controller
             return response()->json($e->getMessage());
         }
 
-        return redirect("/listVoucher");
+        return $this->listVoucher();
     }
     public function prosesDeleteVoucher($id)
     {
         DB::table('voucher')->where('voucher_id',$id)->delete();
-        return redirect('/listVoucher');
+        return $this->listVoucher();
     }
 
     //END MASTER VOUCHER

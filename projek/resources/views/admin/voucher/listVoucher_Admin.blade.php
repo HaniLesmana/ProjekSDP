@@ -48,7 +48,7 @@
                     <td>
                         @if($voucher[$i]->voucher_status == 1)
                             Active
-                        @elseif($voucher[$i]->voucher_status == 2)
+                        @elseif($voucher[$i]->voucher_status == 0)
                             Not Active
                         @endif
                     </td>

@@ -16,12 +16,12 @@
 </style>
 <div class="container mt-5 mb-5 d-flex justify-content-center" style="padding-top:20px; padding-bottom:20px;background-color:#DBD0C0">
     <div class="card px-1 py-4">
-        <form method="post" action="{{ url('/admin/prosesEditVoucher') }}">
+        <form method="post" action="{{ url('/admin/prosesEditVoucher/'.$id) }}">
             @csrf
             <div class="card-body" style="width:400px;padding-top:30px; padding-bottom:30px;">
          <h5 class="card-title mb-3" style="text-align: center;">Edit Voucher</h5>
          @foreach ($voucher as $v)
-         @if($voucher->voucher_id == $id)
+         @if($v->voucher_id == $id)
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
@@ -56,7 +56,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <div class="input-group"> <input class="form-control" type="number" name="potongan" placeholder="Potongan" {{ old('potongan') ? old('potongan') : $v->voucher_potongan }} required> </div>
+                            <div class="input-group"> <input class="form-control" type="number" name="potongan" placeholder="Potongan" value= "{{ old('potongan') ? old('potongan') : $v->voucher_potongan }}" required> </div>
                             @error('potongan')
                                 <span style='color: red'>{{ $message }}</span>
                             @enderror
@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <div class="input-group"> <input class="form-control" type="number" name="masaberlaku" placeholder="Masa Berlaku (hari)" {{ old('masaberlaku') ? old('masaberlaku') : $v->voucher_masaberlaku }} required> </div>
+                            <div class="input-group"> <input class="form-control" type="number" name="masaberlaku" placeholder="Masa Berlaku (hari)" value ="{{ old('masaberlaku') ? old('masaberlaku') : $v->voucher_masaberlaku }}" required> </div>
                             @error('masaberlaku')
                                 <span style='color: red'>{{ $message }}</span>
                             @enderror
@@ -76,13 +76,14 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <div class="input-group"> <input class="form-control" type="number" name="status" placeholder="Status">
-                            @if ($v->voucher_status==0)
-                                <input type="radio" name="status" value="Active" id="" checked>
-                                <input type="radio" name="status" id="" value="Deactive">
+                            <div class="input-group">
+                            Status : <br>
+                            @if ($v->voucher_status==1)
+                                <input type="radio" name="status" value="Active" id="" checked>Active
+                                <input type="radio" name="status" id="" style="margin-left:100px;" value="Deactive">Deactive
                             @else
-                            <input type="radio" name="status" value="Active" id="">
-                            <input type="radio" name="status" id="" value="Deactive" checked>
+                            <input type="radio" name="status" value="Active" id="">Active
+                            <input type="radio" name="status" id="" style="margin-left:100px;" value="Deactive" checked>Deactive
                             @endif
                             </div>
                         </div>
