@@ -72,7 +72,7 @@
       <div class="container2" style="margin-top: 30px; border-radius:12px;box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;height:160px; width:1110px; padding:7px 5px 0 5px;">
         <div class="row">
           <div class="col-sm">
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
+            <button type="submit" class="btn align-middle button_ajax" id="button_art" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_art" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
                 <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;"> <br>
                 <label>Cleaning</label>
             </button>
@@ -103,8 +103,12 @@
           </div>
         </div>
       </div>
+      <div id="daftar">
+
+      </div>
     </div>
     <!-- akhir container -->
+
 
 
     <!-- Optional JavaScript -->
@@ -116,11 +120,12 @@
     <script>
         $(document).ready(function() {
             $("#button_art").click(function(){
+                alert("a");
                 // $("#button_art").css("background-color","#d9a73d");
                 // $("#button_tukang").css("background-color","lightgray");
                 $.ajax({
                 type: 'get',
-                url: 'ajax/{art}',
+                url: 'ajax/art',
                 success: function(data) {
                     $("#daftar").empty();
                     $("#daftar").append(data);
@@ -132,7 +137,7 @@
                 // $("#button_art").css("background-color","lightgray");
                 $.ajax({
                 type: 'get',
-                url: 'ajax/{tukang}',
+                url: 'ajax/tukang',
                 success: function(data) {
                     $("#daftar").empty();
                     $("#daftar").append(data);

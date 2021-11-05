@@ -17,7 +17,7 @@
 
     </div>
   <div class="table-responsive" id="contentss">
-  <table class="table table-striped">
+  <table class="table table-striped" id="myTable">
     <thead style="background-color:#E8D0B3;">
       <tr>
         <th>No</th>
@@ -118,33 +118,39 @@
   </div>
 </div>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
 <script type="text/javascript">
     $(document).ready(function() {
         $("#cariPegawai").keyup(function(){
             var nama=$("#cariPegawai").val();
-            console.log(nama);
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("cariPegawai");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[4];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
             // $.ajax({
             //     type: 'get',
-            //     url: "hasilCari/"+nama,
+            //     url: 'hasilCari/w',
             //     success: function(data) {
-            //         alert("a");
             //         // $("#contentss").empty();
-            //         // $("#contentss").html(data);
+            //         // $("#contentss").append(data);
             //     }
             // });
-            $.ajax({
-                type: 'get',
-                url: 'hasilCari/w',
-                success: function(data) {
-                    $("#contentss").empty();
-                    $("#contentss").append(data);
-                }
-            });
         });
     });
 </script>

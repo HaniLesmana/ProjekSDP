@@ -1,4 +1,4 @@
-{{-- @if (isset($pegawai))
+@if (isset($pegawai))
 <table class="table table-striped">
     <thead style="background-color:#E8D0B3;">
       <tr>
@@ -92,10 +92,10 @@
             <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
                 <i class="fa fa-trash" style="font-size:18px;color:red; "></i>
             </button>
-        </td>
+        </td> --}}
 
 
     </tbody>
   </table>
 @endif
- --}}
+
