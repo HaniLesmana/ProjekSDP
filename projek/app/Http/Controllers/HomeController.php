@@ -217,7 +217,7 @@ class HomeController extends Controller
     }
 
     public function hasilCari($nama, Request $req){
-        dd($nama);
+        //dd($nama);
         if($nama !=""){
             $pegawai = DB::table('pegawai')->where('pegawai_status',1)->where('nama','like','%'.$nama.'%')->get();
         }
@@ -225,6 +225,7 @@ class HomeController extends Controller
             $pegawai = DB::table('pegawai')->where('pegawai_status',1)->get();
         }
         return view('admin.hasilCari',['pegawai'=>$pegawai]);
+
     }
 
     public function prosesDeleteBarang($id){
@@ -493,8 +494,6 @@ class HomeController extends Controller
 
     }
     function ajax($jasa){
-        $jasa=str_replace('{', '', $jasa);
-        $jasa=str_replace('}', '', $jasa);
         $pegawai = DB::table('pegawai')->where('pegawai_status','1')->where('pegawai_jasa',$jasa)->get();
         return view("script",['pegawai' => $pegawai],['jasa'=>$jasa]);
     }
