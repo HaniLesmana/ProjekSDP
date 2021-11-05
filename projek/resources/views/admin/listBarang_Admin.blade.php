@@ -41,7 +41,7 @@
                 <tr>
                     <td>{{ $i+1 }}</td>
                     <td>{{ $barang[$i]->barang_id }}</td>
-                    <td>{{ $barang[$i]->kategori_nama }}</td>
+                    <td>{{ $barang[$i]->barang_kategori }}</td>
                     <td>{{ $barang[$i]->barang_nama }}</td>
                     <td>{{ $barang[$i]->barang_harga }}</td>
                     <td>{{ $barang[$i]->barang_stok }}</td>
