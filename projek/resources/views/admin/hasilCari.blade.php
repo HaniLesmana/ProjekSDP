@@ -1,23 +1,5 @@
-@extends('admin.base-layout')
-@section('header')
-    @include('admin.navbarAdmin')
-@endsection
-@section('main')
-<div class="container">
-    <div class="row">
-        <div class="col-sm-11"><h2>List Pegawai</h2></div>
-            <div class="col-sm-11" style="margin-bottom: 10px;">
-                <button type="submit" style="width:250px;align:right;border-radius:3px;border:1px solid black; background-color:#FACE7F;align:right; width:65px; font-size:9.5px;">
-                    <a href="/admin/addPegawai" style="text-decoration: :none; color:white;">
-                        Add Pegawai
-                    </a>
-                </button>
-                <input type="text" name="keyword" id="cariPegawai" style="width:300px;margin-left:15%; height:28px; border-radius:5px; border: 2px solid #FF914D;font-size:13pt;margin-top:10px;" placeholder="Search title here...">
-            </div>
-
-    </div>
-  <div class="table-responsive" id="contentss">
-  <table class="table table-striped">
+{{-- @if (isset($pegawai))
+<table class="table table-striped">
     <thead style="background-color:#E8D0B3;">
       <tr>
         <th>No</th>
@@ -110,43 +92,10 @@
             <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
                 <i class="fa fa-trash" style="font-size:18px;color:red; "></i>
             </button>
-        </td> --}}
+        </td>
 
 
     </tbody>
   </table>
-  </div>
-</div>
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#cariPegawai").keyup(function(){
-            var nama=$("#cariPegawai").val();
-            console.log(nama);
-            // $.ajax({
-            //     type: 'get',
-            //     url: "hasilCari/"+nama,
-            //     success: function(data) {
-            //         alert("a");
-            //         // $("#contentss").empty();
-            //         // $("#contentss").html(data);
-            //     }
-            // });
-            $.ajax({
-                type: 'get',
-                url: 'hasilCari/w',
-                success: function(data) {
-                    $("#contentss").empty();
-                    $("#contentss").append(data);
-                }
-            });
-        });
-    });
-</script>
-@endsection
-
+@endif
+ --}}

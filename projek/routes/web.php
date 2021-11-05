@@ -100,6 +100,7 @@ Route::prefix("admin")->group(function(){
     Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);
     //TRANSAKSI TOPUP WITHDRAW
 
+    Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);
 
 });
 Route::prefix("user")->group(function(){

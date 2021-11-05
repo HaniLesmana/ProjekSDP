@@ -216,6 +216,17 @@ class HomeController extends Controller
         return $this->listBarang();
     }
 
+    public function hasilCari($nama, Request $req){
+        dd($nama);
+        if($nama !=""){
+            $pegawai = DB::table('pegawai')->where('pegawai_status',1)->where('nama','like','%'.$nama.'%')->get();
+        }
+        else{
+            $pegawai = DB::table('pegawai')->where('pegawai_status',1)->get();
+        }
+        return view('admin.hasilCari',['pegawai'=>$pegawai]);
+    }
+
     public function prosesDeleteBarang($id){
         DB::table('barang')->where('barang_id', $id)->update(['barang_status'=>0]);
         $barang = DB::table('barang')->where('barang_status','1')->get();
