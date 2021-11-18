@@ -9,10 +9,32 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link active" href="#">HOME <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="#">PROFILE</a>
-                    <a class="nav-item nav-link" href="#About" id="tes">CART</a>
-                    <a class="nav-item nav-link" href="#About">HISTORY</a>
+
+                    <form action="{{ url('/home/user')}}" method="get">
+                        <a class="nav-item nav-link">
+                            <input type="submit" value="HOME">
+                            {{-- <a class="nav-item nav-link active" href="#">HOME <span class="sr-only">(current)</span></a> --}}
+                        </a>
+                    </form>
+                    <form action="{{ url('/home/profile')}}" method="get">
+                        <a class="nav-item nav-link">
+                            <input type="submit" value="PROFILE">
+                        </a>
+                        {{-- <a class="nav-item nav-link" href="#">PROFILE</a> --}}
+                    </form>
+                    <form action="{{ url('/home/list_cart')}}" method="get">
+                        <a class="nav-item nav-link">
+                            <input type="submit" value="CART">
+                        </a>
+                        {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
+                    </form>
+                    <form action="{{ url('/home/history')}}" method="get">
+                        <a class="nav-item nav-link">
+                            <input type="submit" value="HISTORY">
+                        </a>
+                        {{-- <a class="nav-item nav-link" href="#About">HISTORY</a> --}}
+                    </form>
+
                     <button type ="button" class="btn btn-primary tombolSignOut" data-toggle="modal" data-target="#SignInModal">Sign Out</button>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 @foreach ($pegawai as $i => $p)
-<div class="card" style="width: 17rem;">
+<div class="card" style="width: 15rem;float:left;">
     @if ($p->pegawai_jasa=="art")
     <img src="{{asset('img/img1.png')}}" class="card-img-top" style="height:11rem;" alt="...">
     @else
@@ -8,9 +8,12 @@
     @endif
 
     <div class="card-body">
-      <h5 class="card-title">{{$p->pegawai_nama}}</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Booking</a>
+        <h5 class="card-title">{{$p->pegawai_nama}}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <form action="{{ url('/home/add_cart/'.$p->pegawai_id)}}" method="get">
+            <button type="submit" class="btn btn-primary">Booking</button>
+        </form>
+      {{-- <a href="#" class="btn btn-primary">Booking</a> --}}
     </div>
-  </div>
+</div>
 @endforeach

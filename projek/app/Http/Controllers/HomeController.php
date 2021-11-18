@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\htransTopup;
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
@@ -633,5 +634,26 @@ class HomeController extends Controller
     function prosesDecline($id){
         $status = DB::update('update htranstpwd set htranstpwd_status = 0 where htranstpwd_id = ?', [$id]);
         return view('admin.home_admin');
+    }
+    function add_cart($id,Request $request){
+        try {
+            DB::table('Cart')->insert(
+                [
+                    'user_id' => $request->session()->get("loggedIn"),
+                    'pegawai_id' =>$id,
+                    'status'=>1
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+        return $this->list_cart($request);
+    }
+    function list_cart(Request $request){
+        $datacart=DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->where("status",1)->get();
+        $param["datacart"]=$datacart;
+        $datapegawai=DB::table('Pegawai')->get();
+        $param["datapegawai"]=$datapegawai;
+        return view("user.list_cart",$param);
     }
 }
