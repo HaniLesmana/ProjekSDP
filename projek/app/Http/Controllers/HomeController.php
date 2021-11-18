@@ -666,9 +666,83 @@ class HomeController extends Controller
         $datacart = DB::table('Cart')->where("user_id",session('loggedIn'))->get();
         $datapegawai = DB::table('pegawai')->get();
         $datauser=DB::table('User')->where("user_id",session('loggedIn'))->first();
-        $param["datapegawai"]=$datapegawai;
-        return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai]);
+        $databarang=DB::table('barang')->get();
+        $datakategori=DB::table('kategori')->get();
+        $total=(count($datacart))*50000;
+        return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai,"databarang"=>$databarang,"datakategori"=>$datakategori,"total"=>$total]);
     }
+    function do_transaksi_sewa(Request $request){
+        $arr=$request->post("arr");
+        $jumlah=$request->post("jumlah");
 
+        // dd($jumlah);
 
+        $jmlCart = count(DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->get());
+        $jmlBarang = count(DB::table('Barang')->get());
+        $jmlArr = $jmlCart * $jmlBarang;
+
+        DB::table('htranssewa')->insert(
+            [
+                'user_id' => $request->session()->get("loggedIn"),
+                'hSewa_tanggal' =>date("Y-m-d H:i:s"),
+                'hSewa_total'=>$request->txttotalhidden,
+                'hSewa_status'=>1,
+                'voucher_id'=>"V001",
+                'alamat'=> $request->txtalamat2,
+            ]
+        );
+        $datahtrans = DB::table('htranssewa')->get();
+        $htrans = $datahtrans[count($datahtrans)-1];
+
+        $datacart = DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->get();
+        $arrid=[];
+        foreach ($datacart as $key => $item) {
+            DB::table('dtranssewa')->insert(
+                [
+                    'pegawai_id' => $item->pegawai_id,
+                    'dSewa_durasi' =>8,
+                    'dSewa_harga'=>50000,
+                    'hSewa_id'=>$htrans->hSewa_id
+                ]
+            );
+            $datadtrans=DB::table('dtranssewa')->get();
+            array_push($arrid,$datadtrans[count($datadtrans)-1]->dSewa_id);
+        }
+
+        $ctr = 0;
+        for ($i=0; $i < $jmlArr; $i++) {
+            if($jumlah[$i] != null){
+                $arrID = explode("pas", $arr[$ctr]);
+                $idxB = $arrID[0];
+                $idxC = $arrID[1];
+
+                $databarang = DB::table('Barang')->get();
+                $barang = [];
+                foreach ($databarang as $key => $value) {
+                    if($idxB == $key){
+                        $barang = $value;
+                    }
+                }
+
+                $datacart = DB::table('Cart')->where('user_id',$request->session()->get("loggedIn"))->get();
+                $cart = [];
+                foreach ($datacart as $key => $value) {
+                    if($idxC == $key){
+                        $cart = $value;
+                    }
+                }
+
+                DB::table('dtransbarang')->insert(
+                    [
+                        'barang_id' => $barang->barang_id,
+                        'barang_jumlah' =>$jumlah[$i],
+                        'dSewa_id'=>$arrid[$idxC-1]
+                    ]
+                );
+
+                $ctr++;
+            }
+        }
+        return $this->home_user($request);
+    }
 }

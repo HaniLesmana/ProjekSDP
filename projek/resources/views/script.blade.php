@@ -1,9 +1,9 @@
 @foreach ($pegawai as $i => $p)
 <div class="card" style="width: 15rem;float:left;">
-    @if ($p->pegawai_jasa=="art")
-    <img src="{{asset('img/img1.png')}}" class="card-img-top" style="height:11rem;" alt="...">
-    @else
+    @if ($p->pegawai_jasa=="Cleaning")
     <img src="{{asset('img/img2.png')}}" class="card-img-top" style="height:11rem;" alt="...">
+    @else
+    <img src="{{asset('img/img1.png')}}" class="card-img-top" style="height:11rem;" alt="...">
     {{-- <img src="https://spesialis1.orthopaedi.fk.unair.ac.id/wp-content/uploads/2021/02/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" class="card-img-top" style="height:11rem;" alt="..."> --}}
     @endif
 
