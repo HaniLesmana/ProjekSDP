@@ -31,6 +31,7 @@ Route::prefix("home")->group(function(){
     Route::get("/add_cart/{id}", [HomeController::class, "add_cart"]);
     Route::get("/list_cart", [HomeController::class, "list_cart"]);
     Route::get("/transaksi_sewa", [HomeController::class, "transaksi_sewa"]);
+    Route::get("/list_cart_cancel/{id}", [HomeController::class, "list_cart_cancel"]);
 });
 Route::prefix("admin")->group(function(){
     //Route::get("/listpegawai",function ()

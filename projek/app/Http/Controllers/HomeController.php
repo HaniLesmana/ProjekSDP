@@ -656,4 +656,19 @@ class HomeController extends Controller
         $param["datapegawai"]=$datapegawai;
         return view("user.list_cart",$param);
     }
+    function list_cart_cancel(Request $request,$id){
+        DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->where("id",$id)->delete();
+        return $this->list_cart($request);
+    }
+    function transaksi_sewa(){
+        $loggedin = session('loggedIn');
+        // $datacart = DataCart::where("user_id",$loggedin)->get();
+        $datacart = DB::table('Cart')->where("user_id",session('loggedIn'))->get();
+        $datapegawai = DB::table('pegawai')->get();
+        $datauser=DB::table('User')->where("user_id",session('loggedIn'))->first();
+        $param["datapegawai"]=$datapegawai;
+        return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai]);
+    }
+
+
 }

@@ -16,6 +16,7 @@
                         <th scope="col">No</th>
                         <th scope="col">Pegawai Nama</th>
                         <th scope="col">Jasa</th>
+                        <th scope="col">Cancel</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -26,6 +27,9 @@
                                         @if ($peg->pegawai_id==$cart->pegawai_id)
                                             <td>{{$peg->pegawai_nama}}</td>
                                             <td>{{$peg->pegawai_jasa}}</td>
+                                            <form action="{{ url('/home/list_cart_cancel/'.$cart->id)}}" method="get">
+                                                <td><button type="submit" class="btn btn-danger">Cancel</button></td>
+                                            </form>
                                         @endif
                                     @endforeach
                                 </tr>
