@@ -34,8 +34,9 @@
                         </a>
                         {{-- <a class="nav-item nav-link" href="#About">HISTORY</a> --}}
                     </form>
-
-                    <button type ="button" class="btn btn-primary tombolSignOut" data-toggle="modal" data-target="#SignInModal">Sign Out</button>
+                    <form action="{{url('/logout')}}" method="get">
+                        <button type ="submit" class="btn btn-primary tombolSignOut">Sign Out</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -29,21 +29,21 @@ class cek_password implements Rule
     {
         if($this->tipe == "user"){
             foreach ($this->data as $dat) {
-                if($dat->user_email == $this->email && $dat->user_password == $value){
+                if($dat->user_email == $this->email && $dat->user_password == md5($value)){
                     return true;
                 }
             }
         }
         else if($this->tipe == "pegawai"){
             foreach ($this->data as $dat) {
-                if($dat->pegawai_email == $this->email && $dat->pegawai_password == $value){
+                if($dat->pegawai_email == $this->email && $dat->pegawai_password == md5($value)){
                     return true;
                 }
             }
         }
         else{
             foreach ($this->data as $dat) {
-                if($dat->admin_email == $this->email && $dat->admin_password == $value){
+                if($dat->admin_email == $this->email && $dat->admin_password == md5($value)){
                     return true;
                 }
             }

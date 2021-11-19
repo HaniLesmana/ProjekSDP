@@ -192,7 +192,8 @@ class HomeController extends Controller
     }
     public function EditBarang($id){
         $barang = DB::table('barang')->where('barang_id',$id)->get();
-        return view("admin.editBarang_Admin",['id'=>$id],['barang'=>$barang]);
+        $kategori = DB::table('kategori')->get();
+        return view("admin.editBarang_Admin",['id'=>$id,'barang'=>$barang,'kategori'=>$kategori]);
     }
     public function prosesEditBarang(Request $request,$id){
         // $id=$request->id;
@@ -213,7 +214,7 @@ class HomeController extends Controller
             'max' => ':attribute maksimal 30 karakter',
             'numeric' => ':attribute harus berupa angka',
         ]);
-        DB::table('barang')->where('barang_id', $id)->update(['barang_nama'=>$nama,'barang_harga'=>$harga,'barang_stok'=>$stok,'barang_status'=>$statusbarang,'barang_kategori'=>$kategori]);
+        DB::table('barang')->where('barang_id', $id)->update(['barang_nama'=>$nama,'barang_harga'=>$harga,'barang_stok'=>$stok,'barang_status'=>1,'barang_kategori'=>$kategori]);
         return $this->listBarang();
     }
 
@@ -437,7 +438,7 @@ class HomeController extends Controller
         }
     }
 
-        function register(Request $request){
+    function register(Request $request){
 
         $rules = $request->validate([
 			'nama_user' => 'required|string|min:3|max:30',
@@ -484,7 +485,7 @@ class HomeController extends Controller
                 'user_nama' => $nama,
                 'user_telepon' => $telp,
                 'user_alamat' => $request->input("alamat_user"),
-                'user_password' => $password,
+                'user_password' => md5($password),
                 'user_saldo' => 0,
                 'user_poin' => 0,
                 'user_status' => 1,
@@ -744,5 +745,35 @@ class HomeController extends Controller
             }
         }
         return $this->home_user($request);
+    }
+    public function logout(Request $request){
+        $request->session()->forget("loggedIn");
+        return $this->home();
+    }
+    public function prosesEditStock(Request $request,$id){
+        $status=-1;
+        $barang = DB::table('barang')->where('barang_id',$id)->first();
+        if($request->txtstok=="Tambah"){
+            $status=1;
+            $newStock =  $request->stok +$barang->barang_stok;
+        }
+        else{
+            $status=0;
+            $newStock =  $barang->barang_stok - $request->stok;
+
+        }
+        DB::table('logstok')->insert([
+            "barang_id"=>$id,
+            "status"=>$status,
+            "jumlah"=>$request->stok,
+            "created_at"=>date("Y-m-d H:i:s"),
+            "updated_at"=>date("Y-m-d H:i:s")
+        ]);
+        DB::table('barang')->where('barang_id',$id)->update([
+            "barang_stok"=>$newStock
+        ]);
+
+
+        return redirect('/admin/editBarang/'.$id);
     }
 }

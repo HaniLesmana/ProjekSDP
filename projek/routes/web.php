@@ -66,6 +66,7 @@ Route::prefix("admin")->group(function(){
     Route::post('/prosesAddBarang', [HomeController::class, "prosesAddBarang"]);
     Route::post('/prosesEditBarang/{id}', [HomeController::class, "prosesEditBarang"]);
     Route::any('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);
+    Route::get('/prosesEditStock/{id}', [HomeController::class, "prosesEditStock"]);
     //MASTER BARANG
 
 
@@ -132,3 +133,5 @@ Route::prefix("pegawai")->group(function(){
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('logout', [HomeController::class, "logout"]);
