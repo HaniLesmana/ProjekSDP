@@ -182,8 +182,15 @@
                 $("#H"+id).css('display',"block");
             }
             else{
+                // var total = $('#txttotalhidden').val();
+                // var harga = $('#R'+id).html();
+                // var jumlah = $('#H'+id).val();
+
+                // var newTotal = parseInt(total) - (parseInt(harga)*parseInt(jumlah));
+                // $('#txttotal').html("Total : "+newTotal);
+                // $('#txttotalhidden').val(newTotal+"");
+
                 $("#H"+id).css('display',"none");
-                //$("#H"+id).val();
             }
         }
         function btncheckout(){
@@ -201,6 +208,5 @@
             $('#txttotal').html("Total : "+newTotal);
             $('#txttotalhidden').val(newTotal+"");
         }
-
     </script>
     @endsection
