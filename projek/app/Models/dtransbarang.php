@@ -6,23 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class dtransTopup extends Model
+class dtransbarang extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table = "dtranstpwd";
+    protected $table="dtransbarang";
     protected $primaryKey="id";
     public $incrementing=true;
     public $timestamps=true;
     protected $fillable=[
-        'htranstpwd_id',
-        'dtranstpwd_nominal',
-        'dtranstpwd_jumlah'
+        'barang_id',
+        'barang_jumlah',
+        'dSewa_id'
     ];
-
-    public function dh_trans()
-    {
-        return $this->belongsTo(htransTopup::class, 'htranstpwd_id', 'htranstpwd_id');
-    }
 }

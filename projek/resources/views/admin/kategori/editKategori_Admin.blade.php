@@ -21,11 +21,11 @@
             <div class="card-body" style="width:400px;padding-top:30px; padding-bottom:30px;">
          <h5 class="card-title mb-3" style="text-align: center;">Edit Kategori</h5>
          @foreach ($kategori as $v)
-         @if($v->kategori_id == $id)
+         @if($v->id == $id)
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" name="id" type="text" value="{{ $v->kategori_id }}" readonly> </div>
+                        <div class="input-group"> <input class="form-control" name="id" type="text" value="{{ $v->id }}" readonly> </div>
                         @error('nama')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror

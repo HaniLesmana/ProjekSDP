@@ -50,7 +50,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="/checkLogin" method="post">
+        <form action="/checkLogin" method="get">
             @csrf
             <div class="modal-body">
             Email : <br>

@@ -17,11 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/',[HomeController::class,"home"]);
 
-Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
+Route::get('/checkLogin', [HomeController::class, "checkLogin"]);
 Route::post('/register', [HomeController::class, "register"]);
 Route::get('/listRequest', [HomeController::class, "listRequest"]);
 Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
-
 
 Route::prefix("home")->group(function(){
     Route::get("/user", [HomeController::class, "home_user"]);

@@ -4,6 +4,9 @@ namespace App\Rules;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Contracts\Validation\Rule;
+use App\Models\pegawai;
+use App\Models\user;
+use App\Models\admin;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -37,54 +40,24 @@ class cek_uniq implements Rule
     {
         $unik=true;
         if($this->jenis == 'nik'){
-            $pegawai = DB::select("select * from pegawai where pegawai_status = 1 and pegawai_nik = '$value'");
-            if($pegawai != null){
+            if(pegawai::where('pegawai_nik',$value)->exists()){
                 $unik = false;
             }
 
         }
         else{
-            $user = DB::select("select * from user where user_status = 1 and user_email = '$value'");
-            $pegawai = DB::select("select * from pegawai where pegawai_status = 1 and pegawai_email = '$value'");
-            $admin = DB::select("select * from admin where admin_status = 1 and admin_email = '$value'");
-
-            if($user != null){
+            if(user::where('user_email',$value)->exists()){
                 $unik = false;
             }
-            if($pegawai!=null){
+            if(pegawai::where('pegawai_email',$value)->exists()){
                 $unik = false;
             }
-            if($admin != null){
+            if(admin::where('admin_email',$value)->exists()){
                 $unik = false;
             }
         }
 
         return $unik;
-
-        // foreach ($user as $u) {
-        //     if($u->username == $t){
-        //         $ada=true;
-        //     }
-        //     else if($value==$this->data[$i][$this->table]&&$this->type=="add"){
-        //         $ada=true;
-        //     }
-        // }
-        // foreach ($this->data1 as $i => $v) {
-        //     if($user->data1[$i][$this->table]&&$this->nik!=$this->data1[$i]['nik']&&$this->type=="edit"){
-        //         $ada=true;
-        //     }
-        //     else if($value==$this->data1[$i][$this->table]&&$this->type=="add"){
-        //         $ada=true;
-        //     }
-        // }
-        // foreach ($user as $i => $v) {
-        //     if($value==$this->data2[$i][$this->table]&&$this->nik!=$this->data2[$i]['nik']&&$this->type=="edit"){
-        //         $ada=true;
-        //     }
-        //     else if($value==$this->data2[$i][$this->table]&&$this->type=="add"){
-        //         $ada=true;
-        //     }
-        // }
     }
 
     /**

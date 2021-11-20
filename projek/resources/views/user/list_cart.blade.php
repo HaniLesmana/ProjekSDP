@@ -24,7 +24,7 @@
                                 <tr>
                                     <td>{{$i+1}}</td>
                                     @foreach ($datapegawai as $key =>$peg)
-                                        @if ($peg->pegawai_id==$cart->pegawai_id)
+                                        @if ($peg->id==$cart->pegawai_id)
                                             <td>{{$peg->pegawai_nama}}</td>
                                             <td>{{$peg->pegawai_jasa}}</td>
                                             <form action="{{ url('/home/list_cart_cancel/'.$cart->id)}}" method="get">

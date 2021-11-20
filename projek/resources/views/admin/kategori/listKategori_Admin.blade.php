@@ -43,25 +43,25 @@
             @for($i = 0; $i < count($kategori); $i++)
                 <tr>
                     <td>{{ $i+1 }}</td>
-                    <td>{{ $kategori[$i]->kategori_id }}</td>
+                    <td>{{ $kategori[$i]->id }}</td>
                     <td>{{ $kategori[$i]->kategori_nama }}</td>
                     <td>
-                        @if($kategori[$i]->kategori_status == 1)
-                            Active
-                        @elseif($kategori[$i]->kategori_status == 0)
+                        @if($kategori[$i]->trashed())
                             Not Active
+                        @else
+                            Active
                         @endif
                     </td>
                     <td>
                     <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                        <a href="/admin/editKategori/{{$kategori[$i]->kategori_id}}" style="text-decoration: :none; color:white;">
+                        <a href="/admin/editKategori/{{$kategori[$i]->id}}" style="text-decoration: :none; color:white;">
                             Edit
                         </a>
                     </button>
                     </td>
                     <td>
                         <!-- BUTTON DELETE -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="text-decoration: none; border:none; background-color:transparent; text-align:center;">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$kategori[$i]->id}}" style="text-decoration: none; border:none; background-color:transparent; text-align:center;">
                             <i class="fa fa-trash" style="font-size:18px;color:red; "></i>
                         </button>
                         <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
@@ -69,7 +69,7 @@
                         </button>
                     </td>
                 </tr>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal{{$kategori[$i]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <form method="get" action="{{ url("/admin/prosesDeleteKategori/".$kategori[$i]->kategori_id) }}">
+                            <form method="get" action="{{ url("/admin/prosesDeleteKategori/".$kategori[$i]->id) }}">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                             </div>

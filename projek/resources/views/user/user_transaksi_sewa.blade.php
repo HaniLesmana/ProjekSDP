@@ -52,7 +52,7 @@
                     <div class="contItem" style="display:flex;">
 
                         @foreach ($datapegawai as $keyj=> $peg)
-                            @if($cart->pegawai_id==$peg->pegawai_id)
+                            @if($cart->pegawai_id==$peg->id)
                                 <div style="float:left;">
                                     <div class="" style="width: 13rem;">
                                         @if ($peg->pegawai_jasa=="Cleaning")

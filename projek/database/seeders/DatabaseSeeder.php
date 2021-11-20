@@ -14,5 +14,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call([
+            AdminSeeder::class,
+            CartSeeder::class,
+            ChatSeeder::class,
+            DtransbarangSeeder::class,
+            DtransbayarSeeder::class,
+            DtranssewaSeeder::class,
+            DtranstpwdSeeder::class,
+            HtransbarangSeeder::class,
+            HtransbayarSeeder::class,
+            HtranssaldoSeeder::class,
+            HtranssewaSeeder::class,
+            LogstokSeeder::class,
+            PegawaiSeeder::class,
+            UserSeeder::class,
+            VoucherSeeder::class,
+        ]);
     }
 }

@@ -2,8 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\barang;
 use App\Models\Cart;
 use App\Models\htransTopup;
+use App\Models\kategori;
+use App\Models\user;
+use App\Models\pegawai;
+use App\Models\admin;
+use App\Models\logstok;
+use App\Models\dtransbarang;
+use App\Models\dtranssewa;
+use App\Models\htranssewa;
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
 use App\Rules\ConfirmPassword;
@@ -15,7 +24,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $users = DB::table('user')->get();
+        $users = user::get();
 
         return view('user.index', ['users' => $users]);
     }
@@ -24,7 +33,7 @@ class HomeController extends Controller
     }
 
     function home_user(Request $request){
-        $user=DB::table('user')->where('user_id',session('loggedIn'))->get();
+        $user=user::where('id',session('loggedIn'))->get();
         return view("home_user",['saldo' => data_get($user,'0.user_saldo')]);
     }
 
@@ -46,46 +55,44 @@ class HomeController extends Controller
     public function listWithdraw()
     {
         return view("admin.listWithdraw");
-
     }
 
 
     // MASTER KATEGORI
     public function listKategori()
     {
-        $kategori = DB::table('kategori')->get();
+        $kategori = kategori::withTrashed()->get();
         return view('admin.kategori.listKategori_Admin',['kategori'=>$kategori]);
     }
     public function editKategori($id){
-        $kategori = DB::table('kategori')->where('kategori_id',$id)->get();
+        $kategori = kategori::where('id',$id)->withTrashed()->get();
         return view('admin.kategori.editKategori_Admin',['id'=>$id],['kategori'=>$kategori]);
     }
     public function prosesAddKategori(Request $request)
     {
-        $rules = [
-            'nama' => 'required'
-        ];
-        $message = [
-            'required'=>':attribute harus diisi'
-        ];
-        $request->validate($rules, $message);
+        // $rules = [
+        //     'nama' => 'required'
+        // ];
+        // $message = [
+        //     'required'=>':attribute harus diisi'
+        // ];
+        // $request->validate($rules, $message);
 
-        $ambil_kode = DB::table('kategori')->select("kategori_id")->get();
-        $ctr = 0;
-        for ($i = 0 ; $i < sizeof($ambil_kode) ; $i++){
-            $kodeb = (int)substr($ambil_kode,3);
-            if($ctr <= $kodeb){
-                $ctr++;
-            }
-        }
-        $urutan = str_pad($ctr,4,'0',STR_PAD_LEFT);
-        $kodeconcate = "K".$urutan;
+        // $ambil_kode = kategori::select("id")->get();
+        // $ctr = 0;
+        // for ($i = 0 ; $i < sizeof($ambil_kode) ; $i++){
+        //     $kodeb = (int)substr($ambil_kode,3);
+        //     if($ctr <= $kodeb){
+        //         $ctr++;
+        //     }
+        // }
+        // $urutan = str_pad($ctr,4,'0',STR_PAD_LEFT);
+        // $kodeconcate = "K".$urutan;
         try {
-            DB::table('kategori')->insert(
+            kategori::insert(
                 [
-                    'kategori_id' => $kodeconcate,
-                    'kategori_nama' => $request->nama,
-                    'kategori_status'=>1
+                    //'id' => $kodeconcate,
+                    'kategori_nama' => $request->nama
                 ]
             );
         } catch (\Exception $e) {
@@ -106,15 +113,14 @@ class HomeController extends Controller
         ];
         $request->validate($rules, $message);
         if($request->status=='Active'){
-            $status=1;
+            kategori::withTrashed()->find($id)->restore();
         }else{
-            $status=0;
+            kategori::where('id',$id)->delete();
         }
         try {
-            DB::table('kategori')->where('kategori_id',$id)->update(
+            kategori::where('id',$id)->update(
                 [
-                    'kategori_nama' => $request->nama,
-                    'kategori_status'=>$status
+                    'kategori_nama' => $request->nama
                 ]
             );
         } catch (\Exception $e) {
@@ -125,19 +131,31 @@ class HomeController extends Controller
     }
     public function prosesDeleteKategori($id)
     {
-        $cekada = false;
-        $kat = DB::table('kategori')->where('kategori_id',$id)->first();
-        $barang = DB::table('barang')->get();
-        foreach($barang as $i =>$item){
-            if($item->barang_kategori == $kat->kategori_nama){
-                $cekada=true;
-            }
+        //dd($id);
+        //$idkategori=kategori::where("id",$id)->first()->id;
+        if(barang::where("barang_kategori",$id)->exists()){
+            //echo "<script>alert('masih ada barang dengan kategori ini')</script>";
+            //return redirect('/admin/listKategori');
+        echo "<script>
+            alert('masih ada barang dengan kategori ini');
+            window.location.href='/admin/listKategori';
+        </script>";
         }
-        if($cekada){
-            return back()->with('msg',"gagal delete! kategori sedang digunakan!");
-        }else if(!$cekada){
-            DB::table('kategori')->where('kategori_id',$id)->delete();
-            return redirect('/admin/listKategori');
+        else{
+            $cekada = false;
+            $kat = kategori::where('id',$id)->first();
+            $barang = barang::get();
+            foreach($barang as $i =>$item){
+                if($item->barang_kategori == $kat->kategori_nama){
+                    $cekada=true;
+                }
+            }
+            if($cekada){
+                return back()->with('msg',"gagal delete! kategori sedang digunakan!");
+            }else if(!$cekada){
+                kategori::where('id',$id)->delete();
+                return redirect('/admin/listKategori');
+            }
         }
     }
 
@@ -146,53 +164,24 @@ class HomeController extends Controller
 
     // MASTER BARANG
     function listBarang(){
-        $barang = DB::select('select * from barang b
-                            left join kategori k
-                            on b.barang_kategori=k.kategori_id
-                            where b.barang_status != 0');
+        $barang = barang::all();
         return view('admin.listBarang_Admin',['barang'=>$barang]);
     }
     public function addBarang(){
-        $kat = DB::select('select * from kategori');
+        // $kat = DB::select('select * from kategori');
+        $kat=kategori::all();
         return view('admin.addBarang_Admin',['kategori'=>$kat]);
     }
     public function prosesAddBarang(Request $request){
-        $barang = DB::table('barang')->get();
-        $id = "";
-        $max = 0;
-        $cek = false;
-        foreach ($barang as $b) {
-            if((int)substr($b->barang_id,1,11) >= $max && strtoupper(substr($b->barang_id,0,1)) == strtoupper(substr($request->nama,0,1))){
-                $max = (int)substr($b->barang_id,1,11) + 1;
-                $cek = true;
-            }
-        }
-        if($cek){
-            $id = strtoupper(substr($request->nama,0,1)).str_pad($max, 11, "0", STR_PAD_LEFT);
-        }
-        else{
-            $id = strtoupper(substr($request->nama,0,1))."00000000000";
-        }
-        $rules = $request->validate([
-			'nama' => 'required|string|min:3|max:30',
-            'harga' => 'required|numeric',
-			'stok' => 'required|numeric',
-            'kategori'=>'required',
-		],
-        [
-            'required' => ':attribute harus diisi',
-            'min' => ':attribute harus 3 karakter',
-            'max' => ':attribute maksimal 30 karakter',
-            'numeric' => ':attribute harus berupa angka',
-        ]);
-        DB::table('barang')->insert(
-            ['barang_id' => $id, 'barang_kategori' => $request->kategori, 'barang_nama' => $request->nama, 'barang_harga' => $request->harga, 'barang_stok' => $request->stok, 'barang_status' => 1]
+        //dd($request->kategori);
+        barang::create(
+            ['barang_kategori' => $request->kategori, 'barang_nama' => $request->nama, 'barang_harga' => $request->harga, 'barang_stok' => $request->stok]
         );
         return redirect('/admin/listbarang');
     }
     public function EditBarang($id){
-        $barang = DB::table('barang')->where('barang_id',$id)->get();
-        $kategori = DB::table('kategori')->get();
+        $barang = barang::where('id',$id)->get();
+        $kategori = kategori::get();
         return view("admin.editBarang_Admin",['id'=>$id,'barang'=>$barang,'kategori'=>$kategori]);
     }
     public function prosesEditBarang(Request $request,$id){
@@ -203,7 +192,7 @@ class HomeController extends Controller
         $statusbarang=$request->statusBarang;
         $kategori=$request->kategori;
         $rules = $request->validate([
-			'nama' => 'required|string|min:3|max:30',
+			'nama' => 'required|string|min:3|max:255',
             'harga' => 'required|numeric',
 			'stok' => 'required|numeric',
             'kategori'=>'required',
@@ -214,38 +203,37 @@ class HomeController extends Controller
             'max' => ':attribute maksimal 30 karakter',
             'numeric' => ':attribute harus berupa angka',
         ]);
-        DB::table('barang')->where('barang_id', $id)->update(['barang_nama'=>$nama,'barang_harga'=>$harga,'barang_stok'=>$stok,'barang_status'=>1,'barang_kategori'=>$kategori]);
+        barang::where('id', $id)->update(['barang_nama'=>$nama,'barang_harga'=>$harga,'barang_stok'=>$stok,'barang_kategori'=>$kategori]);
         return $this->listBarang();
     }
 
     public function hasilCari($nama, Request $req){
         //dd($nama);
         if($nama !=""){
-            $pegawai = DB::table('pegawai')->where('pegawai_status',1)->where('nama','like','%'.$nama.'%')->get();
+            $pegawai = DB::table('pegawai')->where('nama','like','%'.$nama.'%')->get();
         }
         else{
-            $pegawai = DB::table('pegawai')->where('pegawai_status',1)->get();
+            $pegawai = DB::table('pegawai')->get();
         }
         return view('admin.hasilCari',['pegawai'=>$pegawai]);
 
     }
 
     public function prosesDeleteBarang($id){
-        DB::table('barang')->where('barang_id', $id)->update(['barang_status'=>0]);
-        $barang = DB::table('barang')->where('barang_status','1')->get();
-        return view("admin.listBarang_Admin",['barang' => $barang]);
+        barang::where('id', $id)->delete();
+        return redirect("/admin/listbarang");
     }
     // MASTER BARANG
 
 
     //MASTER PEGAWAI
     public function home_list_pegawai(){
-        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+        $pegawai = pegawai::get();
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
 
     function EditPegawai($id,Request $request){
-        $pegawai=DB::table('pegawai')->where('pegawai_id',$id)->get();
+        $pegawai=pegawai::where('id',$id)->get();
         return view("admin.editPegawai_Admin",['id'=>$id],['pegawai' => $pegawai]);
     }
 
@@ -361,7 +349,7 @@ class HomeController extends Controller
             $id = "P00000000000";
         }
 
-        DB::table('pegawai')->insert(array(
+        DB::table('pegawai')->create(array(
             'pegawai_id' => $id,
             'pegawai_nik' => $nik,
             'pegawai_email' => $email,
@@ -385,48 +373,41 @@ class HomeController extends Controller
         $email = $request->input("user_login_email");
         $password = $request->input("user_login_pass");
 
-        $user = DB::select("select * from user where user_status = 1 and user_email = '$email'");
-        $pegawai = DB::select("select * from pegawai where pegawai_status = 1 and pegawai_email = '$email'");
-        $admin = DB::select("select * from admin where admin_status = 1 and admin_email = '$email'");
-
-
-
-
-        if (!empty($user) || !empty($pegawai) || !empty($admin)) {
-            if(!empty($user)){
+        if (user::where('user_email',$email)->exists() || pegawai::where('pegawai_email',$email)->exists() || admin::where('admin_email',$email)->exists()) {
+            if(user::where('user_email',$email)->first() !=null){
                 $validatedData = $request->validate([
                     'user_login_email' => ['required','email'],
-                    'user_login_pass' => ['required',new cek_password($user,$email,"user")],
+                    'user_login_pass' => ['required',new cek_password(user::all(),$email,"user")],
                 ],[
                     'username.email'=> "Email atau password salah",
                     'password.required' => "Email atau password salah",
                 ]);
-                $request->session()->put("loggedIn", data_get($user,'0.user_id'));
-                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($user,'0.user_nama'));
+                $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
+                $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
                 return redirect("/home/user");
             }
-            else if(!empty($pegawai)){
+            else if(pegawai::where('pegawai_email',$email)->first() != null){
                 $validatedData = $request->validate([
                     'user_login_email' => 'required|email',
-                    'user_login_pass' => ['required',new cek_password($pegawai,$email,"pegawai")],
+                    'user_login_pass' => ['required',new cek_password(pegawai::all(),$email,"pegawai")],
                 ],[
                     'username.email'=> "Email atau password salah",
                     'password.required' => "Email atau password salah",
                 ]);
-                $request->session()->put("loggedIn", data_get($pegawai,'0.pegawai_id'));
-                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($pegawai,'0.pegawai_nama'));
+                $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
+                $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
                 return redirect("/home/pegawai");
             }
-            else if(!empty($admin)){
+            else if(admin::where('admin_email',$email)->first()!=null){
                 $validatedData = $request->validate([
                     'user_login_email' => 'required|email',
-                    'user_login_pass' => ['required',new cek_password($admin,$email,"admin")]
+                    'user_login_pass' => ['required',new cek_password(admin::all(),$email,"admin")]
                 ],[
                     'username.email'=> "Email atau password salah",
                     'password.required' => "Email atau password salah",
                 ]);
-                $request->session()->put("loggedIn", data_get($admin,'0.admin_id'));
-                $request->session()->flash("welcomeUser", "Selamat datang ".data_get($admin,'0.admin_nama'));
+                $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
+                $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
                 return redirect("/home/admin");
             }
             else {
@@ -439,8 +420,7 @@ class HomeController extends Controller
     }
 
     function register(Request $request){
-
-        $rules = $request->validate([
+        $request->validate([
 			'nama_user' => 'required|string|min:3|max:30',
             'telp_user' => 'required|numeric',
 			'email_user' => 'required|email',
@@ -449,11 +429,9 @@ class HomeController extends Controller
             'confirm_password'=> 'min:8',
 		]);
 
-        //dd($rules);//dd($rules);
         $email = $request->input("email_user");
-        $users = DB::select("select * from user where user_status = 1 and user_email = '$email'");
 
-        if (!empty($users)) {
+        if (user::where('user_email',$email)->exists()) {
 
             return view('index',['errorEmail'=>'Email telah terdaftar']);
         }
@@ -462,41 +440,33 @@ class HomeController extends Controller
             $password = $request ->input("password_user");
             $telp = $request ->input("telp_user");
 
-            $user = DB::table('user')->get();
+            // user::create([
+            //     'user_email' => $email,
+            //     'user_nama' => $nama,
+            //     'user_telepon' => $telp,
+            //     'user_alamat' => $request->input("alamat_user"),
+            //     'user_password' => md5($password),
+            //     'user_saldo' => 0,
+            //     'user_poin' => 0
+            // ]);
 
-            $id = "";
-            $max = 0;
-            $cek = false;
-            foreach ($user as $u) {
-                if((int)substr($u->user_id,1,11) >= $max){
-                    $max = (int)substr($u->user_id,1,11) + 1;
-                    $cek = true;
-                }
-            }
-            if($cek){
-                $id = "U".str_pad($max, 11, "0", STR_PAD_LEFT);
-            }
-            else{
-                $id = "U00000000000";
-            }
-            DB::table('user')->insert([
-                'user_id' => $id,
-                'user_email' => $email,
-                'user_nama' => $nama,
-                'user_telepon' => $telp,
-                'user_alamat' => $request->input("alamat_user"),
-                'user_password' => md5($password),
-                'user_saldo' => 0,
-                'user_poin' => 0,
-                'user_status' => 1,
-            ]);
+            $user = new user;
+            $user->user_email = $email;
+            $user->user_nama = $nama;
+            $user->user_telepon = $telp;
+            $user->user_alamat = $request->input("alamat_user");
+            $user->user_password = md5($password);
+            $user->user_saldo = 0;
+            $user->user_poin = 0;
+            $user->save();
+
+            //return $this->home();
             return view('index',['sukses'=>'Register berhasil!']);
-            // return redirect('index',['sukses'=>'Register berhasil!']);
         }
 
     }
     function ajax($jasa){
-        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->where('pegawai_jasa',$jasa)->get();
+        $pegawai = pegawai::where('pegawai_jasa',$jasa)->get();
         return view("script",['pegawai' => $pegawai],['jasa'=>$jasa]);
     }
     function ajax1($data){
@@ -638,11 +608,10 @@ class HomeController extends Controller
     }
     function add_cart($id,Request $request){
         try {
-            DB::table('Cart')->insert(
+            Cart::create(
                 [
                     'user_id' => $request->session()->get("loggedIn"),
                     'pegawai_id' =>$id,
-                    'status'=>1
                 ]
             );
         } catch (\Exception $e) {
@@ -651,54 +620,57 @@ class HomeController extends Controller
         return $this->list_cart($request);
     }
     function list_cart(Request $request){
-        $datacart=DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->where("status",1)->get();
+        $datacart=cart::where("user_id",$request->session()->get("loggedIn"))->get();
         $param["datacart"]=$datacart;
-        $datapegawai=DB::table('Pegawai')->get();
+        $datapegawai=Pegawai::get();
         $param["datapegawai"]=$datapegawai;
         return view("user.list_cart",$param);
     }
     function list_cart_cancel(Request $request,$id){
-        DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->where("id",$id)->delete();
+        cart::where("user_id",$request->session()->get("loggedIn"))->where("id",$id)->delete();
         return $this->list_cart($request);
     }
     function transaksi_sewa(){
         $loggedin = session('loggedIn');
         // $datacart = DataCart::where("user_id",$loggedin)->get();
-        $datacart = DB::table('Cart')->where("user_id",session('loggedIn'))->get();
-        $datapegawai = DB::table('pegawai')->get();
-        $datauser=DB::table('User')->where("user_id",session('loggedIn'))->first();
-        $databarang=DB::table('barang')->get();
-        $datakategori=DB::table('kategori')->get();
+        $datacart = cart::where("user_id",session('loggedIn'))->get();
+        $datapegawai = pegawai::get();
+        $datauser=User::where("id",session('loggedIn'))->first();
+        $databarang=barang::get();
+        $datakategori=kategori::get();
         $total=(count($datacart))*50000;
         return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai,"databarang"=>$databarang,"datakategori"=>$datakategori,"total"=>$total]);
     }
     function do_transaksi_sewa(Request $request){
+        $cek = true;
+
+        DB::beginTransaction();
+
         $arr=$request->post("arr");
         $jumlah=$request->post("jumlah");
 
         // dd($jumlah);
 
-        $jmlCart = count(DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->get());
-        $jmlBarang = count(DB::table('Barang')->get());
+        $jmlCart = count(cart::where("user_id",$request->session()->get("loggedIn"))->get());
+        $jmlBarang = count(barang::get());
         $jmlArr = $jmlCart * $jmlBarang;
 
-        DB::table('htranssewa')->insert(
+        htranssewa::create(
             [
                 'user_id' => $request->session()->get("loggedIn"),
-                'hSewa_tanggal' =>date("Y-m-d H:i:s"),
                 'hSewa_total'=>$request->txttotalhidden,
-                'hSewa_status'=>1,
                 'voucher_id'=>"V001",
-                'alamat'=> $request->txtalamat2,
+                // 'hSewa_status'=>2,
+                'alamat'=> "",
             ]
         );
-        $datahtrans = DB::table('htranssewa')->get();
+        $datahtrans = htranssewa::get();
         $htrans = $datahtrans[count($datahtrans)-1];
 
-        $datacart = DB::table('Cart')->where("user_id",$request->session()->get("loggedIn"))->get();
+        $datacart = cart::where("user_id",$request->session()->get("loggedIn"))->get();
         $arrid=[];
         foreach ($datacart as $key => $item) {
-            DB::table('dtranssewa')->insert(
+            dtranssewa::create(
                 [
                     'pegawai_id' => $item->pegawai_id,
                     'dSewa_durasi' =>8,
@@ -706,7 +678,7 @@ class HomeController extends Controller
                     'hSewa_id'=>$htrans->hSewa_id
                 ]
             );
-            $datadtrans=DB::table('dtranssewa')->get();
+            $datadtrans=dtranssewa::get();
             array_push($arrid,$datadtrans[count($datadtrans)-1]->dSewa_id);
         }
 
@@ -717,7 +689,7 @@ class HomeController extends Controller
                 $idxB = $arrID[0];
                 $idxC = $arrID[1];
 
-                $databarang = DB::table('Barang')->get();
+                $databarang = barang::get();
                 $barang = [];
                 foreach ($databarang as $key => $value) {
                     if($idxB == $key){
@@ -725,7 +697,7 @@ class HomeController extends Controller
                     }
                 }
 
-                $datacart = DB::table('Cart')->where('user_id',$request->session()->get("loggedIn"))->get();
+                $datacart = cart::where('user_id',$request->session()->get("loggedIn"))->get();
                 $cart = [];
                 foreach ($datacart as $key => $value) {
                     if($idxC == $key){
@@ -733,16 +705,35 @@ class HomeController extends Controller
                     }
                 }
 
-                DB::table('dtransbarang')->insert(
-                    [
-                        'barang_id' => $barang->barang_id,
-                        'barang_jumlah' =>$jumlah[$i],
-                        'dSewa_id'=>$arrid[$idxC-1]
-                    ]
-                );
+                if(barang::where("id",$barang->barang_id)->first()->barang_stok>=$jumlah[$i]){
+                    dtransbarang::create(
+                        [
+                            'barang_id' => $barang->id,
+                            'barang_jumlah' =>$jumlah[$i],
+                            'dSewa_id'=>$arrid[$idxC-1]
+                        ]
+                    );
 
+                    $newStock = $barang->barang_stok - $jumlah[$i];
+
+                    barang::where('id',$barang->id)->update(
+                        [
+                            'barang_stok' => $newStock,
+                        ]
+                    );
+                }else{
+                    $cek  = false;
+                }
                 $ctr++;
             }
+        }
+
+        if($cek){
+            cart::where('user_id',$request->session()->get('loggedIn'))->delete();
+            DB::commit();
+        }
+        else{
+            DB::rollback();
         }
         return $this->home_user($request);
     }
@@ -752,27 +743,20 @@ class HomeController extends Controller
     }
     public function prosesEditStock(Request $request,$id){
         $status=-1;
-        $barang = DB::table('barang')->where('barang_id',$id)->first();
+        $barang = barang::where('id',$id)->first();
         if($request->txtstok=="Tambah"){
-            $status=1;
             $newStock =  $request->stok +$barang->barang_stok;
         }
         else{
-            $status=0;
             $newStock =  $barang->barang_stok - $request->stok;
-
         }
-        DB::table('logstok')->insert([
+        logstok::insert([
             "barang_id"=>$id,
-            "status"=>$status,
-            "jumlah"=>$request->stok,
-            "created_at"=>date("Y-m-d H:i:s"),
-            "updated_at"=>date("Y-m-d H:i:s")
+            "jumlah"=>$request->stok
         ]);
-        DB::table('barang')->where('barang_id',$id)->update([
+        barang::where('id',$id)->update([
             "barang_stok"=>$newStock
         ]);
-
 
         return redirect('/admin/editBarang/'.$id);
     }

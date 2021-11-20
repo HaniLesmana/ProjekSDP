@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="id" placeholder="ID Barang" value="{{old('id') ? old('id') : $b->barang_id}}" readonly> </div>
+                            <input class="form-control" type="text" name="id" placeholder="ID Barang" value="{{old('id') ? old('id') : $b->id}}" readonly> </div>
                             @error('id')
                                 <span style='color: red'>{{ $message }}</span>
                             @enderror
@@ -93,10 +93,10 @@
                             {{-- <!-- <div class="input-group"> <input class="form-control" type="text" name="kategori" placeholder="Kategori" value="{{old('kategori') ? old('kategori') : $b->barang_kategori}}"> </div> --> --}}
                                 <select name="kategori" id="">
                                 @foreach ($kategori as $kat)
-                                    @if ($kat->kategori_id == $b->barang_kategori)
-                                        <option value="{{ $kat->kategori_id }}" selected>{{ $kat->kategori_nama }}</option>
+                                    @if ($kat->id == $b->barang_kategori)
+                                        <option value="{{ $kat->id }}" selected>{{ $kat->kategori_nama }}</option>
                                     @else
-                                        <option value="{{ $kat->kategori_id }}">{{ $kat->kategori_nama }}<option>
+                                        <option value="{{ $kat->id }}">{{ $kat->kategori_nama }}<option>
                                     @endif
                                 @endforeach
                             </select>
@@ -126,7 +126,7 @@
             </button>
             </div>
 
-            <form method="get" action="{{ url('/admin/prosesEditStock/'.$b->barang_id) }}">
+            <form method="get" action="{{ url('/admin/prosesEditStock/'.$b->id) }}">
                 <div class="modal-body" style="" >
                     <div style="float:left;width:60px;">
                         <label style="font-weight:normal;height:27px;">Jumlah</label> <br>

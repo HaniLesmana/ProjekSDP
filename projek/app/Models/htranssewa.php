@@ -6,24 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class user extends Model
+class htranssewa extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
+    protected $table="htranssewa";
     protected $primaryKey="id";
     public $incrementing=true;
     public $timestamps=true;
     protected $fillable=[
-        'user_email',
-        'user_nama',
-        'user_telepon',
-        'user_alamat',
-        'user_password',
-        'user_saldo',
-        'user_poin'
+        'user_id',
+        'hBarang_id',
+        'hSewa_total',
+        'voucher_id'
     ];
-    public function cart(){
-        return $this->hasMany(cart::class, 'user_id','id');
-    }
+
 }

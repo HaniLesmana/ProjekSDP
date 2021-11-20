@@ -64,7 +64,7 @@
                             <select name="kategori" id="kat" class="form-select" aria-label="Default select example">
                                 @if(isset($kategori))
                                     @foreach($kategori as $kat)
-                                        <option value="{{ $kat->kategori_id }}">{{$kat->kategori_nama }}</option>
+                                        <option value="{{ $kat->id }}">{{$kat->kategori_nama }}</option>
                                     @endforeach
                                 @endif
                             </select>
