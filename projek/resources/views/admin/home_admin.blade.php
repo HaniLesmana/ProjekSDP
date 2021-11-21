@@ -1,11 +1,7 @@
 @extends('admin.base-layout')
-@section('header')
-    @include('admin.navbarAdmin')
-@endsection
 @section('main')
 <div class="container">
-    <div class="page-header">
-      <h1>Hello, Admin</h1>
-  </div>
-Report
+    <h1>Hello, Admin</h1>
+    <hr style="border: 1px solid gray;">
+</div>
 @endsection

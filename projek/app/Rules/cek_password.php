@@ -58,6 +58,6 @@ class cek_password implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Password tidak sesuai!';
     }
 }

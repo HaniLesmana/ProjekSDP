@@ -63,5 +63,15 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+
+        'is_login' => \App\Http\Middleware\checkLogin::class,
+        'is_logout' => \App\Http\Middleware\checkLogout::class,
+    ];
+
+    protected $middlewarePriority = [
+        // \App\Http\Middleware\CheckIsAdmin::class, # Try unmark this and mark the m
+        \App\Http\Middleware\checkLogin::class,
+        \App\Http\Middleware\checkLogout::class,
     ];
 }

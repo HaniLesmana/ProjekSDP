@@ -375,7 +375,7 @@ class HomeController extends Controller
 
         if (user::where('user_email',$email)->exists() || pegawai::where('pegawai_email',$email)->exists() || admin::where('admin_email',$email)->exists()) {
             if(user::where('user_email',$email)->first() !=null){
-                $validatedData = $request->validate([
+                $request->validate([
                     'user_login_email' => ['required','email'],
                     'user_login_pass' => ['required',new cek_password(user::all(),$email,"user")],
                 ],[
@@ -387,7 +387,7 @@ class HomeController extends Controller
                 return redirect("/home/user");
             }
             else if(pegawai::where('pegawai_email',$email)->first() != null){
-                $validatedData = $request->validate([
+                $request->validate([
                     'user_login_email' => 'required|email',
                     'user_login_pass' => ['required',new cek_password(pegawai::all(),$email,"pegawai")],
                 ],[
@@ -399,7 +399,7 @@ class HomeController extends Controller
                 return redirect("/home/pegawai");
             }
             else if(admin::where('admin_email',$email)->first()!=null){
-                $validatedData = $request->validate([
+                $request->validate([
                     'user_login_email' => 'required|email',
                     'user_login_pass' => ['required',new cek_password(admin::all(),$email,"admin")]
                 ],[
@@ -415,7 +415,8 @@ class HomeController extends Controller
             }
         }
         else{
-            return view('index',['error'=>'Email not registered!']);
+            //return view('index',['error'=>'Email not registered!']);
+            return back()->with(['eror'=>'Email not registered!']);
         }
     }
 

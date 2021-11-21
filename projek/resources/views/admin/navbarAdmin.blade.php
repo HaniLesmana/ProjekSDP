@@ -1,20 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar navbar-light fixed-top"  style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));" >
-    <div class="container">
-      <a class="navbar-brand" id="gambar" href="#"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="/home/admin">Home</a>
-            <a class="nav-item nav-link active" href="/listRequest">Top Up</a>
-            <a class="nav-item nav-link active" href="/listWithdraw">Withdraw</a>
-          <a class="nav-item nav-link active" href="/admin/listpegawai">Pegawai</a>
-          <a class="nav-item nav-link" href="/admin/listKategori">Kategori</a>
-          <a class="nav-item nav-link " href="/admin/listbarang" >Barang</a>
-          <a class="nav-item nav-link" href="/admin/listVoucher">Voucher</a>
-          <button type ="submit" class="btn btn-primary tombol" style="align:right;"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>
-        </div>
-      </div>
-    </div>
-  </nav>
+<div class="vertical-nav" id="sidebar" style="background-color:#396EB0;min-height:100vh">
+
+    <ul class="nav flex-column mb-0">
+        <a class="navbar-brand" id="gambar" href="#"></a>
+      <li class="nav-item">
+        <a href="/home/admin" class="nav-link font-italic dropdown-item"><i class="fas fa-home"> Home</i></a>
+      </li>
+      <li class="nav-item">
+        <a href="/listRequest" class="nav-link font-italic dropdown-item">
+            <i class="fas fa-dollar-sign"> Top Up</i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/listWithdraw" class="nav-link font-italic dropdown-item">
+                  Withdraw
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/listpegawai" class="nav-link font-italic dropdown-item">
+                <i class="fas fa-users"> Pegawai</i>
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/listKategori" class="nav-link font-italic dropdown-item">
+                <i class="fas fa-clipboard-list"> Kategori </i>
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/listbarang" class="nav-link font-italic dropdown-item">
+                <i class="fas fa-box-open"> Barang</i>
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin/listVoucher" class="nav-link font-italic dropdown-item">
+                  Voucher
+              </a>
+      </li>
+    </ul>
+    <button type ="submit" class="btn btn-warning tombol" style="position:absolute;bottom:30px;margin-left:25px"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>
+  </div>

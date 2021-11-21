@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\voucherController;
+use App\Http\Middleware\checkLogout;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -14,26 +15,22 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['is_login'])->group(function () {
+    Route::get('/listRequest', [HomeController::class, "listRequest"]);
+    Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
 
-Route::get('/',[HomeController::class,"home"]);
-
-Route::get('/checkLogin', [HomeController::class, "checkLogin"]);
-Route::post('/register', [HomeController::class, "register"]);
-Route::get('/listRequest', [HomeController::class, "listRequest"]);
-Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
-
-Route::prefix("home")->group(function(){
-    Route::get("/user", [HomeController::class, "home_user"]);
-    Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
-    Route::get("/admin", [HomeController::class, "home_admin"]);
-    Route::get("/ajax/{jasa}", [HomeController::class, "ajax"]);
-    Route::get("/add_cart/{id}", [HomeController::class, "add_cart"]);
-    Route::get("/list_cart", [HomeController::class, "list_cart"]);
-    Route::get("/transaksi_sewa", [HomeController::class, "transaksi_sewa"]);
-    Route::get("/list_cart_cancel/{id}", [HomeController::class, "list_cart_cancel"]);
-    Route::get("/do_transaksi_sewa", [HomeController::class, "do_transaksi_sewa"]);
-});
-Route::prefix("admin")->group(function(){
+    Route::prefix("home")->group(function(){
+        Route::get("/user", [HomeController::class, "home_user"]);
+        Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
+        Route::get("/admin", [HomeController::class, "home_admin"]);
+        Route::get("/ajax/{jasa}", [HomeController::class, "ajax"]);
+        Route::get("/add_cart/{id}", [HomeController::class, "add_cart"]);
+        Route::get("/list_cart", [HomeController::class, "list_cart"]);
+        Route::get("/transaksi_sewa", [HomeController::class, "transaksi_sewa"]);
+        Route::get("/list_cart_cancel/{id}", [HomeController::class, "list_cart_cancel"]);
+        Route::get("/do_transaksi_sewa", [HomeController::class, "do_transaksi_sewa"]);
+    });
+    Route::prefix("admin")->group(function(){
     //Route::get("/listpegawai",function ()
     //{
         //return view('admin.listPegawai_Admin');
@@ -106,28 +103,35 @@ Route::prefix("admin")->group(function(){
 
     Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);
 
-});
-Route::prefix("user")->group(function(){
-    Route::get("/topUp",function ()
-    {
-        return view('user.user_topup');
     });
-    Route::get("/cart",function ()
-    {
-        return view('user.user_cart');
+    Route::prefix("user")->group(function(){
+        Route::get("/topUp",function ()
+        {
+            return view('user.user_topup');
+        });
+        Route::get("/cart",function ()
+        {
+            return view('user.user_cart');
+        });
+        Route::get("/checkout",function ()
+        {
+            return view('user.user_checkout');
+        });
+        // Route::get("/ajax1", [HomeController::class, "ajax1"]);
+        Route::post("/gotocart", [HomeController::class, "gotocart"]);
+        Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);
     });
-    Route::get("/checkout",function ()
-    {
-        return view('user.user_checkout');
+    Route::prefix("pegawai")->group(function(){
+        Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
+        Route::get('/history', [HomeController::class, "history"]);
     });
-    // Route::get("/ajax1", [HomeController::class, "ajax1"]);
-    Route::post("/gotocart", [HomeController::class, "gotocart"]);
-    Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);
 });
-Route::prefix("pegawai")->group(function(){
-    Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
-    Route::get('/history', [HomeController::class, "history"]);
-});
+
+Route::get('/',[HomeController::class,"home"])->middleware('is_logout');
+
+Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
+Route::post('/register', [HomeController::class, "register"]);
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

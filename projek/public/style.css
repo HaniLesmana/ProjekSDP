@@ -34,6 +34,7 @@
     height: 70px;
     width: 250px;
     position:inherit;
+    margin-bottom:50px;
 }
 
 .jumbotron::after{

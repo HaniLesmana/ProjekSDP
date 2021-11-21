@@ -50,7 +50,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="/checkLogin" method="get">
+        <form action="/checkLogin" method="post">
             @csrf
             <div class="modal-body">
             Email : <br>
@@ -58,13 +58,22 @@
             Password : <br>
             <input type="password" name="user_login_pass" id="" >
             </div>
-            @if (isset($error))
+            @if (Session::has('eror'))
                 <div class="errormsg" style="color: red">
                     <ul>
-                        <li>{{$error}}</li>
+                        <li>{{Session::get('eror')}}</li>
                     </ul>
                 </div>
             @endif
+            @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+        @endif
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Sign In</button>

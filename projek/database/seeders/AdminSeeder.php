@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             "admin_nama"=>"admin",
             "admin_email"=>"admin@a.com",
             "admin_telepon"=>"3172389",
-            "admin_password"=>"admin",
+            "admin_password"=>md5("admin"),
         ]);
         $admin->save();
     }
