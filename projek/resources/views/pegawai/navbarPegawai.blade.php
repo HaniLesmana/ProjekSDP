@@ -8,7 +8,13 @@
         <div class="navbar-nav ml-auto">
             <a class="nav-item nav-link active" href="/home/pegawai">Home</a>
             <a class="nav-item nav-link" href="/pegawai/pesanan">Order</a>
-            <a class="nav-item nav-link " href="/pegawai/history" >History</a>
+            <a class="nav-item nav-link" href="/pegawai/history" >History</a>
+            <form action="{{ url('pegawai/profile')}}" method="get">
+                <a>
+                    <input class="nav-item nav-link" type="submit" value="Profile">
+                </a>
+                {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
+            </form>
           <button type ="button" class="btn btn-primary tombol" style="align:right;"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>
         </div>
       </div>

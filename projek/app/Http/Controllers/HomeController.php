@@ -758,4 +758,9 @@ class HomeController extends Controller
 
         return redirect('/admin/editBarang/'.$id);
     }
+    public function pegawaiProfile(Request $request){
+        $pegawai=pegawai::where("id",$request->session()->get('loggedIn'))->first();
+        $param["pegawai"]=$pegawai;
+        return view("pegawai.pegawai_profile",$param);
+    }
 }

@@ -124,6 +124,7 @@ Route::middleware(['is_login'])->group(function () {
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
         Route::get('/history', [HomeController::class, "history"]);
+        Route::get("/profile", [HomeController::class, "pegawaiProfile"]);
     });
 });
 
