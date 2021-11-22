@@ -6,13 +6,24 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-11"><h2>List Pegawai</h2></div>
-            <div class="col-sm-11" style="margin-bottom: 10px;">
+            <div class="col-md-12" style="margin-bottom:10px;">
                 <button type="submit" style="width:250px;align:right;border-radius:3px;border:1px solid black; background-color:#FACE7F;align:right; width:65px; font-size:9.5px;">
                     <a href="/admin/addPegawai" style="text-decoration: :none; color:white;">
                         Add Pegawai
                     </a>
                 </button>
-                <input type="text" name="keyword" id="cariPegawai" style="width:300px;margin-left:15%; height:28px; border-radius:5px; border: 2px solid #FF914D;font-size:13pt;margin-top:10px;" placeholder="Search title here...">
+                <input type="text" name="keyword" id="cariPegawai" style="width:300px; height:28px;border-radius:5px;border: 2px solid #FF914D;font-size:13pt;float: right;margin-left:50px" placeholder="Cari by nama...">
+                <select name="jenis" id="jenis" onchange="filterasi()" disabled style="float: right;border: 2px solid #FF914D;border-radius:5px; height:28px;margin-left:5px;font-size:13pt;">
+                    <option value="selectcard">All</option>
+                    <option value="cleaning">Cleaning</option>
+                    <option value="painting">Painting</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="repair">Repair etc</option>
+                </select>
+                <input type="checkbox" style="float: right;height:20px;width:20px;margin-left:5px" name="" id="caribyJenisPegawai" onclick="filter()">
+                <label style="display:inline-block;float:right; padding-top: 4px"> Cari by jenis : </label>
+                <div style="clear: both"></div>
             </div>
 
     </div>
@@ -153,6 +164,40 @@
             // });
         });
     });
+
+    function filter() {
+        var checkBox = document.getElementById("caribyJenisPegawai");
+        var searchbar = document.getElementById("cariPegawai");
+        var jenis = document.getElementById("jenis");
+        if (checkBox.checked == true){
+            searchbar.disabled = true;
+            jenis.disabled = false;
+        } else {
+            searchbar.disabled = false;
+            jenis.disabled = true;
+        }
+    }
+    function filterasi() {
+        var ddl = document.getElementById("jenis");
+        var selectedValue = ddl.options[ddl.selectedIndex].value.toUpperCase();
+        if(selectedValue == "SELECTCARD"){selectedValue = "";}
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("cariPegawai");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[8];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(selectedValue) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
 @endsection
 

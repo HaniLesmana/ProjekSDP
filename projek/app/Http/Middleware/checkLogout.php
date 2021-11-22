@@ -19,12 +19,8 @@ class checkLogout
     {
         if(Session::has('loggedIn'))
         {
-            return back();
+            $request->session()->forget('loggedIn');
         }
-        else {
-            # Dikembalikan ke login page apabila belum login
-            return $next($request);
-            // return redirect('/');
-        }
+        return $next($request);
     }
 }

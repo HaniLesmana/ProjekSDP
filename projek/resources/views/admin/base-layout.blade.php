@@ -123,7 +123,7 @@ body {
       </li>
     </ul>
     <form action="{{url('/logout')}}" method="get">
-    <button type ="submit" class="btn btn-warning tombol" style="position:absolute;bottom:30px;margin-left:25px"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>
+        <button type ="submit" class="btn btn-warning tombol" style="position:absolute;bottom:30px;margin-left:25px"><a href="/" style="text-decoration:none;color:white;">Sign Out <i class="fas fa-sign-out-alt"></i> </a></button>
     </form>
   </div>
 {{-- end navbar --}}
