@@ -17,7 +17,7 @@ class CreateHtranssewasTable extends Migration
             $table->id();
             $table->string("user_id");
             $table->integer("hSewa_total");
-            $table->integer("hSewa_status");
+            $table->integer("hSewa_status")->default(2);
             $table->string("voucher_id");
             $table->string("alamat");
             $table->timestamps();

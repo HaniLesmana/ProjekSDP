@@ -656,31 +656,33 @@ class HomeController extends Controller
         $jmlBarang = count(barang::get());
         $jmlArr = $jmlCart * $jmlBarang;
 
-        htranssewa::create(
-            [
-                'user_id' => $request->session()->get("loggedIn"),
-                'hSewa_total'=>$request->txttotalhidden,
-                'voucher_id'=>"V001",
-                // 'hSewa_status'=>2,
-                'alamat'=> "",
-            ]
-        );
-        $datahtrans = htranssewa::get();
-        $htrans = $datahtrans[count($datahtrans)-1];
+        $htsewa = new htranssewa;
+        $htsewa->user_id = $request->session()->get("loggedIn");
+        $htsewa->hSewa_total = $request->txttotalhidden;
+        $htsewa->voucher_id = "V001";
+        $htsewa->hSewa_status = 2;
+        $htsewa->alamat = "alamat";
+        $htsewa->save();
+
+        $htransID = count(htranssewa::get());
 
         $datacart = cart::where("user_id",$request->session()->get("loggedIn"))->get();
-        $arrid=[];
+        $arrdtranssewa=[];
+        $ctrid = 0;
         foreach ($datacart as $key => $item) {
             dtranssewa::create(
                 [
                     'pegawai_id' => $item->pegawai_id,
                     'dSewa_durasi' =>8,
                     'dSewa_harga'=>50000,
-                    'hSewa_id'=>$htrans->hSewa_id
+                    'hSewa_id'=>$htransID
                 ]
             );
-            $datadtrans=dtranssewa::get();
-            array_push($arrid,$datadtrans[count($datadtrans)-1]->dSewa_id);
+
+            $datadtrans = ['id'=>count(dtranssewa::all())+$ctrid,'pegawai_id'=>$item->pegawai_id,'dSewa_durasi'=>8,'dSewa_harga'=>50000,'hSewa_id'=>$htransID];
+            array_push($arrdtranssewa,$datadtrans);
+
+            $ctrid++;
         }
 
         $ctr = 0;
@@ -690,7 +692,7 @@ class HomeController extends Controller
                 $idxB = $arrID[0];
                 $idxC = $arrID[1];
 
-                $databarang = barang::get();
+                $databarang = barang::all();
                 $barang = [];
                 foreach ($databarang as $key => $value) {
                     if($idxB == $key){
@@ -698,20 +700,12 @@ class HomeController extends Controller
                     }
                 }
 
-                $datacart = cart::where('user_id',$request->session()->get("loggedIn"))->get();
-                $cart = [];
-                foreach ($datacart as $key => $value) {
-                    if($idxC == $key){
-                        $cart = $value;
-                    }
-                }
-
-                if(barang::where("id",$barang->barang_id)->first()->barang_stok>=$jumlah[$i]){
+                if(barang::where("id",$barang->id)->first()->barang_stok>=$jumlah[$i]){
                     dtransbarang::create(
                         [
                             'barang_id' => $barang->id,
                             'barang_jumlah' =>$jumlah[$i],
-                            'dSewa_id'=>$arrid[$idxC-1]
+                            'dSewa_id'=>$arrdtranssewa[$idxC-1]['id']
                         ]
                     );
 
@@ -732,11 +726,14 @@ class HomeController extends Controller
         if($cek){
             cart::where('user_id',$request->session()->get('loggedIn'))->delete();
             DB::commit();
+
+            return $this->home_user($request);
         }
         else{
             DB::rollback();
+
+            return $this->transaksi_sewa($request);
         }
-        return $this->home_user($request);
     }
     public function logout(Request $request){
         $request->session()->forget("loggedIn");
