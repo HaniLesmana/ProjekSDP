@@ -9,7 +9,7 @@
     <div class="card-body">
         <h5 class="card-title">{{$p->pegawai_nama}}</h5>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <form action="{{ url('/home/add_cart/'.$p->id)}}" method="get">
+        <form action="{{ url('/user/detailcart/'.$p->id)}}" method="get">
             <button type="submit" class="btn btn-primary">Booking</button>
         </form>
       {{-- <a href="#" class="btn btn-primary">Booking</a> --}}

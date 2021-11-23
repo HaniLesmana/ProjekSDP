@@ -650,40 +650,11 @@ class HomeController extends Controller
         $arr=$request->post("arr");
         $jumlah=$request->post("jumlah");
 
-        // dd($jumlah);
-
         $jmlCart = count(cart::where("user_id",$request->session()->get("loggedIn"))->get());
         $jmlBarang = count(barang::get());
         $jmlArr = $jmlCart * $jmlBarang;
 
-        $htsewa = new htranssewa;
-        $htsewa->user_id = $request->session()->get("loggedIn");
-        $htsewa->hSewa_total = $request->txttotalhidden;
-        $htsewa->voucher_id = "V001";
-        $htsewa->hSewa_status = 2;
-        $htsewa->alamat = "alamat";
-        $htsewa->save();
 
-        $htransID = count(htranssewa::get());
-
-        $datacart = cart::where("user_id",$request->session()->get("loggedIn"))->get();
-        $arrdtranssewa=[];
-        $ctrid = 0;
-        foreach ($datacart as $key => $item) {
-            dtranssewa::create(
-                [
-                    'pegawai_id' => $item->pegawai_id,
-                    'dSewa_durasi' =>8,
-                    'dSewa_harga'=>50000,
-                    'hSewa_id'=>$htransID
-                ]
-            );
-
-            $datadtrans = ['id'=>count(dtranssewa::all())+$ctrid,'pegawai_id'=>$item->pegawai_id,'dSewa_durasi'=>8,'dSewa_harga'=>50000,'hSewa_id'=>$htransID];
-            array_push($arrdtranssewa,$datadtrans);
-
-            $ctrid++;
-        }
 
         $ctr = 0;
         for ($i=0; $i < $jmlArr; $i++) {
@@ -701,31 +672,80 @@ class HomeController extends Controller
                 }
 
                 if(barang::where("id",$barang->id)->first()->barang_stok>=$jumlah[$i]){
-                    dtransbarang::create(
-                        [
-                            'barang_id' => $barang->id,
-                            'barang_jumlah' =>$jumlah[$i],
-                            'dSewa_id'=>$arrdtranssewa[$idxC-1]['id']
-                        ]
-                    );
 
-                    $newStock = $barang->barang_stok - $jumlah[$i];
-
-                    barang::where('id',$barang->id)->update(
-                        [
-                            'barang_stok' => $newStock,
-                        ]
-                    );
                 }else{
                     $cek  = false;
                 }
                 $ctr++;
             }
         }
-
+        //dd($cek);
         if($cek){
             cart::where('user_id',$request->session()->get('loggedIn'))->delete();
             DB::commit();
+
+            $htsewa = new htranssewa;
+            $htsewa->user_id = $request->session()->get("loggedIn");
+            $htsewa->hSewa_total = $request->txttotalhidden;
+            $htsewa->voucher_id = "V001";
+            $htsewa->hSewa_status = 2;
+            $htsewa->alamat = "alamat";
+            $htsewa->save();
+
+            $htransID = count(htranssewa::get());
+
+            $datacart = cart::where("user_id",$request->session()->get("loggedIn"))->get();
+            $arrdtranssewa=[];
+            $ctrid = 0;
+            foreach ($datacart as $key => $item) {
+                dtranssewa::create(
+                    [
+                        'pegawai_id' => $item->pegawai_id,
+                        'dSewa_durasi' =>8,
+                        'dSewa_harga'=>50000,
+                        'hSewa_id'=>$htransID
+                    ]
+                );
+
+                $datadtrans = ['id'=>count(dtranssewa::all())+$ctrid,'pegawai_id'=>$item->pegawai_id,'dSewa_durasi'=>8,'dSewa_harga'=>50000,'hSewa_id'=>$htransID];
+                array_push($arrdtranssewa,$datadtrans);
+
+                $ctrid++;
+            }
+            dd($arrdtranssewa);
+            $ctr=0;
+            for ($i=0; $i < $jmlArr; $i++) {
+                if($jumlah[$i] != null){
+                    $arrID = explode("pas", $arr[$ctr]);
+                    $idxB = $arrID[0];
+                    $idxC = $arrID[1];
+                    $databarang = barang::all();
+                $barang = [];
+                foreach ($databarang as $key => $value) {
+                    if($idxB == $key){
+                        $barang = $value;
+                    }
+                }
+                dtransbarang::create(
+                    [
+                        'barang_id' => $barang->id,
+                        'barang_jumlah' =>$jumlah[$i],
+                        'dSewa_id'=>$arrdtranssewa[$idxC-1]['id']
+                    ]
+                );
+                $newStock = $barang->barang_stok - $jumlah[$i];
+
+                barang::where('id',$barang->id)->update(
+                        [
+                            'barang_stok' => $newStock,
+                        ]
+                    );
+                    $ctr++;
+                }
+            }
+
+
+
 
             return $this->home_user($request);
         }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\voucherController;
 use App\Http\Middleware\checkLogout;
 use Illuminate\Support\Facades\DB;
@@ -120,6 +121,15 @@ Route::middleware(['is_login'])->group(function () {
         // Route::get("/ajax1", [HomeController::class, "ajax1"]);
         Route::post("/gotocart", [HomeController::class, "gotocart"]);
         Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);
+
+        Route::get("/detailcart/{id}", [UserController::class, "detailcart"]);
+        // Route::get("/ajax/getbarang", [UserController::class, "ajaxgetbarang"]);
+        Route::post("/dotambahaddon", [UserController::class, "dotambahaddon"]);
+        Route::post("/doeditaddon", [UserController::class, "doeditaddon"]);
+        Route::get("/doremoveaddon/{id}/{idpegawai}", [UserController::class, "doremoveaddon"]);
+
+        Route::post("/dosavedetailcart", [UserController::class, "dosavedetailcart"]);
+        Route::post("/doeditdetailcart{id}", [UserController::class, "dosavedetailcart"]);
     });
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
