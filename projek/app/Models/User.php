@@ -26,4 +26,7 @@ class user extends Model
     public function cart(){
         return $this->hasMany(cart::class, 'user_id','id');
     }
+    public function addons(){
+        return $this->hasMany(addon::class, 'id_user','id');
+    }
 }

@@ -123,13 +123,20 @@ Route::middleware(['is_login'])->group(function () {
         Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);
 
         Route::get("/detailcart/{id}", [UserController::class, "detailcart"]);
-        // Route::get("/ajax/getbarang", [UserController::class, "ajaxgetbarang"]);
+        Route::get("/ajax/getbarang", [UserController::class, "ajaxgetbarang"]);
         Route::post("/dotambahaddon", [UserController::class, "dotambahaddon"]);
         Route::post("/doeditaddon", [UserController::class, "doeditaddon"]);
         Route::get("/doremoveaddon/{id}/{idpegawai}", [UserController::class, "doremoveaddon"]);
 
         Route::post("/dosavedetailcart", [UserController::class, "dosavedetailcart"]);
-        Route::post("/doeditdetailcart{id}", [UserController::class, "dosavedetailcart"]);
+        Route::post("/doeditdetailcart{id}", [UserController::class, "doeditdetailcart"]);
+
+
+        Route::get("/detaileditcart/{id}", [UserController::class, "detaileditcart"]);
+        Route::get("/dotambahaddonedit/{id}", [UserController::class, "dotambahaddonedit"]);
+        Route::get("/doeditaddonedit/{id}", [UserController::class, "doeditaddonedit"]);
+        Route::post("/doupdatedetailcart", [UserController::class, "doupdatedetailcart"]);
+
     });
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
@@ -149,3 +156,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('logout', [HomeController::class, "logout"]);
+

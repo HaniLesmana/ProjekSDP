@@ -22,7 +22,7 @@
                         </a>
                         {{-- <a class="nav-item nav-link" href="#">PROFILE</a> --}}
                     </form>
-                    <form action="{{ url('/home/list_cart')}}" method="get">
+                    <form action="{{ url('/home/transaksi_sewa')}}" method="get">
                         <a class="nav-item nav-link">
                             <input type="submit" value="CART">
                         </a>

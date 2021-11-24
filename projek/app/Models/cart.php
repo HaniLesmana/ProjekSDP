@@ -15,6 +15,8 @@ class cart extends Model
     protected $fillable=[
         'user_id',
         'pegawai_id',
+        'tanggal_sewa',
+        'alamat'
     ];
     public function user(){
         return $this->belongsTo(user::class, 'user_id','id');

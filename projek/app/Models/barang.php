@@ -25,4 +25,7 @@ class barang extends Model
     public function kategori(){
         return $this->belongsTo(kategori::class, 'barang_kategori','id');
     }
+    public function addon(){
+        return $this->hasMany(addon::class, 'id_barang','id');
+    }
 }

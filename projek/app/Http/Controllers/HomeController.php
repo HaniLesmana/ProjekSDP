@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\addon;
 use App\Models\barang;
 use App\Models\Cart;
 use App\Models\htransTopup;
@@ -467,7 +468,22 @@ class HomeController extends Controller
 
     }
     function ajax($jasa){
-        $pegawai = pegawai::where('pegawai_jasa',$jasa)->get();
+        $cart=cart::where("user_id",session('loggedIn'))->get();
+        $peg = pegawai::where('pegawai_jasa',$jasa)->get();
+        $pegawai=array();
+        foreach ($peg as $key => $p) {
+            $ada=false;
+            foreach ($cart as $key => $c) {
+                if($c->pegawai_id==$p->id){
+                    $ada=true;
+                }
+            }
+            if ($ada==false){
+                $new = pegawai::where('pegawai_jasa',$jasa)->where('id',$p->id)->first();
+                array_push($pegawai,$new);
+            }
+        }
+        //$pegawai = pegawai::where('pegawai_jasa',$jasa)->get();
         return view("script",['pegawai' => $pegawai],['jasa'=>$jasa]);
     }
     function ajax1($data){
@@ -635,12 +651,13 @@ class HomeController extends Controller
         $loggedin = session('loggedIn');
         // $datacart = DataCart::where("user_id",$loggedin)->get();
         $datacart = cart::where("user_id",session('loggedIn'))->get();
+        $dataaddon=addon::where("id_user",session('loggedIn'))->get();
         $datapegawai = pegawai::get();
         $datauser=User::where("id",session('loggedIn'))->first();
         $databarang=barang::get();
         $datakategori=kategori::get();
         $total=(count($datacart))*50000;
-        return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai,"databarang"=>$databarang,"datakategori"=>$datakategori,"total"=>$total]);
+        return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai,"databarang"=>$databarang,"datakategori"=>$datakategori,"total"=>$total,"dataaddon"=>$dataaddon]);
     }
     function do_transaksi_sewa(Request $request){
         $cek = true;

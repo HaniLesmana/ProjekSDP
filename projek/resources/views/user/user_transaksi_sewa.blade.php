@@ -34,22 +34,16 @@
         /* HIDE SCROLLBAR */
     </style>
     <div class="container">
-        <h2>Transaction Page</h2>
+
         <div class="shadow-lg p-3 mb-5 bg-white rounded">
         <form  method="get" action="{{ url('home/do_transaksi_sewa') }}">
-            <h5>Alamat</h5>
-            <hr>
-            {{-- <input type="text" name="txtalamat" id="" value="{{}}"> --}}
-            <label name="txtalamat1">{{$datauser->user_alamat}}</label><label style="font-size:0.5em;color:#03AC0E;background-color:#D6FFDE;margin-left:5px;">Utama</label><br>
-            <input type="hidden" name="txtalamat2" value="{{$datauser->user_alamat}}">
-            <a href="" data-target="#pilihalamat" data-toggle="modal"><button class="btn btn-warning btnTrans" data-target="#pilihalamat" data-toggle="modal">Pilih alamat lain</button></a>
-            {{-- <button class="btn btn-warning btnTrans" data-target="#pilihalamat" data-toggle="modal">Pilih alamat lain</button> --}}
+            <h2>Cart</h2>
+            <hr style="margin-top:20px;">
 
-            <hr style="margin-top:30px;">
             <div id="contItems">
 
                 @foreach ($datacart as $key =>$cart)
-                    <div class="contItem" style="display:flex;">
+                    <div class="contItem" style="display:flex;margin-bottom:40px;">
 
                         @foreach ($datapegawai as $keyj=> $peg)
                             @if($cart->pegawai_id==$peg->id)
@@ -62,42 +56,47 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div style="float:left;padding:0px 10px 0px 30px;font-size:18px;">
+                                <div style="float:left;padding:0px 0px 0px 30px;font-size:18px;width:140px;">
                                     <b>{{$peg->pegawai_jasa}}</b><br>
-                                    <!-- <label for="" class="">Jenis jasa</label><br> -->
-                                    <label class="lab">Nama</label><br>
-                                    <label class="lab">Alamat</label><br>
-                                    <label class="lab">Biaya</label><br>
+                                    <label class="lab" style="line-height:20px;margin-top:10px;">Nama</label><br>
+                                    <label class="lab" style="line-height:20px;">Biaya</label><br>
+                                    <label class="lab" style="line-height:20px;">Alamat</label><br>
+                                    <label class="lab" style="line-height:20px;">Tanggal sewa</label><br>
+                                    <a href="{{ url('user/detailcartupdate/'.$peg->id) }}"><button class="btn btn-warning" style="color:white;width:100%;margin-top:20px;">Edit</button></a>
+
                                 </div>
                                 <div style="float:left;padding:0px 10px 0px 30px;font-size:18px;width:30%;">
                                     <!-- <label for="" >: </label><br> --> <br>
-                                    <label class="lab">: {{$peg->pegawai_nama}}</label><br>
-                                    <label class="lab">: {{$peg->pegawai_alamat}}</label><br>
-                                    <label class="lab">: Rp. 50.000,--</label><br>
+                                    <label class="lab" style="line-height:20px;margin-top:10px;">: {{$peg->pegawai_nama}}</label><br>
+                                    <label class="lab" style="line-height:20px;">: Rp. 50.000,--</label><br>
+                                    <label class="lab" style="line-height:20px;">: {{$cart->alamat}}</label><br>
+                                    <label class="lab" style="line-height:20px;">: {{date("d-m-Y", strtotime($cart->tanggal_sewa)) }}</label><br>
+                                    <button class="btn btn-danger" style="color:white;width:40%;margin-top:20px;">Remove</button>
                                 </div>
 
-                                <div class="scroll" style="float:right;padding:0;height:200px;" >
+                                <div class="scroll" style="float:right;padding:0;height:200px;width:40%;" >
                                     <table class="table" style="padding:0px;margin:0px;">
                                         <thead class="">
                                             <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">Nama</th>
+                                                <th scope="col" style="width:500px;">Nama</th>
                                                 <th scope="col">Harga</th>
                                                 <th scope="col">Jumlah</th>
                                             </tr>
                                         </thead>
-                                        @foreach ($databarang as $i =>$barang)
-                                            <tr>
-                                                <td style="height:10px;"><input type="checkbox" id="C{{$key+1}}p{{$i+1}}" name="arr[]" onclick="keclicks({{$key+1}}+'p'+{{$i+1}})" value="{{$i}}pas{{$key+1}}"></td>
-                                                {{-- <td style="height:10px;"><input type="checkbox" id="C{{$i+1}}" name="arr[]" onclick="keclicks({{$i+1}})" value="{{$i}}"></td> --}}
-                                                {{-- <td style="height:10px;"><input type="checkbox" id="C{{$i+1}}" name="arr[]" onclick="keclicks({{$i+1}})" value="{{$i}}"></td> --}}
-                                                <td style="height:10px;">{{$barang->barang_nama}}</td>
-                                                <td style="height:10px;"><label id="R{{$key+1}}p{{$i+1}}">{{$barang->barang_harga}}</label></td>
-                                                <td id="txthidden"><input type="number" style="display:none;width:70px;" id="H{{$key+1}}p{{$i+1}}" class="form-control-sm" name="jumlah[]" onchange="changeJumlah({{$key+1}}+'p'+{{$i+1}})" min=1></td>
-                                                {{-- <td id="txthidden"><input type="number" style="display:none;height:10px;" id="H{{$i+1}}" class="form-control-sm" name="jumlah[]"></td> --}}
-
-                                            </tr>
+                                        @foreach ($dataaddon as $j =>$addon)
+                                            @foreach ($databarang as $i =>$barang)
+                                            @if ($addon->id_pegawai==$cart->pegawai_id)
+                                                @if ($addon->id_barang==$barang->id)
+                                                <tr>
+                                                    <td style="height:10px;text-align:left;">{{$barang->barang_nama}}</td>
+                                                    <td style="height:10px;"><label id="R{{$key+1}}p{{$i+1}}">{{$barang->barang_harga}}</label></td>
+                                                    <td id="txthidden"><input type="number" style="display:none;width:70px;" id="H{{$key+1}}p{{$i+1}}" class="form-control-sm" name="jumlah[]" onchange="changeJumlah({{$key+1}}+'p'+{{$i+1}})" min=1></td>
+                                                </tr>
+                                                @endif
+                                            @endif
+                                            @endforeach
                                         @endforeach
+
                                     </table>
                                 </div>
                             @endif
@@ -108,7 +107,7 @@
                 @endforeach
             </div>
 
-
+            <div style="float:right;">
                 <label style="color:grey;font-weight:semibold;font-size:20px;" id="txttotal">Total :  {{$total}}</label>
                 <input type="hidden" name="txttotalhidden" id="txttotalhidden" value="{{$total}}">
                 <input type="hidden" name="txttotalhidden1" id="txttotalhidden1" value="{{$total}}">
@@ -117,8 +116,10 @@
                 <input type="hidden" name="temparr[]" id="temp">
                 <input type="hidden" name="tempjumlah[]" id="tempjumlah">
 
-                <button type="submit" class="btn btn-warning" onclick="btncheckout()">Checkout</button>
-            </form>
+                <button type="submit" class="btn btn-warning" style="color:white;margin-left:10px;margin-top:-5px;" onclick="btncheckout()">Checkout</button>
+            </div>
+            <div style="clear:both"></div>
+        </form>
         </div>
     </div>
 

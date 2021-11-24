@@ -70,7 +70,7 @@
             <h2>{{ $pegawai->pegawai_jasa }}</h2>
         </div>
         {{-- <label style="color:gray;font-size:35px;font-weight:semibold;margin-left:15px;">{{ $pegawai->pegawai_jasa }}</label> --}}
-        <form action="{{ url('/user/dosavedetailcart') }}" method="post">
+        <form action="{{ url('/user/doupdatedetailcart') }}" method="post">
             @csrf
             <div id="contPeg" style="margin-left:15px;">
                 <div style="float:left;">
@@ -140,9 +140,9 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <h4><a href="#">{{ $addon['barang_nama'] }}</a></h4>
+                                    <h4><a href="#">{{ $addon->barang->barang_nama }}</a></h4>
                                     <p class="arrival-product-price">
-                                        Rp.{{ $addon['barang_harga'] }} x {{ $addon['jumlah']}}
+                                        Rp.{{ $addon->barang->barang_harga }} x {{ $addon->jumlah}}
 
                                     </p>
                                     <a href="{{ url('user/doremoveaddon/'.$addon['id'].'/'.$pegawai->id) }}">&nbsp;&nbsp;&nbsp;<button data-toggle="modal" data-target="#modalEditAddOn{{$addon['id']}}" style="color:red; font-size:15px;font-weight:normal;margin-top:9px;margin-left:-10px;">Remove</button></a>
@@ -154,10 +154,10 @@
                             <div class="modal fade bd-example-modal-sm" id="modalEditAddOn{{$addon['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                                     <div class="modal-content">
-                                        <form method="post" action="{{ url('/user/doeditaddon') }}">
+                                        <form method="post" action="{{ url('/user/doeditaddonedit') }}">
                                             @csrf
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">{{ $addon['barang_nama'] }}</h5>
+                                                <h5 class="modal-title" id="exampleModalLongTitle">{{ $addon->barang->barang_nama'] }}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -174,7 +174,7 @@
                                                 ?>
                                                 <select name="jumlah" id="" class="form-select" aria-label="Default select example">
                                                     @for($i = 1; $i <= ($brg->barang_stok); $i++)
-                                                        @if($i == $addon['jumlah'])
+                                                        @if($i == $addon->jumlah)
                                                             <option value="{{$i}}" selected>{{$i}}</option>
                                                         @else
                                                             <option value="{{$i}}">{{$i}}</option>
@@ -182,7 +182,7 @@
 
                                                     @endfor
                                                 </select>
-                                                <input type="hidden" name="id" value="{{ $addon['id'] }}">
+                                                <input type="hidden" name="idaddon" value="{{ $addon->id }}">
                                                 <input type="hidden" name="idpegawai" value="{{ $pegawai->id }}">
                                             </div>
                                             <div class="modal-footer">
@@ -268,7 +268,7 @@
                             <div class="modal fade bd-example-modal-sm" id="modalAddOn{{$barang->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                                     <div class="modal-content">
-                                        <form method="post" action="{{ url('/user/dotambahaddon') }}">
+                                        <form method="post" action="{{ url('/user/dotambahaddonedit') }}">
                                             @csrf
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">Add {{ $barang->barang_nama }}</h5>
@@ -294,7 +294,7 @@
                                                     @endif
 
                                                 </select>
-                                                <input type="hidden" name="id" value="{{ $barang->id }}">
+                                                <input type="hidden" name="idbarang" value="{{ $barang->id }}">
                                                 <input type="hidden" name="idpegawai" value="{{ $pegawai->id }}">
                                             </div>
                                             <div class="modal-footer">

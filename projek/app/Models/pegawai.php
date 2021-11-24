@@ -27,4 +27,7 @@ class pegawai extends Model
     public function inCart(){
         return $this->hasMany(cart::class, 'pegawai_id','id');
     }
+    public function addons(){
+        return $this->hasMany(addon::class, 'id_pegawai','id');
+    }
 }
