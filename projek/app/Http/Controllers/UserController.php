@@ -11,18 +11,21 @@ use App\Models\kategori;
 use App\Models\user;
 use App\Models\pegawai;
 use App\Models\admin;
+use App\Models\chat;
 use App\Models\logstok;
 use App\Models\dtransbarang;
 use App\Models\dtranssewa;
+use App\Models\dtranstpwd;
 use App\Models\htranssewa;
+use Database\Seeders\DtranssewaSeeder;
 
 class UserController extends Controller
 {
     //DETAIL CART
     function detailcart($id){
         $pegawai = pegawai::where('id',$id)->first();
-        $kategori=$pegawai->pegawai_jasa;
-        $databarang = barang::where("barang_kategori",$kategori)->get();
+        $kategori=kategori::where(strtolower('kategori_nama'),strtolower($pegawai->pegawai_jasa))->first();
+        $databarang = barang::where("barang_kategori",$kategori->id)->get();
         $user=user::where('id',session('loggedIn'))->first();
         // session()->forget(['addons']);
         if(session()->exists('addons')){
@@ -100,33 +103,39 @@ class UserController extends Controller
     }
 
     function dosavedetailcart(Request $request){
-        cart::create([
-            "user_id"=>$request->session()->get("loggedIn"),
-            "pegawai_id"=>$request->idpegawai,
-            "tanggal_sewa"=>$request->tanggal,
-            "alamat"=>$request->alamat
-        ]);
-        if(session()->exists('addons')){
-            $addons = json_decode(session('addons'),true);
-            session()->forget(['addons']);
-            foreach ($addons as $key => $value) {
-                addon::create([
-                    'id_pegawai'=>$request->idpegawai,
-                    'id_user'=>$request->session()->get("loggedIn"),
-                    'id_barang'=>$value['id'],
-                    'jumlah'=>$value['jumlah'],
-                ]);
+        if($request->tanggal != null){
+            cart::create([
+                "user_id"=>$request->session()->get("loggedIn"),
+                "pegawai_id"=>$request->idpegawai,
+                "tanggal_sewa"=>$request->tanggal,
+                "alamat"=>$request->alamat
+            ]);
+            if(session()->exists('addons')){
+                $addons = json_decode(session('addons'),true);
+                session()->forget(['addons']);
+                foreach ($addons as $key => $value) {
+                    addon::create([
+                        'id_pegawai'=>$request->idpegawai,
+                        'id_user'=>$request->session()->get("loggedIn"),
+                        'id_barang'=>$value['id'],
+                        'jumlah'=>$value['jumlah'],
+                    ]);
+                }
             }
+            return redirect("/home/user");
         }
-        return redirect("/home/user");
+        else{
+            return redirect('user/detailcart/'.$request->idpegawai)->with("msg","Pilih tanggal sewa");
+        }
     }
 
     //edit
     public function detaileditcart($id){
         $pegawai = pegawai::where('id',$id)->first();
-        $kategori=$pegawai->pegawai_jasa;
-        $databarang = barang::where("barang_kategori",$kategori)->get();
+        $kategori=kategori::where(strtolower('kategori_nama') ,strtolower($pegawai->pegawai_jasa))->first();
+        $databarang = barang::where("barang_kategori",$kategori->id)->get();
         $user=user::where('id',session('loggedIn'))->first();
+        $cart = cart::where('pegawai_id',$id)->where('user_id',session('loggedIn'))->first();
         // session()->forget(['addons']);
         // if(session()->exists('addons')){
         //     $addons = json_decode(session('addons'),true);
@@ -135,7 +144,7 @@ class UserController extends Controller
         //     $addons = array();
         // }
         $addons=addon::where("id_user",session('loggedIn'))->where("id_pegawai",$id)->get();
-        return view('user.user_detail_cart_update',['pegawai'=>$pegawai,'user'=>$user,'databarang'=>$databarang,'addons'=>$addons,'id'=>$id]);
+        return view('user.user_detail_cart_update',['cart'=>$cart,'pegawai'=>$pegawai,'user'=>$user,'databarang'=>$databarang,'addons'=>$addons,'id'=>$id]);
     }
     function dotambahaddonedit(Request $request){
         addon::create([
@@ -151,7 +160,9 @@ class UserController extends Controller
         addon::where('id',$request->idaddon)->update([
             'jumlah'=>$request->jumlah,
         ]);
+
         return redirect('user/detaileditcart/'.$request->idpegawai);
+        //return redirect('user/detaileditcart/'.$request->idpegawai);
     }
 
     function doremoveaddonedit($id = '[]',$idpegawai = '[]'){
@@ -192,5 +203,49 @@ class UserController extends Controller
         }
         return redirect("/home/user");
     }
+    public function ongoingtrans(Request $request){
+        $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
+            $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
+          })
+          ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+          ->get();
+        return view("user.ongoingtrans",["dtransewa"=>$dtransewa]);
+    }
     //DETAIL CART
+
+    //REMOVE CART
+    public function doremovecart($id = '[]'){
+        $cart = cart::find($id);
+        $addon = addon::where('id_pegawai',$cart->pegawai_id)->where('id_user',$cart->user_id)->delete();
+        $cart->delete();
+        return redirect('home/transaksi_sewa');
+
+    }
+    //REMOVE CART
+
+
+    public function detailongoing($id){
+        $dtransewa=dtranssewa::where("id",$id)->first();
+        $pegawai=pegawai::get();
+        $dtransbarang=dtransbarang::where("dSewa_id",$id)->get();
+        return view('user.detailongoing',["dtransewa"=>$dtransewa,"pegawai"=>$pegawai,"dtransbarang"=>$dtransbarang]);
+    }
+
+    public function chat($id,Request $request){
+        $pegawai=pegawai::where("id",$id)->first();
+
+        $request->session()->put("id", $id);
+        $datachat=chat::where(function ($query) {
+            $query->where('chat_sender', '=', session('loggedIn'))
+                  ->where('chat_destination', '=', session("id"));
+        })->orWhere(function ($query) {
+            $query->where('chat_sender', '=', session("id"))
+                  ->where('chat_destination', '=',  session('loggedIn'));
+        })->get();
+        session()->forget('id');
+        //dd($datachat);
+        return view('user.chat',["pegawai"=>$pegawai, 'datachat'=>$datachat]);
+    }
+
+
 }

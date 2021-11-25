@@ -30,4 +30,7 @@ class pegawai extends Model
     public function addons(){
         return $this->hasMany(addon::class, 'id_pegawai','id');
     }
+    public function dtranssewa(){
+        return $this->hasOne(dtranssewa::class, 'pegawai_id','id');
+    }
 }

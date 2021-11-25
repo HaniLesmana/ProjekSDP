@@ -30,6 +30,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/transaksi_sewa", [HomeController::class, "transaksi_sewa"]);
         Route::get("/list_cart_cancel/{id}", [HomeController::class, "list_cart_cancel"]);
         Route::get("/do_transaksi_sewa", [HomeController::class, "do_transaksi_sewa"]);
+        Route::get("/ongoingtrans", [UserController::class, "ongoingtrans"]);
     });
     Route::prefix("admin")->group(function(){
     //Route::get("/listpegawai",function ()
@@ -129,14 +130,18 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/doremoveaddon/{id}/{idpegawai}", [UserController::class, "doremoveaddon"]);
 
         Route::post("/dosavedetailcart", [UserController::class, "dosavedetailcart"]);
-        Route::post("/doeditdetailcart{id}", [UserController::class, "doeditdetailcart"]);
-
+        Route::post("/detaileditcart/{id}", [UserController::class, "detaileditcart"]);
 
         Route::get("/detaileditcart/{id}", [UserController::class, "detaileditcart"]);
         Route::get("/dotambahaddonedit/{id}", [UserController::class, "dotambahaddonedit"]);
-        Route::get("/doeditaddonedit/{id}", [UserController::class, "doeditaddonedit"]);
+        Route::post("/doeditaddonedit", [UserController::class, "doeditaddonedit"]);
+        Route::get("/doremoveaddonedit/{id}", [UserController::class, "doremoveaddonedit"]);
         Route::post("/doupdatedetailcart", [UserController::class, "doupdatedetailcart"]);
 
+        Route::get("/doremovecart/{id}", [UserController::class, "doremovecart"]);
+
+        Route::get("/detailongoing/{id}", [UserController::class, "detailongoing"]);
+        Route::get("/chat/{id}", [UserController::class, "chat"]);
     });
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);

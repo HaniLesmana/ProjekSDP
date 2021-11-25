@@ -12,25 +12,31 @@
 
                     <form action="{{ url('/home/user')}}" method="get">
                         <a class="nav-item nav-link">
-                            <input type="submit" value="HOME">
+                            <input class="btn" type="submit" value="HOME">
                             {{-- <a class="nav-item nav-link active" href="#">HOME <span class="sr-only">(current)</span></a> --}}
                         </a>
                     </form>
                     <form action="{{ url('/home/profile')}}" method="get">
                         <a class="nav-item nav-link">
-                            <input type="submit" value="PROFILE">
+                            <input class="btn" type="submit" value="PROFILE">
                         </a>
                         {{-- <a class="nav-item nav-link" href="#">PROFILE</a> --}}
                     </form>
                     <form action="{{ url('/home/transaksi_sewa')}}" method="get">
                         <a class="nav-item nav-link">
-                            <input type="submit" value="CART">
+                            <input class="btn" type="submit" value="CART">
                         </a>
                         {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
                     </form>
                     <form action="{{ url('/home/history')}}" method="get">
                         <a class="nav-item nav-link">
-                            <input type="submit" value="HISTORY">
+                            <input class="btn" type="submit" value="HISTORY">
+                        </a>
+                        {{-- <a class="nav-item nav-link" href="#About">HISTORY</a> --}}
+                    </form>
+                    <form action="{{ url('/home/ongoingtrans')}}" method="get">
+                        <a class="nav-item nav-link">
+                            <input class="btn" type="submit" value="Transaksi On Going">
                         </a>
                         {{-- <a class="nav-item nav-link" href="#About">HISTORY</a> --}}
                     </form>

@@ -21,4 +21,7 @@ class dtranssewa extends Model
         'dSewa_harga',
         'hSewa_id'
     ];
+    public function pegawai(){
+        return $this->belongsTo(pegawai::class, 'pegawai_id','id');
+    }
 }

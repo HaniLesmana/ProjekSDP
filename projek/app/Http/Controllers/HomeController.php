@@ -13,6 +13,7 @@ use App\Models\admin;
 use App\Models\logstok;
 use App\Models\dtransbarang;
 use App\Models\dtranssewa;
+use App\Models\dtranstpwd;
 use App\Models\htranssewa;
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
@@ -567,21 +568,19 @@ class HomeController extends Controller
 
         $total = $request->total;
         // $rand = rand(0,100);
-        $user = DB::table('user')->where('user_id',session('loggedIn'))->get();
-        $email = data_get($user,'0.user_email');
-        $id = data_get($user,'0.user_id');
-        DB::table('htranstpwd')->insert([
+        $user = user::where('id',session('loggedIn'))->first();
+        $email = $user->user_email;
+        $id = $user->id;
+        htransTopup::create([
             'user_id' => $id,
             'htranstpwd_tanggal' => date("Y/m/d"),
             'htranstpwd_total' => $total,
             'htranstpwd_tipe' => 'topup',
             'htranstpwd_status' => 2,
         ]);
-         //status = 0:declined, 1:accepted, 2=pending
-        //$mx = DB::select("select max(user_id) from user");
-        $mx = DB::select("select * from htranstpwd");
-        //$mx = DB::select("select max(htranstpwd_id) from htranstpwd");
-        //$mxx = data_get($mx,'0.htranstpwd_id');
+
+        $mx = htransTopup::all();
+
         $max=0;
         foreach ($mx as $key => $value) {
             if((int)$value->htranstpwd_id>=$max){
@@ -596,12 +595,13 @@ class HomeController extends Controller
                 $nominal=str_replace('.','',$nominal);
                 $tes=$ar->jumlah;
 
-                // DB::table('dtranstpwd')->insert([
-                //     'htranstpwd_id' => (int)$mx,
-                //     'dtranstpwd_nominal' => (int)$nominal,
-                //     'dtranstpwd_jumlah' => (int)$tes,
-                // ]);
-                DB::insert('insert into dtranstpwd (htranstpwd_id, dtranstpwd_nominal,dtranstpwd_jumlah) values (?, ?, ?)', [$max, (int)$nominal,(int)$tes]);
+                dtranstpwd::create([
+                    'htranstpwd_id' => $max,
+                    'htranstpwd_nominal' => (int)$nominal,
+                    'htranstpwd_jumlah' => (int)$tes,
+                ]);
+
+                //DB::insert('insert into dtranstpwd (htranstpwd_id, dtranstpwd_nominal,dtranstpwd_jumlah) values (?, ?, ?)', [$max, (int)$nominal,(int)$tes]);
             }
         }
         return view('user.user_checkout',['total'=>$total, 'email'=>$email]);

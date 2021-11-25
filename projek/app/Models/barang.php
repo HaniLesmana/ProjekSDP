@@ -28,4 +28,7 @@ class barang extends Model
     public function addon(){
         return $this->hasMany(addon::class, 'id_barang','id');
     }
+    public function dtransbarang(){
+        return $this->hasOne(dtransbarang::class, 'barang_id','id');
+    }
 }

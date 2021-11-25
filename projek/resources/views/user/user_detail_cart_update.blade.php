@@ -102,7 +102,8 @@
                     </div>
                     <div class="shadow-lg" style="padding:20px;width:49.5%;float:left;border-radius:10px;">
                         <label for="tanggal">Tanggal Sewa</label>
-                        <input type="date" name="tanggal" id="tanggal">
+                        <input type="date" value="{{date('Y-m-d', strtotime($cart->tanggal_sewa));  }}" name="tanggal" id="tanggal">
+
                     </div>
                 </div>
                 <div style="clear:both"></div>
@@ -149,7 +150,6 @@
 
                                 </div>
                             </div>
-
                             {{-- MODAL INPUT STOCK --}}
                             <div class="modal fade bd-example-modal-sm" id="modalEditAddOn{{$addon['id']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -157,23 +157,25 @@
                                         <form method="post" action="{{ url('/user/doeditaddonedit') }}">
                                             @csrf
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLongTitle">{{ $addon->barang->barang_nama'] }}</h5>
+                                                <h5 class="modal-title" id="exampleModalLongTitle">{{ $addon->barang->barang_nama }}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
+
                                             <div class="modal-body" style="color:black;">
                                                 Jumlah :
+
                                                 <?php
-                                                    $brg = [];
+                                                    $brg = "";
                                                     foreach ($databarang as $barang) {
-                                                        if($barang->id == $addon['id']){
+                                                        if($barang->id == $addon->id_barang){
                                                             $brg = $barang;
                                                         }
                                                     }
                                                 ?>
                                                 <select name="jumlah" id="" class="form-select" aria-label="Default select example">
-                                                    @for($i = 1; $i <= ($brg->barang_stok); $i++)
+                                                    @for($i = 1; $i <= $brg->barang_stok; $i++)
                                                         @if($i == $addon->jumlah)
                                                             <option value="{{$i}}" selected>{{$i}}</option>
                                                         @else

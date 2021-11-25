@@ -66,6 +66,11 @@
     </style>
 
     <div class="container">
+        @if (Session::has('msg'))
+            <div class="alert alert-warning" role="alert">
+            {{ session('msg'); }}
+            </div>
+        @endif
         <div class="section-header" style="text-align:left;margin-left:15px;margin-top:10px;margin-bottom:10px;">
             <h2>{{ $pegawai->pegawai_jasa }}</h2>
         </div>
@@ -86,6 +91,7 @@
                 </div>
                 <input type="hidden" name="idpegawai" value="{{$pegawai->id}}">
                 <div class="btn btn-warning btnTrans" style="float:right;">
+                    <input type="hidden" name="idpegawai" value="{{ $pegawai->id }}">
                     <button type="submit">Add to Cart</button>
                 </div>
                 <div style="clear:both"></div>

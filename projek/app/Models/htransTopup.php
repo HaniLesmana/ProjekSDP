@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class htransTopup extends Model
 {
     use HasFactory;
-    protected $table = "htranstpwd";
+    use SoftDeletes;
+    protected $table = "htranstpwds";
     protected $primaryKey = "htranstpwd_id";
     protected $fillable = ["htranstpwd_id","user_id", "htranstpwd_tanggal", "htranstpwd_total", "htranstpwd_tipe", "htranstpwd_status"];
+    public $timestamps = true;
 
     public function hd_trans()
     {

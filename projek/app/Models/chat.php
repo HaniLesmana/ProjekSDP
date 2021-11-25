@@ -11,10 +11,18 @@ class chat extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable=[
-        'pegawai_id',
-        'user_id',
-        'chat_isi',
-        'chat_sender'
-    ];
+    // protected $fillable=[
+    //     'pegawai_id',
+    //     'user_id',
+    //     'chat_isi',
+    //     'chat_sender'
+    // ];
+
+    function sender(){
+        return $this->belongsTo(user::class, 'chat_sender','id');
+    }
+
+    function destination(){
+        return $this->belongsTo(user::class, 'chat_destination','id');
+    }
 }
