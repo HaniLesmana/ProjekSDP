@@ -6,16 +6,45 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="/home/pegawai">Home</a>
-            <a class="nav-item nav-link" href="/pegawai/pesanan">Order</a>
-            <a class="nav-item nav-link" href="/pegawai/history" >History</a>
-            <form action="{{ url('pegawai/profile')}}" method="get">
-                <a>
-                    <input class="nav-item nav-link" type="submit" value="Profile">
+            {{-- <a class="nav-item nav-link active" href="/home/pegawai">Home</a> --}}
+            <form action="{{ url('home/pegawai')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn" type="submit" value="Home">
                 </a>
                 {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
             </form>
-          <button type ="button" class="btn btn-primary tombol" style="align:right;"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>
+            {{-- <a class="nav-item nav-link" href="/pegawai/pesanan">Order</a> --}}
+            <form action="{{ url('pegawai/pesanan')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn" type="submit" value="Order">
+                </a>
+                {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
+            </form>
+            {{-- <a class="nav-item nav-link" href="/pegawai/history" >History</a> --}}
+            <form action="{{ url('pegawai/history')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn" type="submit" value="History">
+                </a>
+                {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
+            </form>
+            <form action="{{ url('pegawai/profile')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn" type="submit" value="Profile">
+                </a>
+                {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
+            </form>
+            <form action="{{ url('pegawai/chat')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn" type="submit" value="Chat">
+                </a>
+                {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
+            </form>
+            <form action="{{ url('/logout')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn btn-danger" type="submit" value="Sign Out">
+                </a>
+            </form>
+          {{-- <button type ="button" class="btn btn-primary tombol" style="align:right;"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button> --}}
         </div>
       </div>
     </div>

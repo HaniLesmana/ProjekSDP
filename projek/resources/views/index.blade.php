@@ -186,8 +186,9 @@
       </div>
       <!-- Akhir work like at home -->
       <!-- About -->
-      <a id="About"><h1>About</h1>
-        <p>BABOWE is Web Application that will help you to find your trustful,high quality, with great service Handyman and Household Assistant
+      <br><br>
+      <a id="About"><h1 style="margin-bottom:20px;">About</h1>
+        <p style="line-height:25px;">BABOWE is Web Application that will help you to find your trustful,high quality, with great service Handyman and Household Assistant
           Your satisfy is our happiness.
 
           Babowe started to operate from 2021 at first, we  want to help

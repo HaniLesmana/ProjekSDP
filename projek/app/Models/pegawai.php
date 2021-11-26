@@ -21,7 +21,8 @@ class pegawai extends Model
         'pegawai_alamat',
         'pegawai_password',
         'pegawai_jasa',
-        'pegawai_saldo'
+        'pegawai_saldo',
+        'pegawai_deskripsi',
     ];
 
     public function inCart(){

@@ -15,7 +15,8 @@
 @section('main')
 
     <!-- Jumbotron -->
-    <div class="container mb-3">
+    <div style="height:10px;"></div>
+    <div class="container mb-3" style="padding-left:30px;">
         <div class="row align-items-center" style="height: 400px;width: 100%;">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">

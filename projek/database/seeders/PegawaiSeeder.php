@@ -24,6 +24,7 @@ class PegawaiSeeder extends Seeder
             "pegawai_password"=>md5("123"),
             "pegawai_jasa"=>"Cleaning",
             "pegawai_saldo"=>10000,
+            "pegawai_deskripsi"=>"sudah pernah menjadi pegawai rumah tangga"
         ]);
 
         $pegawai=pegawai::create([
@@ -34,7 +35,8 @@ class PegawaiSeeder extends Seeder
             "pegawai_alamat"=>"fdsa",
             "pegawai_password"=>md5("123"),
             "pegawai_jasa"=>"Plumbing",
-            "pegawai_saldo"=>23000
+            "pegawai_saldo"=>23000,
+            "pegawai_deskripsi"=>"sudah berpengalaman dalam menjalankan tugas",
         ]);
 
         $pegawai->save();

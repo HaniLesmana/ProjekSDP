@@ -36,11 +36,11 @@
                     </form>
                     <form action="{{ url('/home/ongoingtrans')}}" method="get">
                         <a class="nav-item nav-link">
-                            <input class="btn" type="submit" value="Transaksi On Going">
+                            <input class="btn" type="submit" value="ONGOING TRANSACTION">
                         </a>
                         {{-- <a class="nav-item nav-link" href="#About">HISTORY</a> --}}
                     </form>
-                    <form action="{{url('/logout')}}" method="get">
+                    <form action="{{url('/logout')}}" method="get" style="padding-top: 10px;">
                         <button type ="submit" class="btn btn-primary tombolSignOut">Sign Out</button>
                     </form>
                 </div>

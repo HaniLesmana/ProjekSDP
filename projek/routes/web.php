@@ -141,7 +141,11 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/doremovecart/{id}", [UserController::class, "doremovecart"]);
 
         Route::get("/detailongoing/{id}", [UserController::class, "detailongoing"]);
+
         Route::get("/chat/{id}", [UserController::class, "chat"]);
+        Route::post("/chat_ajax", [UserController::class, "chat_ajax"]);
+
+        Route::post("/chat_ajax2", [UserController::class, "chat_ajax2"]);
     });
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);

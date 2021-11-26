@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\chat;
 use Illuminate\Database\Seeder;
 
 class ChatSeeder extends Seeder
@@ -14,5 +15,11 @@ class ChatSeeder extends Seeder
     public function run()
     {
         //
+        $chat=chat::create([
+             "chat_sender"=> 1,
+             "chat_destination"=>1,
+             "chat_text"=>"kuda",
+        ]);
+        $chat->save();
     }
 }

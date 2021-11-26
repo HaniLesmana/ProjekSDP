@@ -233,7 +233,6 @@ class UserController extends Controller
 
     public function chat($id,Request $request){
         $pegawai=pegawai::where("id",$id)->first();
-
         $request->session()->put("id", $id);
         $datachat=chat::where(function ($query) {
             $query->where('chat_sender', '=', session('loggedIn'))
@@ -244,8 +243,49 @@ class UserController extends Controller
         })->get();
         session()->forget('id');
         //dd($datachat);
-        return view('user.chat',["pegawai"=>$pegawai, 'datachat'=>$datachat]);
+        return view('user.chat',["pegawai"=>$pegawai, "datachat"=>$datachat]);
     }
 
+    public function chat_ajax(Request $request){
+        $chat=$request->post("datachat");
+        $idpegawai=$request->post("idpegawai");
+        // dd((int)session('loggedIn'));
+        chat::create([
+            "chat_sender"=> (integer)session('loggedIn'),
+            "chat_destination"=>(integer)$idpegawai,
+            "chat_text"=>$chat,
+        ]);
 
+        // $chat = new chat;
+        // $chat->chat_sender = (int)session('loggedIn');
+        // $chat->chat_destination = (int)$idpegawai;
+        // $chat->chat_text = $chat;
+        // $chat->save();
+
+
+
+
+        // $chat=chat::create([
+        //     "chat_sender"=> 1,
+        //     "chat_destination"=>1,
+        //     "chat_text"=>"kuda",
+        // ]);
+        // $chat->save();
+        //return view("user.chat_ajax");
+        return $this->chat_ajax2($request);
+    }
+
+    public function chat_ajax2(Request $request){
+        $pegawai=pegawai::where("id",$request->idpegawai)->first();
+        session()->put("id", $request->idpegawai);
+        $datachat=chat::where(function ($query) {
+            $query->where('chat_sender', '=', session('loggedIn'))
+                  ->where('chat_destination', '=', session("id"));
+        })->orWhere(function ($query) {
+            $query->where('chat_sender', '=', session("id"))
+                  ->where('chat_destination', '=',  session('loggedIn'));
+        })->get();
+        session()->forget('id');
+        return view("user.chat_ajax",['datachat'=>$datachat]);
+    }
 }

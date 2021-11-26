@@ -11,18 +11,27 @@ class chat extends Model
     use HasFactory;
     use SoftDeletes;
 
-    // protected $fillable=[
-    //     'pegawai_id',
-    //     'user_id',
-    //     'chat_isi',
-    //     'chat_sender'
-    // ];
+    protected $table="chats";
 
-    function sender(){
+    protected $fillable=[
+        'chat_sender',
+        'chat_destination',
+        'chat_text',
+    ];
+
+    function user_sender(){
         return $this->belongsTo(user::class, 'chat_sender','id');
     }
 
-    function destination(){
+    function user_destination(){
+        return $this->belongsTo(pegawai::class, 'chat_destination','id');
+    }
+
+    function pegawai_sender(){
+        return $this->belongsTo(pegawai::class, 'chat_sender','id');
+    }
+
+    function pegawai_destination(){
         return $this->belongsTo(user::class, 'chat_destination','id');
     }
 }
