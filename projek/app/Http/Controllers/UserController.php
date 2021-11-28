@@ -253,6 +253,7 @@ class UserController extends Controller
         chat::create([
             "chat_sender"=> (integer)session('loggedIn'),
             "chat_destination"=>(integer)$idpegawai,
+            "chat_from"=>"user",
             "chat_text"=>$chat,
         ]);
 
@@ -277,15 +278,19 @@ class UserController extends Controller
 
     public function chat_ajax2(Request $request){
         $pegawai=pegawai::where("id",$request->idpegawai)->first();
-        session()->put("id", $request->idpegawai);
-        $datachat=chat::where(function ($query) {
-            $query->where('chat_sender', '=', session('loggedIn'))
-                  ->where('chat_destination', '=', session("id"));
-        })->orWhere(function ($query) {
-            $query->where('chat_sender', '=', session("id"))
-                  ->where('chat_destination', '=',  session('loggedIn'));
-        })->get();
-        session()->forget('id');
+        // session()->put("id", $request->idpegawai);
+        // $datachat=chat::where(function ($query) {
+        //     $query->where('chat_sender', '=', session('loggedIn'))
+        //           ->where('chat_destination', '=', session("id"));
+        // })->orWhere(function ($query) {
+        //     $query->where('chat_sender', '=', session("id"))
+        //           ->where('chat_destination', '=',  session('loggedIn'));
+        // })->get();
+        // session()->forget('id');
+
+
+
+        $datachat=chat::where("chat_sender",session('loggedIn'))->where("chat_destination",$request->idpegawai)->get();
         return view("user.chat_ajax",['datachat'=>$datachat]);
     }
 }

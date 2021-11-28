@@ -16,6 +16,7 @@ class chat extends Model
     protected $fillable=[
         'chat_sender',
         'chat_destination',
+        'chat_from',
         'chat_text',
     ];
 

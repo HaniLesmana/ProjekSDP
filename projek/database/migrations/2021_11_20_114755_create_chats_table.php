@@ -17,6 +17,7 @@ class CreateChatsTable extends Migration
             $table->id();
             $table->string("chat_sender");
             $table->string("chat_destination");
+            $table->string("chat_from");
             $table->string("chat_text");
             $table->timestamps();
             $table->softDeletes();

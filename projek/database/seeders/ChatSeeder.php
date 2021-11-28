@@ -18,6 +18,7 @@ class ChatSeeder extends Seeder
         $chat=chat::create([
              "chat_sender"=> 1,
              "chat_destination"=>1,
+             "chat_from"=>"user",
              "chat_text"=>"kuda",
         ]);
         $chat->save();

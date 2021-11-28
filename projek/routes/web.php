@@ -151,6 +151,9 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
         Route::get('/history', [HomeController::class, "history"]);
         Route::get("/profile", [HomeController::class, "pegawaiProfile"]);
+        Route::get("/chat", [HomeController::class, "pegawaiChat"]);
+        Route::post("/chat_ajax_pegawai_insert", [HomeController::class, "chat_ajax_pegawai_insert"]);
+        Route::post("/chat_ajax_pegawai", [HomeController::class, "chat_ajax_pegawai"]);
     });
 });
 

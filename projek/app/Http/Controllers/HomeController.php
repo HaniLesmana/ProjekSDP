@@ -10,6 +10,7 @@ use App\Models\kategori;
 use App\Models\user;
 use App\Models\pegawai;
 use App\Models\admin;
+use App\Models\chat;
 use App\Models\logstok;
 use App\Models\dtransbarang;
 use App\Models\dtranssewa;
@@ -799,5 +800,41 @@ class HomeController extends Controller
         $pegawai=pegawai::where("id",$request->session()->get('loggedIn'))->first();
         $param["pegawai"]=$pegawai;
         return view("pegawai.pegawai_profile",$param);
+    }
+    public function pegawaiChat(){
+        $datachat=chat::where("chat_destination",session()->get('loggedIn'))->latest('id')->get();
+        $arr=array();
+        foreach ($datachat as $i => $c) {
+            if (count($arr)==0){
+                array_push($arr,$c);
+            }else{
+                $ada=false;
+                foreach ($arr as $j => $a) {
+                    if($a->chat_sender==$c->chat_sender){
+                        $ada=true;
+                    }
+                }
+                if(!$ada){
+                    array_push($arr,$c);
+                }
+            }
+        }
+        return view("pegawai.chat",["datachat"=>$datachat,"arr"=>$arr]);
+    }
+    public function chat_ajax_pegawai(Request $request){
+        $datachat=chat::where("chat_destination",session()->get('loggedIn'))->where("chat_sender",$request->iduser)->get();
+        return view("pegawai.chat_ajax",["datachat"=>$datachat]);
+    }
+    public function chat_ajax_pegawai_insert(Request $request){
+        $chat=$request->post("datachat");
+        $iduser=$request->post("iduser");
+        // dd((int)session('loggedIn'));
+        chat::create([
+            "chat_sender"=> (integer)$iduser,
+            "chat_destination"=>(integer)session('loggedIn'),
+            "chat_from"=>"pegawai",
+            "chat_text"=>$chat,
+        ]);
+        //return $this->chat_ajax_pegawai($request);
     }
 }
