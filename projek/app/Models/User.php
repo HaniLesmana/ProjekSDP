@@ -29,4 +29,10 @@ class user extends Model
     public function addons(){
         return $this->hasMany(addon::class, 'id_user','id');
     }
+    public function htranssewa(){
+        return $this->hasMany(htranssewa::class, 'user_id','id');
+    }
+    public function user_voucher(){
+        return $this->hasMany(user_voucher::class, 'user_id','id');
+    }
 }

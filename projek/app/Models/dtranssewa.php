@@ -17,11 +17,15 @@ class dtranssewa extends Model
     public $timestamps=true;
     protected $fillable=[
         'pegawai_id',
-        'dSewa_durasi',
+        'dSewa_tanggal',
         'dSewa_harga',
+        'dSewa_alamat',
         'hSewa_id'
     ];
     public function pegawai(){
         return $this->belongsTo(pegawai::class, 'pegawai_id','id');
+    }
+    public function htranssewa(){
+        return $this->belongsTo(htranssewa::class, 'hSewa_id','id');
     }
 }

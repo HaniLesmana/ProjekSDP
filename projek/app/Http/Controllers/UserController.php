@@ -23,9 +23,11 @@ class UserController extends Controller
 {
     //DETAIL CART
     function detailcart($id){
+
         $pegawai = pegawai::where('id',$id)->first();
         $kategori=kategori::where(strtolower('kategori_nama'),strtolower($pegawai->pegawai_jasa))->first();
         $databarang = barang::where("barang_kategori",$kategori->id)->get();
+
         $user=user::where('id',session('loggedIn'))->first();
         // session()->forget(['addons']);
         if(session()->exists('addons')){
@@ -233,15 +235,16 @@ class UserController extends Controller
 
     public function chat($id,Request $request){
         $pegawai=pegawai::where("id",$id)->first();
-        $request->session()->put("id", $id);
-        $datachat=chat::where(function ($query) {
-            $query->where('chat_sender', '=', session('loggedIn'))
-                  ->where('chat_destination', '=', session("id"));
-        })->orWhere(function ($query) {
-            $query->where('chat_sender', '=', session("id"))
-                  ->where('chat_destination', '=',  session('loggedIn'));
-        })->get();
-        session()->forget('id');
+        // $request->session()->put("id", $id);
+        // $datachat=chat::where(function ($query) {
+        //     $query->where('chat_sender', '=', session('loggedIn'))
+        //           ->where('chat_destination', '=', session("id"));
+        // })->orWhere(function ($query) {
+        //     $query->where('chat_sender', '=', session("id"))
+        //           ->where('chat_destination', '=',  session('loggedIn'));
+        // })->get();
+        // session()->forget('id');
+        $datachat=chat::where("chat_sender",session()->get('loggedIn'))->where("chat_destination",$id)->get();
         //dd($datachat);
         return view('user.chat',["pegawai"=>$pegawai, "datachat"=>$datachat]);
     }
@@ -287,10 +290,12 @@ class UserController extends Controller
         //           ->where('chat_destination', '=',  session('loggedIn'));
         // })->get();
         // session()->forget('id');
+        $datachat=chat::where("chat_sender",session()->get('loggedIn'))->where("chat_destination",$request->idpegawai)->get();
 
 
-
-        $datachat=chat::where("chat_sender",session('loggedIn'))->where("chat_destination",$request->idpegawai)->get();
+        //$datachat=chat::where("chat_sender",session('loggedIn'))->where("chat_destination",$request->idpegawai)->get();
         return view("user.chat_ajax",['datachat'=>$datachat]);
     }
+
+
 }

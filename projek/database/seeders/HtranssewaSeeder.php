@@ -18,9 +18,9 @@ class HtranssewaSeeder extends Seeder
         $htranssewa=htranssewa::create([
             "user_id"=>"1",
             "hSewa_total"=>2000,
-            "hSewa_status"=>2,
+            //"hSewa_status"=>2,
             "voucher_id"=>1,
-            "alamat"=>"alamat"
+            //"alamat"=>"alamat"
         ]);
         $htranssewa->save();
     }

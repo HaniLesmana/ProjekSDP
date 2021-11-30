@@ -16,6 +16,8 @@ use App\Models\dtransbarang;
 use App\Models\dtranssewa;
 use App\Models\dtranstpwd;
 use App\Models\htranssewa;
+use App\Models\user_voucher;
+use App\Models\voucher;
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
 use App\Rules\ConfirmPassword;
@@ -493,7 +495,15 @@ class HomeController extends Controller
         return view('user.user_cart');
     }
     function pegawaiOrder(){
-        return view("pegawai/pesanan");
+        //$dtranssewa=dtranssewa::where("pegawai_id",session('loggedIn'))->where("dSewa_status_accpegawai",2)->get();
+        $dtranssewa=dtranssewa::where(function ($query) {
+             $query->where('pegawai_id', '=', session('loggedIn'))
+                   ->where('dSewa_status_accpegawai', '=', 2);
+        })->orWhere(function ($query) {
+             $query->where('pegawai_id', '=', session('loggedIn'))
+                   ->where('dSewa_status_accpegawai', '=', 1);
+        })->get();
+        return view("pegawai/pesanan",["dtranssewa"=>$dtranssewa]);
     }
 
     function history(){
@@ -657,8 +667,221 @@ class HomeController extends Controller
         $datauser=User::where("id",session('loggedIn'))->first();
         $databarang=barang::get();
         $datakategori=kategori::get();
-        $total=(count($datacart))*50000;
+        $total=0;
+        foreach ($datacart as $key => $dc) {
+            if($dc->pegawai->pegawai_jasa=="Cleaning"){
+                $total=$total+150000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Painting"){
+                $total=$total+200000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Plumbing"){
+                $total=$total+300000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Electrical"){
+                $total=$total+500000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Repair"){
+                $total=$total+400000;
+            }
+        }
+        //$total=(count($datacart))*50000;
         return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai,"databarang"=>$databarang,"datakategori"=>$datakategori,"total"=>$total,"dataaddon"=>$dataaddon]);
+    }
+    function pembayaran(){
+        $datacart = cart::where("user_id",session('loggedIn'))->get();
+        $dataaddon=addon::where("id_user",session('loggedIn'))->get();
+        //$total=(count($datacart))*50000;
+        $total=0;
+        foreach ($datacart as $key => $dc) {
+            if($dc->pegawai->pegawai_jasa=="Cleaning"){
+                $total=$total+150000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Painting"){
+                $total=$total+200000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Plumbing"){
+                $total=$total+300000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Electrical"){
+                $total=$total+500000;
+            }
+            else if($dc->pegawai->pegawai_jasa=="Repair"){
+                $total=$total+400000;
+            }
+        }
+        foreach ($dataaddon as $key => $da) {
+            $total=$total+($da->barang->barang_harga*$da->jumlah);
+        }
+        $datavoucher=voucher::all();
+        $user_voucher=user_voucher::where("user_id",session("loggedIn"))->get();
+        return view("user.pembayaran",["total"=>$total,"datavoucher"=>$datavoucher,"user_voucher"=>$user_voucher]);
+    }
+    function do_pembayaran(Request $request){
+        $user=user::where("id",session("loggedIn"))->first();
+        if($request->totalhidden>$user->user_saldo){
+            echo "<script>
+            alert('Saldo tidak mencukupi');
+            window.location.href='/home/user';
+            </script>";
+            //return redirect("/home/user");
+        }else{
+            $dataaddon=addon::where("id_user",session("loggedIn"))->get();
+            $datacart=cart::where("user_id",session("loggedIn"))->get();
+
+            $htsewa = new htranssewa;
+            $htsewa->user_id = $request->session()->get("loggedIn");
+            $htsewa->hSewa_total = $request->totalhidden;
+            if ($request->datavoucher==-1){
+                $htsewa->voucher_id=NULL;
+            }else{
+                $htsewa->voucher_id = $request->datavoucher;
+            }
+            //$htsewa->hSewa_status = 2;
+            //$htsewa->alamat = "alamat";
+            $htsewa->save();
+            foreach($datacart as $i => $cart){
+                if($cart->pegawai->pegawai_jasa=="Cleaning"){
+                    dtranssewa::create([
+                        "pegawai_id"=>$cart->pegawai_id,
+                        "dSewa_tanggal"=>$cart->tanggal_sewa,
+                        "dSewa_harga"=>150000,
+                        "dSewa_alamat"=>$cart->alamat,
+                        "dSewa_status_accpegawai"=>2,
+                        "hSewa_id"=>htranssewa::latest("id")->first()->id,
+                    ]);
+                    foreach ($dataaddon as $key => $addon) {
+                        if($addon->id_pegawai==$cart->pegawai_id){
+                            dtransbarang::create(
+                                [
+                                    'barang_id' => $addon->id_barang,
+                                    'barang_jumlah' =>$addon->jumlah,
+                                    'dSewa_id'=>dtranssewa::latest("id")->first()->id
+                                ]
+                            );
+                            $st=(barang::where("id",$addon->id_barang)->first()->barang_stok)-($addon->jumlah);
+                            barang::where("id",$addon->id_barang)->update([
+                                "barang_stok"=>$st
+                            ]);
+                        }
+                    }
+                }
+                else if($cart->pegawai->pegawai_jasa=="Painting"){
+                    dtranssewa::create([
+                        "pegawai_id"=>$cart->pegawai_id,
+                        "dSewa_tanggal"=>$cart->tanggal_sewa,
+                        "dSewa_harga"=>200000,
+                        "dSewa_alamat"=>$cart->alamat,
+                        "dSewa_status_accpegawai"=>2,
+                        "hSewa_id"=>htranssewa::latest("id")->first(),
+                    ]);
+                    foreach ($dataaddon as $key => $addon) {
+                        if($addon->id_pegawai==$cart->pegawai_id){
+                            dtransbarang::create(
+                                [
+                                    'barang_id' => $addon->id_barang,
+                                    'barang_jumlah' =>$addon->jumlah,
+                                    'dSewa_id'=>dtranssewa::latest("id")->first()
+                                ]
+                            );
+                            $st=(barang::where("id",$addon->id_barang)->first()->barang_stok)-($addon->jumlah);
+                            barang::where("id",$addon->id_barang)->update([
+                                "barang_stok"=>$st
+                            ]);
+                        }
+                    }
+                }
+                else if($cart->pegawai->pegawai_jasa=="Plumbing"){
+                    dtranssewa::create([
+                        "pegawai_id"=>$cart->pegawai_id,
+                        "dSewa_tanggal"=>$cart->tanggal_sewa,
+                        "dSewa_harga"=>300000,
+                        "dSewa_alamat"=>$cart->alamat,
+                        "dSewa_status_accpegawai"=>2,
+                        "hSewa_id"=>htranssewa::latest("id")->first(),
+                    ]);
+                    foreach ($dataaddon as $key => $addon) {
+                        if($addon->id_pegawai==$cart->pegawai_id){
+                            dtransbarang::create(
+                                [
+                                    'barang_id' => $addon->id_barang,
+                                    'barang_jumlah' =>$addon->jumlah,
+                                    'dSewa_id'=>dtranssewa::latest("id")->first()
+                                ]
+                            );
+                            $st=(barang::where("id",$addon->id_barang)->first()->barang_stok)-($addon->jumlah);
+                            barang::where("id",$addon->id_barang)->update([
+                                "barang_stok"=>$st
+                            ]);
+                        }
+                    }
+                }
+                else if($cart->pegawai->pegawai_jasa=="Electrical"){
+                    dtranssewa::create([
+                        "pegawai_id"=>$cart->pegawai_id,
+                        "dSewa_tanggal"=>$cart->tanggal_sewa,
+                        "dSewa_harga"=>500000,
+                        "dSewa_alamat"=>$cart->alamat,
+                        "dSewa_status_accpegawai"=>2,
+                        "hSewa_id"=>htranssewa::latest("id")->first(),
+                    ]);
+                    foreach ($dataaddon as $key => $addon) {
+                        if($addon->id_pegawai==$cart->pegawai_id){
+                            dtransbarang::create(
+                                [
+                                    'barang_id' => $addon->id_barang,
+                                    'barang_jumlah' =>$addon->jumlah,
+                                    'dSewa_id'=>dtranssewa::latest("id")->first()
+                                ]
+                            );
+                            $st=(barang::where("id",$addon->id_barang)->first()->barang_stok)-($addon->jumlah);
+                            barang::where("id",$addon->id_barang)->update([
+                                "barang_stok"=>$st
+                            ]);
+                        }
+                    }
+                }
+                else if($cart->pegawai->pegawai_jasa=="Repair"){
+                    dtranssewa::create([
+                        "pegawai_id"=>$cart->pegawai_id,
+                        "dSewa_tanggal"=>$cart->tanggal_sewa,
+                        "dSewa_harga"=>400000,
+                        "dSewa_alamat"=>$cart->alamat,
+                        "dSewa_status_accpegawai"=>2,
+                        "hSewa_id"=>htranssewa::latest("id")->first(),
+                    ]);
+                    foreach ($dataaddon as $key => $addon) {
+                        if($addon->id_pegawai==$cart->pegawai_id){
+                            dtransbarang::create(
+                                [
+                                    'barang_id' => $addon->id_barang,
+                                    'barang_jumlah' =>$addon->jumlah,
+                                    'dSewa_id'=>dtranssewa::latest("id")->first()
+                                ]
+                            );
+                            $st=(barang::where("id",$addon->id_barang)->first()->barang_stok)-($addon->jumlah);
+                            barang::where("id",$addon->id_barang)->update([
+                                "barang_stok"=>$st
+                            ]);
+                        }
+                    }
+
+                }
+                user::where("id",session("loggedIn"))->update([
+                    "user_saldo"=>$user->user_saldo-$request->totalhidden
+                ]);
+                $dataaddon=addon::where("id_user",session("loggedIn"))->delete();
+                $datacart=cart::where("user_id",session("loggedIn"))->delete();
+                if ($request->datavoucher==-1){
+
+                }else{
+                    user_voucher::where("user_id",session("loggedIn"))->where("voucher_id",$request->datavoucher)->delete();
+                }
+                return redirect("/home/user");
+            }
+
+        }
+
     }
     function do_transaksi_sewa(Request $request){
         $cek = true;
@@ -706,7 +929,7 @@ class HomeController extends Controller
             $htsewa->user_id = $request->session()->get("loggedIn");
             $htsewa->hSewa_total = $request->txttotalhidden;
             $htsewa->voucher_id = "V001";
-            $htsewa->hSewa_status = 2;
+            //$htsewa->hSewa_status = 2;
             $htsewa->alamat = "alamat";
             $htsewa->save();
 
@@ -715,7 +938,7 @@ class HomeController extends Controller
             $datacart = cart::where("user_id",$request->session()->get("loggedIn"))->get();
             $arrdtranssewa=[];
             $ctrid = 0;
-            foreach ($datacart as $key => $item) {
+                foreach ($datacart as $key => $item) {
                 dtranssewa::create(
                     [
                         'pegawai_id' => $item->pegawai_id,
@@ -801,8 +1024,17 @@ class HomeController extends Controller
         $param["pegawai"]=$pegawai;
         return view("pegawai.pegawai_profile",$param);
     }
-    public function pegawaiChat(){
+    public function pegawaiChat(Request $request){
+        $pegawai=pegawai::where("id",$request->session()->get('loggedIn'))->first();
         $datachat=chat::where("chat_destination",session()->get('loggedIn'))->latest('id')->get();
+        // $datachat=chat::where(function ($query) {
+        //     $query->where('chat_sender', '=', session('loggedIn'))
+        //           ->where('chat_from', '=', "pegawai");
+        // })->orWhere(function ($query) {
+        //     $query->where('chat_from', '=', "user")
+        //           ->where('chat_destination', '=',  session('loggedIn'));
+        // })->get();
+
         $arr=array();
         foreach ($datachat as $i => $c) {
             if (count($arr)==0){
@@ -817,9 +1049,10 @@ class HomeController extends Controller
                 if(!$ada){
                     array_push($arr,$c);
                 }
+
             }
         }
-        return view("pegawai.chat",["datachat"=>$datachat,"arr"=>$arr]);
+        return view("pegawai.chat",["datachat"=>$datachat,"arr"=>$arr,"pegawai"=>$pegawai]);
     }
     public function chat_ajax_pegawai(Request $request){
         $datachat=chat::where("chat_destination",session()->get('loggedIn'))->where("chat_sender",$request->iduser)->get();

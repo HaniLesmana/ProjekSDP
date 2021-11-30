@@ -105,7 +105,7 @@
                 <hr>
             @endforeach
         </div>
-        <form  method="get" action="{{ url('home/do_transaksi_sewa') }}">
+        <form  method="get" action="{{ url('home/pembayaran') }}">
 
             <div style="float:right;">
                 <label style="color:grey;font-weight:semibold;font-size:20px;" id="txttotal">Total :  {{$total}}</label>

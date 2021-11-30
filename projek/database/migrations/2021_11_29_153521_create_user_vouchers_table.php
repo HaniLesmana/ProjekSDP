@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHtranssewasTable extends Migration
+class CreateUserVouchersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateHtranssewasTable extends Migration
      */
     public function up()
     {
-        Schema::create('htranssewa', function (Blueprint $table) {
+        Schema::create('user_vouchers', function (Blueprint $table) {
             $table->id();
-            $table->string("user_id");
-            $table->integer("hSewa_total");
-            //$table->integer("hSewa_status")->default(2);
-            $table->string("voucher_id")->nullable(true);
-            //$table->string("alamat");
+            $table->string('user_id');
+            $table->string('voucher_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +29,6 @@ class CreateHtranssewasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('htranssewas');
+        Schema::dropIfExists('user_vouchers');
     }
 }

@@ -142,7 +142,7 @@
 
 <div style="width:100%;">
   @foreach ($datachat as $chat)
-    @if ($chat->chat_sender == session('loggedIn'))
+    @if ($chat->chat_from == "user")
         <div class="msg right-msg">
             <div class="msg-img"
             ></div>

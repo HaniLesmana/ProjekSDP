@@ -16,8 +16,11 @@ class CreateDtranssewasTable extends Migration
         Schema::create('dtranssewa', function (Blueprint $table) {
             $table->id();
             $table->string("pegawai_id");
-            $table->integer("dSewa_durasi");
+            $table->string("dSewa_tanggal");
             $table->integer("dSewa_harga");
+            $table->string("dSewa_alamat");
+            //$table->integer("dSewa_status_bayar")->default(2);
+            $table->integer("dSewa_status_accpegawai")->default(2);
             $table->string("hSewa_id");
             $table->timestamps();
             $table->softDeletes();

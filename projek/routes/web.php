@@ -28,6 +28,8 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/add_cart/{id}", [HomeController::class, "add_cart"]);
         Route::get("/list_cart", [HomeController::class, "list_cart"]);
         Route::get("/transaksi_sewa", [HomeController::class, "transaksi_sewa"]);
+        Route::get("/pembayaran", [HomeController::class, "pembayaran"]);
+        Route::post("/do_pembayaran", [HomeController::class, "do_pembayaran"]);
         Route::get("/list_cart_cancel/{id}", [HomeController::class, "list_cart_cancel"]);
         Route::get("/do_transaksi_sewa", [HomeController::class, "do_transaksi_sewa"]);
         Route::get("/ongoingtrans", [UserController::class, "ongoingtrans"]);

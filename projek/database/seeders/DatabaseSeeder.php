@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             AdminSeeder::class,
+            BarangSeeder::class,
             CartSeeder::class,
             ChatSeeder::class,
             DtransbarangSeeder::class,
@@ -26,9 +27,11 @@ class DatabaseSeeder extends Seeder
             HtransbayarSeeder::class,
             HtranssaldoSeeder::class,
             HtranssewaSeeder::class,
+            KategoriSeeder::class,
             LogstokSeeder::class,
             PegawaiSeeder::class,
             UserSeeder::class,
+            UserVoucherSeeder::class,
             VoucherSeeder::class,
         ]);
     }

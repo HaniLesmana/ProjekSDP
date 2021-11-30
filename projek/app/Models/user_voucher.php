@@ -3,28 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class htranssewa extends Model
+class user_voucher extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $table="htranssewa";
+    public $timestamps=true;
     protected $primaryKey="id";
     public $incrementing=true;
-    public $timestamps=true;
     protected $fillable=[
         'user_id',
-        'hBarang_id',
-        'hSewa_total',
-        'voucher_id'
+        'voucher_id',
     ];
-    public function dtranssewa(){
-        return $this->hasMany(dtranssewa::class, 'hSewa_id','id');
-    }
     public function user(){
         return $this->belongsTo(user::class, 'user_id','id');
+    }
+    public function voucher(){
+        return $this->belongsTo(voucher::class, 'voucher_id','id');
     }
 }

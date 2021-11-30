@@ -17,7 +17,7 @@
     <!-- Jumbotron -->
     <div style="height:10px;"></div>
     <div class="container mb-3" style="padding-left:30px;">
-        <div class="row align-items-center" style="height: 400px;width: 100%;">
+        <div class="row align-items-center" style="height: 400px;width: 101%;">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -77,45 +77,131 @@
                 </div>
             </div>
       </div>
-      <div class="container2" style="margin-top: 30px; border-radius:12px;box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;height:160px; width:1110px; padding:7px 5px 0 5px;">
-        <div class="row">
-          <div class="col-sm">
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_cleaning" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
-                <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;"> <br>
-                <label>Cleaning</label>
-            </button>
-          </div>
-          <div class="col-sm">
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_painting" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
-                <img src="{{asset('img/paint-roller.png')}}" style="height=50px;width:100px;"> <br>
-                <label>Painting</label>
-            </button>
-          </div>
-          <div class="col-sm">
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_plumbing" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
-                <img src="{{asset('img/plumbing.png')}}" style="height=50px;width:100px;"> <br>
-                <label>Plumbing</label>
-            </button>
-          </div>
-          <div class="col-sm">
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_electrical" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
-                <img src="{{asset('img/listrik.png')}}" style="height=50px;width:100px;"> <br>
-                <label>Electrical</label>
-            </button>
-          </div>
-          <div class="col-sm">
-            <button type="submit" class="btn align-middle button_ajax" onMouseOver="this.style.color='white';" onMouseOut="this.style.background-Color=rgba(0, 0, 0, 0);this.style.border='none';this.style.color='black';" id="button_repair" style="outline:none;box-shadow:none;width:100%;height:100%;background-color: #d9a73d;">
-                <img src="{{asset('img/tools.png')}}" style="height=50px;width:100px;"> <br>
-                <label>Repair etc</label>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div id="daftar">
 
       </div>
     </div>
     <!-- akhir container -->
+
+
+    <!-- NEW TEMPLATE -->
+    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap -->
+    <!-- <link rel="stylesheet" href="{{asset('css/userhome/bootstrap.min.css')}}"> -->
+
+    <!-- Font Awesome -->
+    <!-- <link rel="stylesheet" href="{{asset('css/userhome/font-awesome.min.css')}}"> -->
+
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="{{asset('css/userhome/owl.carousel.css')}}"> -->
+    <link rel="stylesheet" href="{{asset('css/userhome/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/userhome/style2.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('css/userhome/responsive.css')}}"> -->
+
+
+    <div class="block-header">
+        <h3 class="block-header__title">Featured Products</h3>
+        <div class="block-header__divider"></div>
+        <ul class="block-header__groups-list">
+            <li><button type="button" id="button_cleaning" class="block-header__group block-header__group--active">Cleaning</button></li>
+            <li><button type="button" id="button_painting" class="block-header__group">Painting</button></li>
+            <li><button type="button" id="button_plumbing" class="block-header__group">Plumbing</button></li>
+            <li><button type="button" id="button_electrical" class="block-header__group">Electrical</button></li>
+            <li><button type="button" id="button_repair" class="block-header__group">Repair</button></li>
+        </ul>
+        <div class="block-header__arrows-list">
+        </div>
+    </div>
+
+
+    <!-- Start promo area -->
+    <!-- <div class="promo-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-6" id="button_all">
+                    <div class="single-promo promo1">
+                        <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;">
+                        <p>All</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6" id="button_cleaning">
+                    <div class="single-promo promo2">
+                        <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;">
+                        <p>Cleaning</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6" id="button_painting">
+                    <div class="single-promo promo3">
+                        <img src="{{asset('img/paint-roller.png')}}" style="height=50px;width:100px;">
+                        <p>Painting</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6" id="button_plumbing">
+                    <div class="single-promo promo4">
+                        <img src="{{asset('img/plumbing.png')}}" style="height=50px;width:100px;">
+                        <p>Plumbing</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6" id="button_electrical">
+                    <div class="single-promo promo5">
+                        <img src="{{asset('img/listrik.png')}}" style="height=50px;width:100px;">
+                        <p>Electrical</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6" id="button_repair">
+                    <div class="single-promo promo6">
+                        <img src="{{asset('img/tools.png')}}" style="height=50px;width:100px;">
+                        <p>Repair</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- End promo area -->
+
+    <!-- Start main content area -->
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="latest-product">
+                        <div class="product-carousel" id="daftar" style="margin-top:-30px;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End main content area -->
+
+
+
+    <!-- Latest jQuery form server -->
+    <!-- <script src="https://code.jquery.com/jquery.min.js"></script> -->
+
+    <!-- Bootstrap JS form CDN -->
+    <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+
+    <!-- jQuery sticky menu -->
+    <!-- <script src="{{asset('js/userhome/owl.carousel.min.js')}}"></script> -->
+    <!-- <script src="{{asset('js/userhome/jquery.sticky.js')}}"></script> -->
+
+    <!-- jQuery easing -->
+    <!-- <script src="{{asset('js/userhome/jquery.easing.1.3.min.js')}}"></script> -->
+
+    <!-- Main Script -->
+    <script src="{{asset('js/userhome/main.js')}}"></script>
+
+    <!-- Slider -->
+    <!-- <script type="text/javascript" src="{{asset('js/userhome/bxslider.min.js')}}"></script> -->
+    <!-- <script type="text/javascript" src="{{asset('js/userhome/script.slider.js')}}"></script> -->
+
+    <!-- NEW TEMPLATE -->
 
 
 
@@ -131,6 +217,8 @@
 
     <script>
         $(document).ready(function() {
+
+
             $("#button_cleaning").click(function(){
                 // $("#button_art").css("background-color","#d9a73d");
                 // $("#button_tukang").css("background-color","lightgray");
@@ -140,6 +228,8 @@
                     success: function(data) {
                         $("#daftar").empty();
                         $("#daftar").append(data);
+                        removeSelectedMenu();
+                        $("#button_cleaning").addClass('block-header__group--active');
                     }
                      // $("#daftar").empty();
                      // $("#daftar").append(data);
@@ -155,6 +245,8 @@
                 success: function(data) {
                     $("#daftar").empty();
                     $("#daftar").append(data);
+                    removeSelectedMenu();
+                    $("#button_painting").addClass('block-header__group--active');
                 }
             });
             });
@@ -167,6 +259,8 @@
                 success: function(data) {
                     $("#daftar").empty();
                     $("#daftar").append(data);
+                    removeSelectedMenu();
+                    $("#button_plumbing").addClass('block-header__group--active');
                 }
             });
             });
@@ -179,6 +273,8 @@
                 success: function(data) {
                     $("#daftar").empty();
                     $("#daftar").append(data);
+                    removeSelectedMenu();
+                    $("#button_electrical").addClass('block-header__group--active');
                 }
             });
             });
@@ -191,10 +287,22 @@
                 success: function(data) {
                     $("#daftar").empty();
                     $("#daftar").append(data);
+                    removeSelectedMenu();
+                    $("#button_repair").addClass('block-header__group--active');
                 }
             });
             });
+
+            $("#button_cleaning").trigger("click");
         });
+
+        function removeSelectedMenu() {
+            $("#button_cleaning").removeClass('block-header__group--active');
+            $("#button_painting").removeClass('block-header__group--active');
+            $("#button_plumbing").removeClass('block-header__group--active');
+            $("#button_electrical").removeClass('block-header__group--active');
+            $("#button_repair").removeClass('block-header__group--active');
+        }
     </script>
 
 @endsection
