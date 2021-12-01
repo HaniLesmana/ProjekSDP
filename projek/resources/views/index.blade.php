@@ -108,7 +108,9 @@
             Password : <br>
             <input type="password" name="password_user" id=""><br>
             Confirm Password : <br>
-            <input type="password" name="confirm_password" id="">
+            <input type="password" name="confirm_password" id=""> <br>
+            Photo : <br>
+            <input type="file" name="file" id="">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

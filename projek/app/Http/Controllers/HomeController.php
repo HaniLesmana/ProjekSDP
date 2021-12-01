@@ -25,6 +25,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -490,7 +491,13 @@ class HomeController extends Controller
             $nama = $request ->input("nama_user");
             $password = $request ->input("password_user");
             $telp = $request ->input("telp_user");
-
+            $id = user::max("id");
+            $idd = $id+1;
+            // dd($idd);
+            if($request->hasFile("file")){
+                Storage::putFileAs("/public/photos",$request->file('file'),"User".$idd);
+            }
+            $photo ="User".$idd;
             // user::create([
             //     'user_email' => $email,
             //     'user_nama' => $nama,
@@ -509,6 +516,7 @@ class HomeController extends Controller
             $user->user_password = md5($password);
             $user->user_saldo = 0;
             $user->user_poin = 0;
+            $user->user_photo = $photo;
             $user->save();
 
             //return $this->home();
