@@ -23,7 +23,7 @@ body{
                             {{-- <a class="nav-item nav-link active" href="#">HOME <span class="sr-only">(current)</span></a> --}}
                         </a>
                     </form>
-                    <form action="{{ url('/home/profile')}}" method="get">
+                    <form action="{{ url('/user/profile')}}" method="get">
                         <a class="nav-item nav-link" style="padding-left:0px;padding-right:0px;">
                             <input class="btn" type="submit" value="PROFILE">
                         </a>
