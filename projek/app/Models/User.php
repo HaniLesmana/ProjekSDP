@@ -21,7 +21,8 @@ class user extends Model
         'user_alamat',
         'user_password',
         'user_saldo',
-        'user_poin'
+        'user_poin',
+        'user_photo'
     ];
     public function cart(){
         return $this->hasMany(cart::class, 'user_id','id');

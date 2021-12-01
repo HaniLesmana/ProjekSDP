@@ -23,6 +23,7 @@ class pegawai extends Model
         'pegawai_jasa',
         'pegawai_saldo',
         'pegawai_deskripsi',
+        'pegawai_photo'
     ];
 
     public function inCart(){

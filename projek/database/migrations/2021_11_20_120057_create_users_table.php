@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string("user_password");
             $table->integer("user_saldo");
             $table->integer("user_poin");
+            $table->string("user_photo")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
