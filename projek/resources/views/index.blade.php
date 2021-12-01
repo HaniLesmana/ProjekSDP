@@ -94,7 +94,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{ url('/register')}}" method="post">
+        <form enctype="multipart/form-data" action="{{ url('/register')}}" method="post">
             @csrf
           <div class="modal-body">
             Name : <br>
@@ -110,7 +110,7 @@
             Confirm Password : <br>
             <input type="password" name="confirm_password" id=""> <br>
             Photo : <br>
-            <input type="file" name="file" id="">
+            <input type="file" name="file" id="" value="file">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
