@@ -19,7 +19,7 @@ class CreateAdminsTable extends Migration
             $table->string("admin_nama");
             $table->string("admin_email");
             $table->string("admin_telepon");
-            $table->string("admin_password");
+            $table->string("password");
             $table->timestamps();
             $table->softDeletes();
         });

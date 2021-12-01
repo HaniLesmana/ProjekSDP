@@ -83,7 +83,7 @@ body{
             <div class="card bg-c-yellow order-card">
                 <div class="card-block">
                     <h6 class="m-b-20">One Month Employee Income</h6>
-                    <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>{{$pendapatan_pegawai_per_bulan}}</span></h2>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>+{{$pendapatan_pegawai_per_bulan}}</span></h2>
                     <p class="m-b-0">Income<span class="f-right">{{$pendapatan_pegawai}}</span></p>
                 </div>
             </div>
@@ -93,7 +93,7 @@ body{
             <div class="card bg-c-pink order-card">
                 <div class="card-block">
                     <h6 class="m-b-20">Rating</h6>
-                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
+                    <h2 class="text-right"><i class="fa fa-star f-left"></i><span>486</span></h2>
                     <p class="m-b-0">Total Review<span class="f-right">351</span></p>
                 </div>
             </div>

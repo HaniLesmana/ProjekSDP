@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class admin extends Model
+class admin extends Authenticable
 {
     use HasFactory;
     use SoftDeletes;

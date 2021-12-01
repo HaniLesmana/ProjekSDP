@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             "user_email"=>"asd@a.com",
             "user_telepon"=>"1645653172389",
             "user_alamat"=>"asd 123",
-            "user_password"=>md5("12345678"),
+            "password"=>bcrypt('12345678'),  //'$2a$12$DLLoKXpETEcn.KRzQYliKOt7mwgakoII3g7YEvY5gpHpOSUhBAVHO', //12345678
             "user_saldo"=>0,
             "user_poin"=>12,
         ]);

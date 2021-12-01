@@ -40,6 +40,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'web_admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+        'web_pegawai' => [
+            'driver' => 'session',
+            'provider' => 'pegawai',
+        ],
+        'web_user' => [
+            'driver' => 'session',
+            'provider' => 'user',
+        ],
     ],
 
     /*
@@ -61,6 +73,18 @@ return [
 
     'providers' => [
         'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\admin::class,
+        ],
+        'pegawai' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\pegawai::class,
+        ],
+        'user' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],

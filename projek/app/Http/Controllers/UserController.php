@@ -19,6 +19,9 @@ use App\Models\dtranstpwd;
 use App\Models\htranssewa;
 use Carbon\Carbon;
 use Database\Seeders\DtranssewaSeeder;
+// use Facade\FlareClient\Http\Client;
+use GuzzleHttp\Client;
+use Xendit\Xendit;
 
 class UserController extends Controller
 {
@@ -314,5 +317,81 @@ class UserController extends Controller
         ]);
         return redirect("/home/ongoingtrans");
     }
+    public function history(Request $request){
+        $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
+            $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
+        })
+        ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+        ->get();
+        return view("user.history",["dtransewa"=>$dtransewa]);
+    }
+    public function history_filter_pegawai($id,$id1,Request $request){
+        if ($id1=="Any"){
+            $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
+                $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
+            })
+            ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+            ->get();
+        }
+        else{
+            $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
+                $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
+            })
+            ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+            ->where('dtranssewa.dSewa_status_accpegawai',$id1)
+            ->get();
+        }
+        $arr=array();
+        foreach ($dtransewa as $key => $dt) {
+            if (str_contains($dt->pegawai->pegawai_nama,$id)){
+                array_push($arr,$dt);
+            }
+        }
+        return view("user.history_filter_pegawai",["dtransewa"=>$arr]);
+    }
+    public function history_filter_pegawai_status($id,Request $request){
+        if ($id=="Any"){
+            $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
+                $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
+            })
+            ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+            ->get();
+            return view("user.history_filter_pegawai",["dtransewa"=>$dtransewa]);
+        }
+        else{
+            $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
+                $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
+            })
+            ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+            ->where('dtranssewa.dSewa_status_accpegawai',$id)
+            ->get();
+        }
+        return view("user.history_filter_pegawai",["dtransewa"=>$dtransewa]);
+    }
 
+    public function midtranssewa(Request $request){
+        $client = new Client();
+        $price = 150000;
+        $response = $client->post('https://api.sandbox.midtrans.com/v2/charge',
+            [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Basic U0ItTWlkLXNlcnZlci1iR3NldXl4WmhBOXFKWDFoUFhQdG9QZlc6',
+                    'Content-Type' => 'application/json'
+                ],
+                'body' => json_encode([
+                    'payment_type' => 'bank_transfer',
+                    'transaction_details' => [
+                        'order_id' => '1638375694689',
+                        'gross-amount' => $price
+                    ],
+                    'bank-transfer' => [
+                        'bank' => 'bca'
+                    ]
+                ])
+            ]);
+        $data = json_decode($response->getBody());
+        return response()->json($data);
+
+    }
 }

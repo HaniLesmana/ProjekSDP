@@ -20,6 +20,7 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('/listRequest', [HomeController::class, "listRequest"]);
     Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
 
+
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);
         Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
@@ -33,6 +34,9 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/list_cart_cancel/{id}", [HomeController::class, "list_cart_cancel"]);
         Route::get("/do_transaksi_sewa", [HomeController::class, "do_transaksi_sewa"]);
         Route::get("/ongoingtrans", [UserController::class, "ongoingtrans"]);
+        Route::get('/history', [UserController::class, "history"]);
+        Route::get('/history_filter_pegawai/{id}/{id1}', [UserController::class, "history_filter_pegawai"]);
+        Route::get('/history_filter_pegawai_status/{id}', [UserController::class, "history_filter_pegawai_status"]);
     });
     Route::prefix("admin")->group(function(){
     //Route::get("/listpegawai",function ()
@@ -155,7 +159,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
         Route::get('/pesanan_acc/{id}', [HomeController::class, "pegawaiOrderacc"]);
         Route::get('/pesanan_cancel/{id}', [HomeController::class, "pegawaiOrdercancel"]);
-        Route::get('/history', [HomeController::class, "history"]);
+
         Route::get("/profile", [HomeController::class, "pegawaiProfile"]);
         Route::get("/chat", [HomeController::class, "pegawaiChat"]);
         Route::post("/chat_ajax_pegawai_insert", [HomeController::class, "chat_ajax_pegawai_insert"]);
@@ -167,11 +171,16 @@ Route::get('/',[HomeController::class,"home"])->middleware('is_logout');
 
 Route::post('/checkLogin', [HomeController::class, "checkLogin"]);
 Route::post('/register', [HomeController::class, "register"]);
-
+Route::post("/finish_transaksi", [HomeController::class, "finish_transaksi"]);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
 Route::get('logout', [HomeController::class, "logout"]);
+
+
+
+
+Route::get('midtranssewa', [UserController::class, "midtranssewa"]);
 
