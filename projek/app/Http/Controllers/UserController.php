@@ -17,6 +17,7 @@ use App\Models\dtransbarang;
 use App\Models\dtranssewa;
 use App\Models\dtranstpwd;
 use App\Models\htranssewa;
+use Carbon\Carbon;
 use Database\Seeders\DtranssewaSeeder;
 
 class UserController extends Controller
@@ -208,10 +209,20 @@ class UserController extends Controller
     public function ongoingtrans(Request $request){
         $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {
             $join->on('htranssewa.id', '=', 'dtranssewa.hSewa_id');
-          })
-          ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
-          ->get();
-        return view("user.ongoingtrans",["dtransewa"=>$dtransewa]);
+        })
+        ->where('htranssewa.user_id',$request->session()->get("loggedIn"))
+        //   ->where("dSewa_status_accpegawai",1)
+        //   ->orwhere("dSewa_status_accpegawai",2)
+        //->whereDate('dSewa_tanggal', '=', Carbon::now()->format("Y-m-d"))
+        ->get();
+        // dd(Carbon::now()->format("Y-m-d"));
+        $t=array();
+        foreach ($dtransewa as $key => $dt) {
+            if($dt->dSewa_status_accpegawai==1||$dt->dSewa_status_accpegawai==2){
+                array_push($t,$dt);
+            }
+        }
+        return view("user.ongoingtrans",["dtransewa"=>$t]);
     }
     //DETAIL CART
 
@@ -297,5 +308,11 @@ class UserController extends Controller
         return view("user.chat_ajax",['datachat'=>$datachat]);
     }
 
+    public function status_pesanan_finish($id){
+        dtranssewa::where("id",$id)->update([
+            "dSewa_status_accpegawai"=>3
+        ]);
+        return redirect("/home/ongoingtrans");
+    }
 
 }

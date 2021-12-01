@@ -289,7 +289,7 @@ body{margin-top:0px;}
                                         <th scope="col">User</th>
                                         <th scope="col">Address</th>
                                         <th class="text-center" scope="col">Accept</th>
-                                        <th class="text-center" scope="col">Delete</th>
+                                        <th class="text-center" scope="col">Cancel</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -298,8 +298,10 @@ body{margin-top:0px;}
                                     <tr class="inner-box">
                                         <th scope="row">
                                             <div class="event-date">
-                                                <span>16</span>
-                                                <p>Novembar</p>
+                                                {{-- <span>16</span> --}}
+                                                <span>{{date("d", strtotime($dt->dSewa_tanggal)) }}</span>
+                                                {{-- <p>Novembar</p> --}}
+                                                <p>{{date("F",strtotime($dt->dSewa_tanggal))}}</p>
                                             </div>
                                         </th>
                                         <td>
@@ -312,13 +314,13 @@ body{margin-top:0px;}
                                                 <h3><a href="#">{{$dt->htranssewa->user->user_nama}}</a></h3>
                                                 <div class="meta">
                                                     <div class="organizers">
-                                                        <a href="#">{{$dt->htranssewa->user->user_telepon}}</a>
+                                                        <h5>{{$dt->htranssewa->user->user_telepon}}</h5>
                                                     </div>
-                                                    <div class="categories">
-                                                        <a href="#">{{$dt->htranssewa->user->user_alamat}}</a>
+                                                    <div class="categories" style="color: darkgray">
+                                                        <h5>{{$dt->htranssewa->user->user_alamat}}</h5>
                                                     </div>
                                                     <div class="time">
-                                                        <span></span>
+                                                        <span>{{date("d-m-y",strtotime($dt->dSewa_tanggal)) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,20 +330,24 @@ body{margin-top:0px;}
                                                 <span>{{$dt->dSewa_alamat}}</span>
                                             </div>
                                         </td>
+                                        @if ($dt->dSewa_status_accpegawai==2)
                                         <td>
-                                            <form action="" method="get">
+                                            <form action="{{ url('/pegawai/pesanan_acc/'.$dt->id)}}" method="get">
                                                 <div class="primary-btn">
-                                                    <a class="btn btn-warning text-light">Accept</a>
+                                                    {{-- <a class="btn btn-warning text-light">Accept</a> --}}
+                                                    <button type="submit" class="btn btn-warning text-light">Accept</button>
                                                 </div>
                                             </form>
                                         </td>
                                         <td>
-                                            <form action="" method="get">
+                                            <form action="{{ url('/pegawai/pesanan_cancel/'.$dt->id)}}" method="get">
                                                 <div class="primary-btn">
-                                                    <a class="btn btn-danger text-light">Cancel</a>
+                                                    {{-- <a class="btn btn-danger text-light">Cancel</a> --}}
+                                                    <button type="submit" class="btn btn-danger text-light">Cancel</button>
                                                 </div>
                                             </form>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                     @endif

@@ -15,7 +15,7 @@ body{
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto" style="padding-top:20px;">
+                <div class="navbar-nav ml-auto" style="padding-top:20px;float:right;">
 
                     <form action="{{ url('/home/user')}}" method="get">
                         <a class="nav-item nav-link" style="padding-left:0px;padding-right:0px;">

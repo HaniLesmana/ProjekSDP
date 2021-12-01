@@ -148,9 +148,13 @@ Route::middleware(['is_login'])->group(function () {
         Route::post("/chat_ajax", [UserController::class, "chat_ajax"]);
 
         Route::post("/chat_ajax2", [UserController::class, "chat_ajax2"]);
+
+        Route::get("/status_pesanan_finish/{id}", [UserController::class, "status_pesanan_finish"]);
     });
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
+        Route::get('/pesanan_acc/{id}', [HomeController::class, "pegawaiOrderacc"]);
+        Route::get('/pesanan_cancel/{id}', [HomeController::class, "pegawaiOrdercancel"]);
         Route::get('/history', [HomeController::class, "history"]);
         Route::get("/profile", [HomeController::class, "pegawaiProfile"]);
         Route::get("/chat", [HomeController::class, "pegawaiChat"]);

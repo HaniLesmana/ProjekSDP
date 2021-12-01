@@ -9,28 +9,28 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link type="text/css" rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"/>
+    <!-- <link type="text/css" rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"/> -->
     <!-- Slick -->
-    <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/slick.css')}}"/>
-    <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/slick-theme.css')}}"/>
+    <!-- <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/slick.css')}}"/> -->
+    <!-- <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/slick-theme.css')}}"/> -->
     <!-- nouislider -->
-    <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/nouislider.min.css')}}"/>
+    <!-- <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/nouislider.min.css')}}"/> -->
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="{{asset('css/detailcart/font-awesome.min.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('css/detailcart/font-awesome.min.css')}}"> -->
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{{asset('css/detailcart/style.css')}}"/>
     <!-- Css Styles -->
     {{-- <link rel="stylesheet" href="{{asset('style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/detailcart/bootstrap.min.css')}}" type="text/css">
+    <!-- <link rel="stylesheet" href="{{asset('css/detailcart/bootstrap.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/detailcart/font-awesome.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/detailcart/elegant-icons.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/detailcart/nice-select.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/detailcart/jquery-ui.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/detailcart/owl.carousel.min.css')}}" type="text/css">
-    <link rel="stylesheet" href="{{asset('css/detailcart/slicknav.min.css')}}" type="text/css">
-    <link rel="stylesheet" href="{{asset('css/detailcart/style.css')}}" type="text/css"> --}}
+    <link rel="stylesheet" href="{{asset('css/detailcart/slicknav.min.css')}}" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="{{asset('css/detailcart/style.css')}}" type="text/css"> --}} -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -55,14 +55,15 @@
         label {
             display: block;
         }
-        input {
+        /* input {
             border: 1px solid #c4c4c4;
             border-radius: 5px;
             background-color: #fff;
             padding: 3px 5px;
             box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
             width: 190px;
-        }
+            float:right;
+        } */
     </style>
 
     <div class="container">
@@ -97,7 +98,7 @@
                 <div style="clear:both"></div>
 
                 <div style="margin-top:30px;margin-bottom:50px;">
-                    <div class="shadow-lg" style="padding:20px;width:49.5%;float:left;margin-right:10px;border-radius:10px;pading:20px;">
+                    <div class="shadow-lg" style="padding:20px;width:49.5%;float:left;margin-right:10px;border-radius:0px;pading:20px;">
                         <label for="tanggal">Alamat</label>
                         <input type="text" name="alamat" id="alamat" value="{{ $user->user_alamat }}" readonly>
                         <a href="" data-target="#pilihalamat" data-toggle="modal">
@@ -106,7 +107,7 @@
                             </button>
                         </a>
                     </div>
-                    <div class="shadow-lg" style="padding:20px;width:49.5%;float:left;border-radius:10px;">
+                    <div class="shadow-lg" style="padding:20px;height:99px;width:49.5%;float:left;border-radius:0px;">
                         <label for="tanggal">Tanggal Sewa</label>
                         <input type="date" name="tanggal" id="tanggal">
                     </div>

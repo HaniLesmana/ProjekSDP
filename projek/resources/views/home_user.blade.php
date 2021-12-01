@@ -51,7 +51,7 @@
     <!-- Container -->
     <div class="container ">
         <!-- bagian Work like at home -->
-        <div class="row mr-5">
+        <!-- <div class="row mr-5">
             <div class="col-lg" style="border-radius:12px;box-shadow: rgb(49 53 59 / 12%) 0px 1px 6px 0px;font-family:Nunito Sans, -apple-system, sans-serif;">
             {{-- <img src="../img/workingspace.png" alt="workingspace" class="img-fluid"> --}}
                 <div class="col-sm-6" style="border-radius:5px;float:left;">
@@ -76,11 +76,116 @@
 
                 </div>
             </div>
-      </div>
+      </div> -->
 
       </div>
     </div>
     <!-- akhir container -->
+
+
+    <!-- NEW SALDO UI -->
+    <style>
+        body{
+            margin-top:0px;
+            background:#FAFAFA;
+        }
+        .order-card {
+            color: #fff;
+        }
+
+        .bg-c-blue {
+            background: linear-gradient(45deg,#4099ff,#73b4ff);
+        }
+
+        .bg-c-green {
+            background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+        }
+
+        .bg-c-yellow {
+            background: linear-gradient(45deg,#FFB64D,#ffcb80);
+        }
+
+        .bg-c-pink {
+            background: linear-gradient(45deg,#FF5370,#ff869a);
+        }
+
+
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+            box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+            border: none;
+            margin-bottom: 30px;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card .card-block {
+            padding: 25px;
+        }
+
+        .order-card i {
+            font-size: 26px;
+        }
+
+        .f-left {
+            float: left;
+        }
+
+        .f-right {
+            float: right;
+        }
+        .gradient1{
+            background-image: url('/img/gradient1.png');
+        }
+        .gradient2{
+            background-image: url('/img/gradient2.png');
+            height: 138px;
+        }
+        .gradient3{
+            background-image: url('/img/gradient3.png');
+            height: 138px;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+    </style>
+    <div class="container" style="margin-top:32px;">
+        <div class="row">
+
+            <div class="col-md-8 col-xl-6">
+                <div class="card order-card gradient1">
+                    <div class="card-block">
+                        <h5 class="m-b-20">Saldo</h5>
+                        <h2><span>Rp {{ $saldo }},-</span></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+                <a href="{{ url('/user/topUp')}}">
+                <div class="card bg-c order-card gradient2">
+                    <div class="card-block">
+                        <h5 class="m-b-20">Topup</h5>
+                        <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span></span></h2>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+                <a href="{{ url('/user/topUp')}}">
+                <div class="card bg-c order-card gradient3">
+                    <div class="card-block">
+                        <h5 class="m-b-20">Withdraw</h5>
+                        <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span></span></h2>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- NEW SALDO UI -->
 
 
     <!-- NEW TEMPLATE -->
@@ -102,7 +207,7 @@
 
 
     <div class="block-header">
-        <h3 class="block-header__title">Featured Products</h3>
+        <h3 class="block-header__title">Our Services</h3>
         <div class="block-header__divider"></div>
         <ul class="block-header__groups-list">
             <li><button type="button" id="button_cleaning" class="block-header__group block-header__group--active">Cleaning</button></li>
@@ -114,53 +219,6 @@
         <div class="block-header__arrows-list">
         </div>
     </div>
-
-
-    <!-- Start promo area -->
-    <!-- <div class="promo-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2 col-sm-6" id="button_all">
-                    <div class="single-promo promo1">
-                        <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;">
-                        <p>All</p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6" id="button_cleaning">
-                    <div class="single-promo promo2">
-                        <img src="{{asset('img/household.png')}}" style="height=50px;width:100px;">
-                        <p>Cleaning</p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6" id="button_painting">
-                    <div class="single-promo promo3">
-                        <img src="{{asset('img/paint-roller.png')}}" style="height=50px;width:100px;">
-                        <p>Painting</p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6" id="button_plumbing">
-                    <div class="single-promo promo4">
-                        <img src="{{asset('img/plumbing.png')}}" style="height=50px;width:100px;">
-                        <p>Plumbing</p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6" id="button_electrical">
-                    <div class="single-promo promo5">
-                        <img src="{{asset('img/listrik.png')}}" style="height=50px;width:100px;">
-                        <p>Electrical</p>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6" id="button_repair">
-                    <div class="single-promo promo6">
-                        <img src="{{asset('img/tools.png')}}" style="height=50px;width:100px;">
-                        <p>Repair</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- End promo area -->
 
     <!-- Start main content area -->
     <div class="maincontent-area">

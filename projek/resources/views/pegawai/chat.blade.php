@@ -284,6 +284,7 @@ body{
                             <div class="status"> <i class="fa fa-circle offline"></i> {{$a->chat_text}}</div>
                         </div>
                     </li>
+                    <input type="hidden" id="hidden{{$a->chat_sender}}" value="{{$a->user_sender->user_nama}}">
                     @endforeach
                     {{-- <li class="clearfix active">
                         <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
@@ -330,7 +331,7 @@ body{
                                 <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                             </a>
                             <div class="chat-about">
-                                <h6 class="m-b-0">{{$pegawai->pegawai_nama}}</h6>
+                                <h6 class="m-b-0" id="namachat">{{$a->user_sender->user_nama}}</h6>
                                 <small>Last seen: 2 hours ago</small>
                             </div>
                         </div>
@@ -391,6 +392,7 @@ $(document).ready(function() {
 });
 function btnpilih(userid){
     userdiclick=userid;
+    $("#namachat").html($("#hidden"+userid).val());
     $.ajax({
         type: 'post',
         url: '/pegawai/chat_ajax_pegawai/',

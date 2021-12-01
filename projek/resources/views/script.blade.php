@@ -29,9 +29,7 @@
 </style>
 
 @foreach ($pegawai as $i => $p)
-
-
-    <div class="col-md-3 single-product">
+    <div class="col-md-3 single-product" style="float:left;padding-bottom:40px;">
         <div class="product-f-image">
             <!-- <img src="img/product-2.jpg" alt="" style="height:350px;"> -->
 
@@ -49,7 +47,17 @@
 
         <h2>{{ $p->pegawai_jasa }}</h2>
         <div class="product-carousel-price">
-            <ins>Rp 50.000,-</ins> <del>Rp 100.000,-</del>
+            @if ($p->pegawai_jasa=="Cleaning")
+                <ins>Rp 150.000,-</ins> <del>Rp 200.000,-</del>
+            @elseif ($p->pegawai_jasa=="Painting")
+                <ins>Rp 200.000,-</ins> <del>Rp 250.000,-</del>
+            @elseif ($p->pegawai_jasa=="Plumbing")
+                <ins>Rp 300.000,-</ins> <del>Rp 350.000,-</del>
+            @elseif ($p->pegawai_jasa=="Electrical")
+                <ins>Rp 500.000,-</ins> <del>Rp 550.000,-</del>
+            @elseif ($p->pegawai_jasa=="Repair")
+                <ins>Rp 400.000,-</ins> <del>Rp 450.000,-</del>
+            @endif
         </div>
     </div>
 

@@ -6,19 +6,22 @@
 
     <!-- Akhir Navbar -->
     @section('main')
-    <div class="container" style="margin-top : 20px;">
+    <div class="container" style="margin-top:20px;font-family:Arial, Helvetica, sans-serif;font-size:25px">
         <h2>Total : Rp {{ $total }}</h2>
-        <div class="card">
-            <div class="card-body"  style="font-size: 15px;">
+        <div class="shadow-lg" style="margin-top:20px;border-radius:5px;">
+            <div class="card-body"  style="font-size: 20px;">
                 Berikut Total yang harus dibayarkan, mohon transfer ke <br>
                 rekening BCA 7880067997 atas nama PT. Babowe Indonesia <br>
                 dengan berita "top up : {{ $email }}"
+
+                <br><br>
+                <form action="/home/user" method="get">
+                    <button type="submit" class="btn btn-warning" style="color:white;padding:10px;30px">
+                        Selesai
+                    </button>
+                </form>
             </div>
-            <form action="/home/user" method="get">
-            <button type="submit" style="border:0px;border-radius:2px;text-align:center;margin-left : 18px;font-size:15px;float:left;color:white;outline:none;box-shadow:none;width:250px;background-color:#d9a73d">
-                Selesai
-            </button>
-            </form>
+
           </div>
     </div>
 

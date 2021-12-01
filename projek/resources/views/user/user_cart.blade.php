@@ -33,19 +33,31 @@
         <label for="">Total : </label>
         <label for="" id="total">{{ $total }}</label>
 
-        <div class="row">
+        <!-- <div class="row">
 
         </div>
 
         <div style="display:inline-block;width:250px;margin-top:20px;margin-bottom:25px;">
             <a href="{{ url('/home/user_topup') }}"><button type="submit" class="btnBottom">Back</button></a>
 
-                <!-- <button type="submit" class="btnBottom" id="btncart" style="margin-left:10px;">Next</button> -->
-                <button type="submit" class="btnBottom" id="btncart" style="margin-left:10px;">Checkout</button>
-                <input type="hidden" name="total" value="{{ $total }}">
+            <button type="submit" class="btn btn-warning" id="btncart" style="color:white;padding:12px 20px;font-size:18px;" style="margin-left:10px;">Checkout</button>
+            <input type="hidden" name="total" value="{{ $total }}">
 
 
+        </div> -->
+
+        <div style="display:inline-block;width:100%;margin-top:20px;padding:0px 0%;">
+            <div style="float:left">
+                <a href="{{ url('/home/user_topup') }}"><button type="submit" class="btn btn-danger" style="color:white;padding:12px 20px;font-size:18px;">Back</button></a>
             </div>
+
+            <div style="float:right;">
+            <input type="hidden" name="total" value="{{ $total }}">
+                <button type="submit" class="btn btn-warning" id="btncart" style="color:white;padding:12px 20px;font-size:18px;">Checkout</button>
+            </div>
+        </div>
+
+
         </form>
     </div>
 
