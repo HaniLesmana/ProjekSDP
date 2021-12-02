@@ -29,15 +29,29 @@ class checkLogin
         // }
 
         // AUTH
-        if(Auth::guard("web_user")->check() && !Auth::guard("web_pegawai")->check() && !Auth::guard("web_admin")->check())
+        // if(Auth::guard("web_user")->check() && !Auth::guard("web_pegawai")->check() && !Auth::guard("web_admin")->check())
+        // {
+        //     return $next($request);
+        // }
+        // else if(Auth::guard("web_pegawai")->check() && !Auth::guard("web_user")->check() && !Auth::guard("web_admin")->check())
+        // {
+        //     return $next($request);
+        // }
+        // else if(Auth::guard("web_admin")->check() && !Auth::guard("web_user")->check() && !Auth::guard("web_pegawai")->check())
+        // {
+        //     return $next($request);
+        // }
+        if(Auth::guard("web_user")->check())
         {
             return $next($request);
+
         }
-        else if(Auth::guard("web_pegawai")->check() && !Auth::guard("web_user")->check() && !Auth::guard("web_admin")->check())
+        else if(Auth::guard("web_pegawai")->check())
         {
             return $next($request);
+            dd("1");
         }
-        else if(Auth::guard("web_admin")->check() && !Auth::guard("web_user")->check() && !Auth::guard("web_pegawai")->check())
+        else if(Auth::guard("web_admin")->check())
         {
             return $next($request);
         }
