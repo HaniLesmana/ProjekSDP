@@ -555,11 +555,13 @@ class HomeController extends Controller
             $telp = $request ->input("telp_user");
             $id = user::max("id");
             $idd = $id+1;
+            $photo="";
             // dd($idd);
-            if($request->hasFile("file")){
-                Storage::putFileAs("/public/photos",$request->file('file'),"User".$idd);
+            if($request->hasFile("user_photo")){
+                Storage::putFileAs("/public/photos",$request->file('user_photo'),"User".$idd.'.'.$request->file('user_photo')->getClientOriginalExtension());
+                $photo ="User".$idd.".".$request->file('user_photo')->getClientOriginalExtension();
             }
-            $photo ="User".$idd;
+
 
             $user = new user;
             $user->user_email = $email;
@@ -1127,6 +1129,11 @@ class HomeController extends Controller
 
         return redirect('/admin/editBarang/'.$id);
     }
+    function profileUser(Request $request){
+        $user=user::where("id",$request->session()->get('loggedIn'))->first();
+         $param["user"]=$user;
+         return view("user.profile",$param);
+     }
     public function pegawaiProfile(Request $request){
         $pegawai=pegawai::where("id",$request->session()->get('loggedIn'))->first();
         $param["pegawai"]=$pegawai;
