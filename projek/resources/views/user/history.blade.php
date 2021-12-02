@@ -298,7 +298,8 @@ $(document).ready(function(){
                         <th>Order Date</th>
                         <th>Status</th>
                         <th>Net Amount</th>
-                        <th>Action</th>
+                        <th>Detail</th>
+                        <th>Review</th>
                     </tr>
                 </thead>
                 <tbody id="listhistory">
@@ -331,6 +332,14 @@ $(document).ready(function(){
                                         <a class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a>
                                     </button> --}}
                                     <a href="{{url('/user/detailongoing/'.$dt->id)}}" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a>
+                                </td>
+                                <td>
+                                    <a href="{{url('/user/rating/'.$dt->pegawai_id)}}" class="view" title="View Details" data-toggle="tooltip">
+                                        {{-- <span class="material-icons-outlined">
+                                            reviews
+                                        </span> --}}
+                                        <i class="fa">&#xf005;</i>
+                                    </a>
                                 </td>
                             {{-- </form> --}}
                             {{-- <td><a href="#" class="view" title="View Details" data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td> --}}

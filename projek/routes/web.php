@@ -156,6 +156,8 @@ Route::middleware(['is_login'])->group(function () {
         Route::post("/chat_ajax2", [UserController::class, "chat_ajax2"]);
 
         Route::get("/status_pesanan_finish/{id}", [UserController::class, "status_pesanan_finish"]);
+        Route::get("/rating/{id}", [UserController::class, "rating"]);
+
     });
     Route::prefix("pegawai")->group(function(){
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);

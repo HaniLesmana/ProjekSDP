@@ -394,4 +394,7 @@ class UserController extends Controller
         return response()->json($data);
 
     }
+    public function rating($id){
+        return view("user.rating");
+    }
 }

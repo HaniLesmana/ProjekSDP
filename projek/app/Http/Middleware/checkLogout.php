@@ -18,13 +18,23 @@ class checkLogout
      */
     public function handle(Request $request, Closure $next)
     {
+        // dd('TEST');
         if(Session::has('loggedIn'))
         {
             $request->session()->forget('loggedIn');
-            Auth::guard("web_user")->logout();
-            Auth::guard("web_pegawai")->logout();
-            Auth::guard("web_admin")->logout();
+        }
 
+        if(Auth::guard("web_user")->check())
+        {
+            Auth::guard("web_user")->logout();
+        }
+        else if(Auth::guard("web_pegawai")->check())
+        {
+            Auth::guard("web_pegawai")->logout();
+        }
+        else if(Auth::guard("web_admin")->check())
+        {
+            Auth::guard("web_admin")->logout();
         }
         return $next($request);
     }
