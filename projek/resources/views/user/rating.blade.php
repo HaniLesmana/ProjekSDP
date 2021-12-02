@@ -487,8 +487,6 @@ $(document).ready(function() {
     //     resetWarna();
     // });
 
-
-
     $("#bintang1").click(function(){
         rating=1;
     });

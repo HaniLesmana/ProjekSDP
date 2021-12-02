@@ -204,15 +204,15 @@ class HomeController extends Controller
         $photou = pegawai::where("id",session('loggedIn'))->first()->pegawai_photo;
         //dd($request->hasFile("photo_user"));
         if($photou == "" || $photou==null){
-            if($request->hasFile("photo_user")){
-                Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('user_photo')->getClientOriginalExtension());
-                $photo ="User".$id.".".$request->file('photo_user')->getClientOriginalExtension();
+            if($request->hasFile("pegawai_photo")){
+                Storage::putFileAs("/public/photos",$request->file('pegawai_photo'),"Pegawai".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
+                $photo ="Pegawai".$id.".".$request->file('pegawai_photo')->getClientOriginalExtension();
             }
         }else{
-            if($request->hasFile("photo_user")){
-                Storage::delete("/public/photos","User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
-                Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
-                $photo ="User".$id.".".$request->file('photo_user')->getClientOriginalExtension();
+            if($request->hasFile("pegawai_photo")){
+                Storage::delete("/public/photos","User".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
+                Storage::putFileAs("/public/photos",$request->file('pegawai_photo'),"Pegawai".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
+                $photo ="Pegawai".$id.".".$request->file('photo_pegawai')->getClientOriginalExtension();
 
             }
         }
