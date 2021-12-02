@@ -154,6 +154,50 @@ class HomeController extends Controller
         return $this->listKategori();
 
     }
+
+    public function editProfile(Request $request)
+    {
+        dd("masuk");
+
+        $rules = [
+			'user_nama' => 'required|string|min:3|max:30',
+            'user_telp' => 'required|numeric',
+			'user_email' => 'required|email',
+            'user_alamat'=>'required'
+        ];
+        $message = [
+            'required'=>':attribute harus diisi'
+        ];
+        $request->validate($rules, $message);
+
+        $email = $request->input("email_user");
+            $nama = $request ->input("user_nama");
+            $telp = $request ->input("user_telp");
+            $id = user::where("id",session('loggedIn'))->get();
+            // $id = user::max("id");
+            // $idd = $id+1;
+            // $photo="";
+            // // dd($idd);
+            // if($request->hasFile("user_photo")){
+            //     Storage::putFileAs("/public/photos",$request->file('user_photo'),"User".$idd.'.'.$request->file('user_photo')->getClientOriginalExtension());
+            //     $photo ="User".$idd.".".$request->file('user_photo')->getClientOriginalExtension();
+            // }
+
+            try {
+                user::where('id',$id)->update(
+                    [
+                        'user_email' => $email,
+                        'user_nama' => $nama,
+                        'user_telepon' => $telp,
+                        'user_alamat' => $request->input("user_alamat")
+                    ]
+                );
+                // dd(user::where('id',$id)->get());
+            } catch (\Exception $e) {
+                return response()->json($e->getMessage());
+            }
+            return $this->profileUser($request);
+    }
     public function prosesEditKategori(Request $request, $id)
     {
 

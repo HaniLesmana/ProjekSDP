@@ -126,6 +126,7 @@ Route::middleware(['is_login'])->group(function () {
             return view('user.user_checkout');
         });
         Route::get("/profile", [HomeController::class, "profileUser"]);
+        Route::get("/editProfile", [HomeController::class, "editProfile"]);
         // Route::get("/ajax1", [HomeController::class, "ajax1"]);
         Route::post("/gotocart", [HomeController::class, "gotocart"]);
         Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);

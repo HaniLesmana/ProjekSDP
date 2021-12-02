@@ -50,8 +50,10 @@
         border: solid 1px #DBD0C0;
     }
 </style>
-<form enctype="multipart/form-data" action="{{ url('/editProfile')}}" method="post">
     <div class="container rounded bg-white mt-5 mb-5">
+        @if (isset($sukses))
+            <script>alert("Profile Updated!")</script>
+        @endif
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -70,6 +72,7 @@
                         <h4 class="text-right">Profile Settings</h4>
                     </div>
 
+                    <form enctype="multipart/form-data" action="{{ url('/user/editProfile') }}" method="post">
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" id="user_nama" value="{{ $user->user_nama }}"></div>
                     </div>
@@ -82,15 +85,31 @@
                     </div>
                     <div class="row mt-4">
                         <button class="btn btn-warning" type="button" style="margin-left:16px;" id="btnEdit" onclick="btnClick()">Edit Profile</button>
-                        <button class="btn btn-warning profile-button" style="margin-left:30px;" type="submit" id="btnSave" onclick="btnSaveClick()">Save Profile</button>
+                        <button type="submit" class="btn btn-warning profile-button" style="margin-left:30px;" id="btnSave" onclick="btnSaveClick()">Save Profile</button>
                     </div>
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    @if(isset($errorEmail))
+                        <div class="errormsg" style="color: red">
+                            <ul>
+                                <li>{{$errorEmail}}</li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
+            </form>
             </div>
         </div>
     </div>
     </div>
     </div>
-</form>
 
 <script>
     $(document).ready(function() {
