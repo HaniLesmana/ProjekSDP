@@ -6,6 +6,11 @@
 .navbar-brand{
     font-family: viga;
     font-size: 33px;
+    margin-top:50px;
+}
+
+body{
+    font-family:Roboto, sans-serif;
 }
 
 /* Jumbotron */

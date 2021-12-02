@@ -41,23 +41,24 @@ class checkLogin
         // {
         //     return $next($request);
         // }
-        if(Auth::guard("web_user")->check())
-        {
-            return $next($request);
 
-        }
-        else if(Auth::guard("web_pegawai")->check())
-        {
-            return $next($request);
-            dd("1");
-        }
-        else if(Auth::guard("web_admin")->check())
-        {
-            return $next($request);
-        }
-        else{
-            return redirect()->back();
-        }
+        // if(Auth::guard("web_user")->check())
+        // {
+        //     return $next($request);
+
+        // }
+        // else if(Auth::guard("web_pegawai")->check())
+        // {
+        //     return $next($request);
+        // }
+        // else if(Auth::guard("web_admin")->check())
+        // {
+        //     return $next($request);
+        // }
+        // else{
+        //     return redirect()->back();
+        // }
+        return $next($request);
         // AUTH
     }
 }

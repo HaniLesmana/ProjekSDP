@@ -18,9 +18,9 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar navbar-light fixed-top"  style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));position:fixed;" >
+    <nav class="navbar navbar-expand-lg navbar navbar-light fixed-top"  style="background-color: rgba(255,255,255,0.9);  background-image: linear-gradient( rgba(0,0,0,0.1),rgba(220,220,220,0),rgba(225,225,225,0));position:fixed;height:75px" >
       <div class="container">
-        <a class="navbar-brand" id="gambar" href="#"></a>
+        <a class="navbar-brand" id="gambar"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -142,14 +142,14 @@
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">Get work done faster <br>& better with Us</h1>
-        <a class="nav-item btn btn-primary tombol" style="margin-bottom: 30px;" href="#">Our Work</a>
+        <h1 class="display-4">Get work done faster <br>and better with us</h1>
+        <!-- <a class="nav-item btn btn-primary tombol" style="margin-bottom: 30px;" href="#">Our Work</a> -->
       </div>
     </div>
     <!-- Akhir jumbotron -->
 
     <!-- Container -->
-    <div class="container">
+    <div style="margin-top:-32px;">
 
       <!-- info panel -->
       <!-- <div class="row justify-content-center">
@@ -176,40 +176,46 @@
       <!-- akhir info panel -->
 
       <!-- bagian Work like at home -->
-      <div class="row justify-content-center">
-        <div class="col-lg">
-          <img src="img/workingspace.png" alt="workingspace" class="img-fluid">
-        </div>
-        <div class="col-lg">
-          <h2>You <b>Work</b> Like at <b>Home</b></h2>
-          <p>Bekerja dengan suasana hati yang lebih asik dan mempelajari hal baru setiap harinya</p>
-          <a class="nav-item btn btn-primary tombol" href="#">GALLERY</a>
+      <div class="row justify-content-center" style="padding: 10% 0 10% 0; background-color:#f2f2f2;">
+        <div class="container">
+          <h2>Need Help Right Away?</h2>
+          <p>We specialize in making routine maintenance and emergency repair experiences worry free. Give us a call today to learn how simple our process truly is!</p>
         </div>
       </div>
-      <!-- Akhir work like at home -->
-      <!-- About -->
-      <br><br>
-      <a id="About"><h1 style="margin-bottom:20px;">About</h1>
-        <p style="line-height:25px;">BABOWE is Web Application that will help you to find your trustful,high quality, with great service Handyman and Household Assistant
-          Your satisfy is our happiness.
 
-          Babowe started to operate from 2021 at first, we  want to help
-        </p>
-       </a>
+      <div class="container">
+        <div class="row justify-content-center" style="padding:40px 0 30px 0;">
+            <div class="col-lg">
+              <img src="img/plumbing.png" alt="workingspace" class="img-fluid">
+              <p style="padding-top:35px;">By planning ahead you can save yourself from feeling stressed and overwhelmed. Our Repair Services is the handyman service provider trusted throughout Indonesia.</p>
+            </div>
+            <div class="col-lg">
+              <h1 style="color:#e71a23">BOOK NOW</h1>
+              <!-- <a class="nav-item btn btn-primary tombol" href="#">GALLERY</a> -->
+              <img src="img/electrician.png" alt="workingspace" class="img-fluid" style="margin-top:25px;">
+            </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center" style="padding:40px 0 30px 0;background-color:#f2f2f2;">
+        <div class="container">
+          <div class="col-lg">
+            <h1 style="margin-bottom:20px;">About</h1>
+            <a id="About">
+              <p style="line-height:25px;">BABOWE is Web Application that will help you to find your trustful,high quality, with great service Handyman and Household Assistant
+                Your satisfy is our happiness.
+
+                Babowe started to operate from 2021 at first, we  want to help
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Akhir work like at home -->
 
     </div>
     <!-- akhir container -->
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
