@@ -651,13 +651,35 @@ class HomeController extends Controller
         $total=(10000*$request->hid10k)+(20000*$request->hid20k)+(50000*$request->hid50k)+(75000*$request->hid75k)+(100000*$request->hid100k)+(125000*$request->hid125k)+(190000*$request->hid190k)+(250000*$request->hid250k);
         return view('user.user_cart',['data'=>json_encode($arr)],['total'=>$total]);
     }
-
     function gotocheckout(Request $request){
         $data=json_decode($request->data);
         $total = $request->total;
         $user = user::where('id',session('loggedIn'))->first();
         $email = $user->user_email;
         $id = $user->id;
+        \Midtrans\Config::$serverKey = "SB-Mid-server-UDDn8ne9rxTp4snNJ_sHqCrZ";
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => 3,
+                'gross_amount' => $total,
+            ),
+            'customer_details' => array(
+                'first_name' => $user->user_nama,
+                'email' => $user->user_email,
+                'phone' => $user->user_telepon,
+            ),
+        );
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        //dd($snapToken);
+        // return back()->with(["bayar"=>$snapToken,"data"=>$data, "total"=>$total]);
+        return view('user.user_cart',["bayar"=>$snapToken,"data"=>json_encode($data), "total"=>$total]);
+
         htransTopup::create([
             'user_id' => $id,
             'htranstpwd_tanggal' => date("Y/m/d"),
