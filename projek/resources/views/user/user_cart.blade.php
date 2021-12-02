@@ -5,6 +5,11 @@
     @endsection
     <!-- Akhir Navbar -->
     @section('main')
+    <!-- @TODO: replace SET_YOUR_CLIENT_KEY_HERE with your client key -->
+    <script type="text/javascript"
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key=env('MIDTRANS_CLIENT_KEY')></script>
+    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
     <div class="container">
         <form action="{{ url('/user/gotocheckout') }}" method="post">
             @csrf
@@ -16,6 +21,7 @@
                         <th>Jumlah</th>
                     </tr>
                 </thead>
+                @if (isset($data))
                     @foreach(json_decode($data,true) as $dat)
                     <tbody>
                         @if($dat['jumlah'] != 0)
@@ -28,7 +34,7 @@
                         @endif
                     </tbody>
                     @endforeach
-
+                @endif
         </table>
         <label for="">Total : </label>
         <label for="" id="total">{{ $total }}</label>
@@ -57,7 +63,11 @@
             </div>
         </div>
 
-
+        @if (isset($bayar))
+            <script>
+                window.snap.pay("{{$bayar}}");
+            </script>
+        @endif
         </form>
     </div>
 
@@ -81,7 +91,12 @@
             //     var total = $("#total").html();
             //     $("#total").val(totalInt+"");
             // });
-
+            // var payButton = document.getElementById('btncart');
+            // payButton.addEventListener('click', function () {
+            //     // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+            //     window.snap.pay('TRANSACTION_TOKEN_HERE');
+            //     // customer will be redirected after completing payment pop-up
+            // });
         });
 
         function hitungUlang(){
