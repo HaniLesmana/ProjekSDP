@@ -26,9 +26,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active" href="#">Home</a>
-            <a class="nav-item nav-link " href="#" >Features</a>
-            <a class="nav-item nav-link" href="#About">About</a>
+            {{-- <a class="nav-item nav-link active" href="#">Home</a> --}}
+            {{-- <a class="nav-item nav-link " href="#" >Features</a> --}}
+            <a class="nav-item nav-link" href="#About">About Us</a>
             <button type ="button" class="btn btn-primary tombol" data-toggle="modal" data-target="#SignInModal">Sign In</button>
           </div>
         </div>
@@ -186,7 +186,7 @@
       <div class="container">
         <div class="row justify-content-center" style="padding:40px 0 30px 0;">
             <div class="col-lg">
-              <img src="img/plumbing.png" alt="workingspace" class="img-fluid">
+              <img src="img/plumber.png" alt="workingspace" class="img-fluid">
               <p style="padding-top:35px;">By planning ahead you can save yourself from feeling stressed and overwhelmed. Our Repair Services is the handyman service provider trusted throughout Indonesia.</p>
             </div>
             <div class="col-lg">
