@@ -166,6 +166,8 @@ Route::middleware(['is_login'])->group(function () {
 
     });
     Route::prefix("pegawai")->group(function(){
+        Route::post("/editProfile", [HomeController::class, "editProfilePegawai"]);
+        Route::post("/updatePhoto", [HomeController::class, "updatePhotoPegawai"]);
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
         Route::get('/pesanan_acc/{id}', [HomeController::class, "pegawaiOrderacc"]);
         Route::get('/pesanan_cancel/{id}', [HomeController::class, "pegawaiOrdercancel"]);

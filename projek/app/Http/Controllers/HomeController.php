@@ -198,6 +198,34 @@ class HomeController extends Controller
         // return $this->home($request);
         return $this->profileUser($request);
     }
+    public function editProfilePegawai(Request $request)
+    {
+        $rules = [
+            "nama" => 'required|string|min:3|max:30',
+            "telp" => 'required|numeric',
+            "email" => 'required|email',
+            "alamat" =>'required'
+        ];
+        $message = [
+            'required'=>':attribute harus diisi'
+        ];
+        $request->validate($rules, $message);
+        $id = pegawai::where("id",session('loggedIn'))->first()->id;
+        try {
+            pegawai::where('id',$id)->update(
+                [
+                    'pegawai_email' => $request->email,
+                    'pegawai_nama' => $request->nama,
+                    'pegawai_telepon' => $request->telp,
+                    'pegawai_alamat' => $request->alamat
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+        // return $this->home($request);
+        return $this->pegawaiProfile($request);
+    }
     public function updatePhotoPegawai(Request $request)
     {
         $id = pegawai::where("id",session('loggedIn'))->first()->id;
@@ -207,17 +235,25 @@ class HomeController extends Controller
             if($request->hasFile("pegawai_photo")){
                 Storage::putFileAs("/public/photos",$request->file('pegawai_photo'),"Pegawai".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
                 $photo ="Pegawai".$id.".".$request->file('pegawai_photo')->getClientOriginalExtension();
+                try {
+                    pegawai::where('id',$id)->update(
+                        [
+                            'pegawai_photo' => $photo
+                        ]
+                    );
+                } catch (\Exception $e) {
+                    return response()->json($e->getMessage());
+                }
             }
         }else{
             if($request->hasFile("pegawai_photo")){
                 Storage::delete("/public/photos","User".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
                 Storage::putFileAs("/public/photos",$request->file('pegawai_photo'),"Pegawai".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
-                $photo ="Pegawai".$id.".".$request->file('photo_pegawai')->getClientOriginalExtension();
 
             }
         }
         // return $this->home($request);
-        return $this->profileUser($request);
+        return $this->pegawaiProfile($request);
     }
     public function updatePhoto(Request $request)
     {
@@ -228,13 +264,21 @@ class HomeController extends Controller
             if($request->hasFile("photo_user")){
                 Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('user_photo')->getClientOriginalExtension());
                 $photo ="User".$id.".".$request->file('photo_user')->getClientOriginalExtension();
+                try {
+                    user::where('id',$id)->update(
+                        [
+                            'user_photo' => $photo
+                        ]
+                    );
+                    // dd(user::where('id',$id)->get());
+                } catch (\Exception $e) {
+                    return response()->json($e->getMessage());
+                }
             }
         }else{
             if($request->hasFile("photo_user")){
                 Storage::delete("/public/photos","User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
                 Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
-                $photo ="User".$id.".".$request->file('photo_user')->getClientOriginalExtension();
-
             }
         }
         // return $this->home($request);
