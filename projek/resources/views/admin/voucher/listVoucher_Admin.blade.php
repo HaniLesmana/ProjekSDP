@@ -29,8 +29,6 @@
         <th>Nama</th>
         <th>Harga</th>
         <th>Potongan</th>
-        <th>Masa Berlaku</th>
-        <th>Status</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -40,21 +38,13 @@
             @for($i = 0; $i < count($voucher); $i++)
                 <tr>
                     <td>{{ $i+1 }}</td>
-                    <td>{{ $voucher[$i]->voucher_id }}</td>
+                    <td>{{ $voucher[$i]->id }}</td>
                     <td>{{ $voucher[$i]->voucher_nama }}</td>
                     <td>{{ $voucher[$i]->voucher_harga }}</td>
                     <td>{{ $voucher[$i]->voucher_potongan }}</td>
-                    <td>{{ $voucher[$i]->voucher_masaberlaku }}</td>
-                    <td>
-                        @if($voucher[$i]->voucher_status == 1)
-                            Active
-                        @elseif($voucher[$i]->voucher_status == 0)
-                            Not Active
-                        @endif
-                    </td>
                     <td>
                     <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                        <a href="/admin/editVoucher/{{$voucher[$i]->voucher_id}}" style="text-decoration: :none; color:white;">
+                        <a href="/admin/editVoucher/{{$voucher[$i]->id}}" style="text-decoration: :none; color:white;">
                             Edit
                         </a>
                     </button>
@@ -83,7 +73,7 @@
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <form method="get" action="{{ url("/admin/prosesDeleteVoucher/".$voucher[$i]->voucher_id) }}">
+                            <form method="get" action="{{ url("/admin/prosesDeleteVoucher/".$voucher[$i]->id) }}">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                             </div>

@@ -17,6 +17,7 @@ class CreateLogstoksTable extends Migration
             $table->id();
             $table->string("barang_id");
             $table->integer("jumlah");
+            $table->string("alasan");
             $table->softDeletes();
         });
     }

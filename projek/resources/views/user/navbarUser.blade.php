@@ -45,7 +45,13 @@ body{
                         <a class="nav-item nav-link" style="padding-left:0px;padding-right:0px;">
                             <input class="btn" type="submit" value="ONGOING">
                         </a>
-                        {{-- <a class="nav-item nav-link" href="#About">HISTORY</a> --}}
+                        {{-- <a class="nav-item nav-link" href="#About">VOUCHER</a> --}}
+                    </form>
+                    <form action="{{ url('/user/voucher')}}" method="get">
+                        <a class="nav-item nav-link" style="padding-left:0px;padding-right:0px;">
+                            <input class="btn" type="submit" value="VOUCHER">
+                        </a>
+                        {{-- <a class="nav-item nav-link" href="#About">VOUCHER</a> --}}
                     </form>
                     <form action="{{url('/logout')}}" method="get" style="padding-top:7px;">
                         <button type ="submit" class="btn btn-warning tombolSignOut" style="color:white;">Sign Out</button>

@@ -121,6 +121,12 @@ body {
                   Voucher
               </a>
       </li>
+      <li class="nav-item">
+        <a href="/admin/listpembayaranpegawai" class="nav-link font-italic dropdown-item">
+        <!-- <i class="far fa-money-bill-alt"></i> -->
+                <i class="far fa-money-bill-alt"> Pembayaran Pegawai</i>
+              </a>
+      </li>
     </ul>
     <form action="{{url('/logout')}}" method="get">
         <button type ="submit" class="btn btn-warning tombol" style="position:absolute;bottom:30px;margin-left:25px"><a href="/" style="text-decoration:none;color:white;">Sign Out <i class="fas fa-sign-out-alt"></i> </a></button>

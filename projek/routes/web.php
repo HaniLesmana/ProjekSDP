@@ -20,6 +20,10 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('/listRequest', [HomeController::class, "listRequest"]);
     Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
 
+    Route::post('payments/notif', 'PaymentController@notif');
+    Route::get('payments/sukses', 'PaymentController@sukses');
+    Route::get('payments/gagal', 'PaymentController@gagal');
+    Route::get('payments/pending', 'PaymentController@pending');
 
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);
@@ -110,6 +114,8 @@ Route::middleware(['is_login'])->group(function () {
     //TRANSAKSI TOPUP WITHDRAW
 
     Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);
+    Route::get('/listpembayaranpegawai', [HomeController::class, "listpembayaranpegawai"]);
+    Route::get('/accpembayaran/{id}/{id1}', [HomeController::class, "accpembayaran"]);
 
     });
     Route::prefix("user")->group(function(){
@@ -129,11 +135,12 @@ Route::middleware(['is_login'])->group(function () {
         {
             return view('user.user_checkout');
         });
+        Route::get("/voucher", [HomeController::class, "listVoucher"]);
         Route::get("/profile", [HomeController::class, "profileUser"]);
         Route::post("/editProfile", [HomeController::class, "editProfile"]);
         Route::post("/updatePhoto", [HomeController::class, "updatePhoto"]);
         // Route::get("/ajax1", [HomeController::class, "ajax1"]);
-        Route::post("/gotocart", [HomeController::class, "gotocart"]);
+        Route::any("/gotocart", [HomeController::class, "gotocart"]);
         Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);
 
         Route::get("/detailcart/{id}", [UserController::class, "detailcart"]);
@@ -164,6 +171,8 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/rating/{id}", [UserController::class, "rating"]);
         Route::get("/ajax_rating/{id}/{id1}/{id2}", [UserController::class, "ajax_rating"]);
 
+        Route::get("/transvoucher", [UserController::class, "transvoucher"]);
+        Route::post("/dotransvoucher", [voucherController::class, "dotransvoucher"]);
     });
     Route::prefix("pegawai")->group(function(){
         Route::post("/editProfile", [HomeController::class, "editProfilePegawai"]);

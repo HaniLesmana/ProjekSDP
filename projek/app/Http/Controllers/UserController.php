@@ -17,7 +17,10 @@ use App\Models\dtransbarang;
 use App\Models\dtranssewa;
 use App\Models\dtranstpwd;
 use App\Models\htranssewa;
+use App\Models\logsaldo;
 use App\Models\review;
+use App\Models\user_voucher;
+use App\Models\voucher;
 use Carbon\Carbon;
 use Database\Seeders\DtranssewaSeeder;
 // use Facade\FlareClient\Http\Client;
@@ -316,6 +319,26 @@ class UserController extends Controller
         dtranssewa::where("id",$id)->update([
             "dSewa_status_accpegawai"=>3
         ]);
+        $dtransewa=dtranssewa::where("id",$id)->first();
+        $saldo=(pegawai::where("id",$dtransewa->pegawai_id)->first()->pegawai_saldo)+$dtransewa->dSewa_harga;
+        pegawai::where("id",$dtransewa->pegawai_id)->update([
+            "pegawai_saldo"=>$saldo
+        ]);
+
+        $dtransbarang=dtransbarang::where("dSewa_id",$id)->get();
+        $total=0;
+        foreach ($dtransbarang as $key => $db) {
+            $total=$total+$db->barang->barang_harga;
+        }
+        $saldo=(pegawai::where("id",$dtransewa->pegawai_id)->first()->pegawai_saldo)+$total;
+        logsaldo::create([
+            "dtrans_id"=>$dtransewa->id,
+            "jumlah"=>$total,
+            "jenis"=>"0",
+        ]);
+        admin::where("id",1)->update([
+            "admin_saldo"=>$saldo
+        ]);
         return redirect("/home/ongoingtrans");
     }
     public function history(Request $request){
@@ -430,15 +453,16 @@ class UserController extends Controller
         $persen2=0;
         $persen1=0;
         if($total_star!=0){
-            $rata_star=($star5+$star4+$star3+$star2+$star1)/$total_star;
+            $rata_star=((5*$star5)+(4*$star4)+(3*$star3)+(2*$star2)+$star1)/$total_star;
             $persen5=($star5/$total_star)*100;
             $persen4=($star4/$total_star)*100;
             $persen3=($star3/$total_star)*100;
             $persen2=($star2/$total_star)*100;
             $persen1=($star1/$total_star)*100;
         }
-
-        return view("user.rating",["review"=>$review,"id"=>$id,"rata_star"=>$rata_star,"total_star"=>$total_star,"persen5"=>$persen5,"persen4"=>$persen4,"persen3"=>$persen3,"persen2"=>$persen2,"persen1"=>$persen1]);
+        //dd($star5." ".$star4." ".$star3." ".$star2." ".$star1." ".$total_star);
+        //dd(round($rata_star));
+        return view("user.rating",["review"=>$review,"id"=>$id,"rata_star"=>round($rata_star),"total_star"=>$total_star,"persen5"=>round($persen5),"persen4"=>round($persen4),"persen3"=>round($persen3),"persen2"=>round($persen2),"persen1"=>round($persen1)]);
     }
     public function ajax_rating(Request $request,$id,$id1,$id2){
         review::create([
@@ -447,7 +471,50 @@ class UserController extends Controller
             'rating'=>$id,
             'review'=>$id1
         ]);
+        //$review=review::where("pegawai_id",$id2)->get();
+
         $review=review::where("pegawai_id",$id2)->get();
-        return view("user.rating",["review"=>$review,"id"=>$id2]);
+        $star5=0;
+        $star4=0;
+        $star3=0;
+        $star2=0;
+        $star1=0;
+
+        $total_star=count($review);
+        foreach ($review as $key => $r) {
+            if ($r->rating==5){
+                $star5=$star5+1;
+            }
+            if ($r->rating==4){
+                $star4=$star4+1;
+            }
+            if ($r->rating==3){
+                $star3=$star3+1;
+            }
+            if ($r->rating==2){
+                $star2=$star2+1;
+            }
+            if ($r->rating==1){
+                $star1=$star1+1;
+            }
+        }
+
+        $rata_star=0;
+        $persen5=0;
+        $persen4=0;
+        $persen3=0;
+        $persen2=0;
+        $persen1=0;
+        if($total_star!=0){
+            $rata_star=($star5+$star4+$star3+$star2+$star1)/$total_star;
+            $persen5=($star5/$total_star)*100;
+            $persen4=($star4/$total_star)*100;
+            $persen3=($star3/$total_star)*100;
+            $persen2=($star2/$total_star)*100;
+            $persen1=($star1/$total_star)*100;
+        }
+
+        //return view("user.rating_ajax",["review"=>$review,"id"=>$id2]);
+        return view("user.rating_ajax",["review"=>$review,"id"=>$id2,"rata_star"=>round($rata_star),"total_star"=>$total_star,"persen5"=>round($persen5),"persen4"=>round($persen4),"persen3"=>round($persen3),"persen2"=>round($persen2),"persen1"=>round($persen1)]);
     }
 }

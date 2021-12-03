@@ -20,6 +20,8 @@ class CreateHtranstpwdsTable extends Migration
             $table->integer("htranstpwd_total");
             $table->string("htranstpwd_tipe");
             $table->integer("htranstpwd_status");
+            $table->string("token_payment");
+            $table->string("status_payment");
             $table->timestamps();
             $table->softDeletes();
         });

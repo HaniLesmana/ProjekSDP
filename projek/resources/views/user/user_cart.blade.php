@@ -10,6 +10,11 @@
     src="https://app.sandbox.midtrans.com/snap/snap.js"
     data-client-key=env('MIDTRANS_CLIENT_KEY')></script>
     <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
+    @if(isset($bayar))
+        <script>
+            window.snap.pay("{{$bayar}}");
+        </script>
+    @endif
     <div class="container">
         <form action="{{ url('/user/gotocheckout') }}" method="post">
             @csrf
@@ -62,12 +67,6 @@
                 <button type="submit" class="btn btn-warning" id="btncart" style="color:white;padding:12px 20px;font-size:18px;">Checkout</button>
             </div>
         </div>
-
-        @if (isset($bayar))
-            <script>
-                window.snap.pay("{{$bayar}}");
-            </script>
-        @endif
         </form>
     </div>
 

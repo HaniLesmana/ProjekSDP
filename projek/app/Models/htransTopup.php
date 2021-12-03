@@ -12,8 +12,15 @@ class htransTopup extends Model
     use SoftDeletes;
     protected $table = "htranstpwds";
     protected $primaryKey = "htranstpwd_id";
-    protected $fillable = ["htranstpwd_id","user_id", "htranstpwd_tanggal", "htranstpwd_total", "htranstpwd_tipe", "htranstpwd_status"];
+    protected $fillable = ["htranstpwd_id","user_id", "htranstpwd_tanggal", "htranstpwd_total", "htranstpwd_tipe", "htranstpwd_status","token_payment","status_payment"];
     public $timestamps = true;
+    public const CHALLENGE = 'changllenge';
+    public const SETLE = 'setlement';
+    public const PENDING = 'pending';
+    public const DENY = 'deny';
+    public const EXPIRE = 'expire';
+    public const CANCEL = 'cancel';
+    public const SUCCESS = 'success';
 
     public function hd_trans()
     {

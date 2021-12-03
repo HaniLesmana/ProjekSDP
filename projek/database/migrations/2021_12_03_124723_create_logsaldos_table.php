@@ -4,23 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminsTable extends Migration
+class CreateLogsaldosTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('logsaldos', function (Blueprint $table) {
             $table->id();
-            $table->string("admin_nama");
-            $table->string("admin_email");
-            $table->integer("admin_saldo");
-            $table->string("admin_telepon");
-            $table->string("password");
+            $table->string("dtrans_id");
+            $table->integer("jumlah");//barang + dtransewa harga
+            $table->string("jenis");
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +30,6 @@ class CreateAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('logsaldos');
     }
 }

@@ -21,11 +21,11 @@
             <div class="card-body" style="width:400px;padding-top:30px; padding-bottom:30px;">
          <h5 class="card-title mb-3" style="text-align: center;">Edit Voucher</h5>
          @foreach ($voucher as $v)
-         @if($v->voucher_id == $id)
+         @if($v->id == $id)
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <div class="input-group"> <input class="form-control" name="id" type="text" value="{{ $v->voucher_id }}" readonly> </div>
+                        <div class="input-group"> <input class="form-control" name="id" type="text" value="{{ $v->id }}" readonly> </div>
                         @error('nama')
                             <span style='color: red'>{{ $message }}</span>
                         @enderror
@@ -60,32 +60,6 @@
                             @error('potongan')
                                 <span style='color: red'>{{ $message }}</span>
                             @enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <div class="input-group"> <input class="form-control" type="number" name="masaberlaku" placeholder="Masa Berlaku (hari)" value ="{{ old('masaberlaku') ? old('masaberlaku') : $v->voucher_masaberlaku }}" required> </div>
-                            @error('masaberlaku')
-                                <span style='color: red'>{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <div class="input-group">
-                            Status : <br>
-                            @if ($v->voucher_status==1)
-                                <input type="radio" name="status" value="Active" id="" checked>Active
-                                <input type="radio" name="status" id="" style="margin-left:100px;" value="Deactive">Deactive
-                            @else
-                            <input type="radio" name="status" value="Active" id="">Active
-                            <input type="radio" name="status" id="" style="margin-left:100px;" value="Deactive" checked>Deactive
-                            @endif
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -205,6 +205,7 @@ body{
                     </span>
                     <h5 class="mb-0 pt-1">Rate this</h5>
                 </div>
+                <div id="allreview">
                 <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
                     <h5 class="mb-0 mb-4">Ratings and Reviews</h5>
                     <div class="graph-star-rating-header">
@@ -292,8 +293,8 @@ body{
                 <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
                     <!-- <a href="#" class="btn btn-outline-primary btn-sm float-right">Top Rated</a> -->
                     <h5 class="mb-1">All Ratings and Reviews</h5>
-                    @isset($rating)
-                        @foreach($rating as $key => $dr)
+                    @isset($review)
+                        @foreach($review as $key => $dr)
                         <div class="reviews-members pt-4 pb-4">
                         <div class="media">
                             <a href="#"><img alt="Generic placeholder image" src="http://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-pill"></a>
@@ -327,7 +328,7 @@ body{
                                           <a href="#"><i class="icofont-ui-rating"></i></a> -->
                                           </span>
                                     <h6 class="mb-1"><a class="text-black" href="#">{{$dr->pegawai->pegawai_nama}}</a></h6>
-                                    <p class="text-gray">Tue, 20 Mar 2020</p>
+                                    <p class="text-gray">{{$dr->created_at}}</p>
                                 </div>
                                 <div class="reviews-members-body">
                                     <!-- <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p> -->
@@ -381,6 +382,7 @@ body{
                     </div>
                     <hr> -->
                     <!-- <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All Reviews</a> -->
+                </div>
                 </div>
                 <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
                     <h5 class="mb-4">Leave Comment</h5>
@@ -462,9 +464,9 @@ $(document).ready(function() {
         $('#myRate').html('5');
     });
 
-    $("#contBintang").mouseleave(function(){
-        resetWarna();
-    });
+    // $("#contBintang").mouseleave(function(){
+    //     resetWarna();
+    // });
 
     function resetWarna(){
         $('#bintang1').css('color',"#3868fb");
@@ -515,6 +517,9 @@ $(document).ready(function() {
             //     _token: '{{csrf_token()}}'
             // },
             success: function(data) {
+                $("#allreview").empty();
+                $("#allreview").append(data);
+                $("#input_review").val("");
                 //alert("berhasil");
                 // loadChatAjax2();
                 //loadChatAjax();

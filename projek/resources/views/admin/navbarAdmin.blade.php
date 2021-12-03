@@ -35,6 +35,11 @@
                   Voucher
               </a>
       </li>
+      <!-- <li class="nav-item">
+        <a href="/admin/listVoucher" class="nav-link font-italic dropdown-item">
+                  Pembayaran Pegawai
+              </a>
+      </li> -->
     </ul>
     <button type ="submit" class="btn btn-warning tombol" style="position:absolute;bottom:30px;margin-left:25px"><a href="/" style="text-decoration:none;color:white;">Sign Out</a></button>
   </div>

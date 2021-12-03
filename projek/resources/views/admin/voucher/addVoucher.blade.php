@@ -52,16 +52,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <div class="input-group"> <input class="form-control" type="number" name="masaberlaku" placeholder="Masa Berlaku (hari)" value="{{ old('masaberlaku') }}" required> </div>
-                            @error('masaberlaku')
-                                <span style='color: red'>{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
                 <button type="submit" style="color:white;margin-top:8px;color:white;height:35px;width: 375px;border-radius:3px;border:1px solid black; background-color:#FACE7F;text-align:center;">
                     Add
                 </button>

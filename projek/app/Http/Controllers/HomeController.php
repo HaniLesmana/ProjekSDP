@@ -16,6 +16,7 @@ use App\Models\dtransbarang;
 use App\Models\dtranssewa;
 use App\Models\dtranstpwd;
 use App\Models\htranssewa;
+use App\Models\logsaldo;
 use App\Models\user_voucher;
 use App\Models\voucher;
 use App\Rules\cek_password;
@@ -786,7 +787,7 @@ class HomeController extends Controller
         $user = user::where('id',session('loggedIn'))->first();
         $email = $user->user_email;
         $id = $user->id;
-        \Midtrans\Config::$serverKey = "SB-Mid-server-UDDn8ne9rxTp4snNJ_sHqCrZ";
+        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
         \Midtrans\Config::$isProduction = false;
         // Set sanitization on (default)
@@ -803,18 +804,22 @@ class HomeController extends Controller
                 'email' => $user->user_email,
                 'phone' => $user->user_telepon,
             ),
+            'expiry' => array(
+                'start_time'=> date('Y-m-d H:i:s T'),
+                'unit' => 'days',
+                'duration'=>2,
+            )
         );
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-        //dd($snapToken);
-        // return back()->with(["bayar"=>$snapToken,"data"=>$data, "total"=>$total]);
-        return view('user.user_cart',["bayar"=>$snapToken,"data"=>json_encode($data), "total"=>$total]);
-
+        // dd($snapToken);
         htransTopup::create([
             'user_id' => $id,
             'htranstpwd_tanggal' => date("Y/m/d"),
             'htranstpwd_total' => $total,
             'htranstpwd_tipe' => 'topup',
             'htranstpwd_status' => 2,
+            'token_payment' => $snapToken,
+            'status_payment'=>"Pending" ,
         ]);
 
         $mx = htransTopup::all();
@@ -842,7 +847,8 @@ class HomeController extends Controller
                 //DB::insert('insert into dtranstpwd (htranstpwd_id, dtranstpwd_nominal,dtranstpwd_jumlah) values (?, ?, ?)', [$max, (int)$nominal,(int)$tes]);
             }
         }
-        return view('user.user_checkout',['total'=>$total, 'email'=>$email]);
+        return view('user.user_cart',["bayar"=>$snapToken,"data"=>json_encode($data), "total"=>$total]);
+        // return view('user.user_checkout',['total'=>$total, 'email'=>$email]);
     }
     function prosesAcc($id){
         $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
@@ -1290,6 +1296,12 @@ class HomeController extends Controller
         $param["pegawai"]=$pegawai;
         return view("pegawai.pegawai_profile",$param);
     }
+    public function listVoucher()
+    {
+        $voucher = voucher::get();
+        $datavoucher["datavoucher"]=$voucher;
+        return view("user.user_voucher",$datavoucher);
+    }
     public function pegawaiChat(Request $request){
         $pegawai=pegawai::where("id",$request->session()->get('loggedIn'))->first();
         $datachat=chat::where("chat_destination",session()->get('loggedIn'))->latest('id')->get();
@@ -1315,7 +1327,6 @@ class HomeController extends Controller
                 if(!$ada){
                     array_push($arr,$c);
                 }
-
             }
         }
         return view("pegawai.chat",["datachat"=>$datachat,"arr"=>$arr,"pegawai"=>$pegawai]);
@@ -1351,9 +1362,56 @@ class HomeController extends Controller
                     dtranssewa::where("id",$dt->id)->update([
                         "dSewa_status_accpegawai"=>3
                     ]);
+
+                    // pegawai::where("id",$dt->pegawai_id)->update([
+                    //     "pegawai_saldo"=>$saldo
+                    // ]);
+                    $dtransbarang=dtransbarang::where("dSewa_id",$dt->id)->get();
+                    $total=0;
+                    foreach ($dtransbarang as $key => $db) {
+                        $total=$total+$db->barang->barang_harga;
+                    }
+                    $saldo=(pegawai::where("id",$dt->pegawai_id)->first()->pegawai_saldo)+$total;
+                    logsaldo::create([
+                        "dtrans_id"=>$dt->id,
+                        "jumlah"=>$total,
+                        "jenis"=>"0",//0 belum 1 sudah
+                    ]);
+                    admin::where("id",1)->update([
+                        "admin_saldo"=>$saldo
+                    ]);
                 }
             }
         }
 
+
+    }
+    public function listpembayaranpegawai(){
+        $datapegawai=pegawai::all();
+        $datalogsaldo=logsaldo::all();
+        $p=array();
+        if($p != null){
+            foreach ($datalogsaldo as $key => $log) {
+                if($log->dtranssewa->pegawai_id==1){
+                    array_push($p,$log);
+                }
+            }
+        }
+
+        return view("admin.listpembayaranpegawai",['datalogsaldo'=>$p]);
+    }
+
+    public function listpembayaranpegawaifiltered($idpeg){
+        $datapegawai=pegawai::all();
+        $datalogsaldo=logsaldo::where("jenis",0)->get();
+        return view("admin.listpembayaranpegawai",['datalogsaldo'=>$datalogsaldo]);
+    }
+    public function accpembayaran($id,$id1){
+        $saldo=(pegawai::where("id",$id1)->first()->pegawai_saldo)+logsaldo::where("id",$id)->first()->dtranssewa->dSewa_harga;
+        pegawai::where("id",$id1)->update([
+            "pegawai_saldo"=>$saldo
+        ]);
+        logsaldo::where("id",$id)->delete();
+        return $this->listpembayaranpegawai();
     }
 }
