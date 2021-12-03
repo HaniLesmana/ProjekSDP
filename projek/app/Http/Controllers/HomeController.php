@@ -154,9 +154,138 @@ class HomeController extends Controller
         return $this->listKategori();
 
     }
+
+    public function editProfile(Request $request)
+    {
+        $rules = [
+			"nama" => 'required|string|min:3|max:30',
+         "telp" => 'required|numeric',
+			"email" => 'required|email',
+         "alamat" =>'required'
+        ];
+        $message = [
+            'required'=>':attribute harus diisi'
+        ];
+        $request->validate($rules, $message);
+        $email = $request->email;
+        $nama = $request->nama;
+        $telp = $request->telp;
+        $id = user::where("id",session('loggedIn'))->first()->id;
+
+        //dd($email." ".$nama." ".$telp.$id);
+        // $id = user::max("id");
+        // $idd = $id+1;
+        // $photo="";
+        // // dd($idd);
+        // if($request->hasFile("user_photo")){
+        //     Storage::putFileAs("/public/photos",$request->file('user_photo'),"User".$idd.'.'.$request->file('user_photo')->getClientOriginalExtension());
+        //     $photo ="User".$idd.".".$request->file('user_photo')->getClientOriginalExtension();
+        // }
+        //dd($id);
+        try {
+            user::where('id',$id)->update(
+                [
+                    'user_email' => $request->email,
+                    'user_nama' => $request->nama,
+                    'user_telepon' => $request->telp,
+                    'user_alamat' => $request->alamat
+                ]
+            );
+            // dd(user::where('id',$id)->get());
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+        // return $this->home($request);
+        return $this->profileUser($request);
+    }
+    public function editProfilePegawai(Request $request)
+    {
+        $rules = [
+            "nama" => 'required|string|min:3|max:30',
+            "telp" => 'required|numeric',
+            "email" => 'required|email',
+            "alamat" =>'required'
+        ];
+        $message = [
+            'required'=>':attribute harus diisi'
+        ];
+        $request->validate($rules, $message);
+        $id = pegawai::where("id",session('loggedIn'))->first()->id;
+        try {
+            pegawai::where('id',$id)->update(
+                [
+                    'pegawai_email' => $request->email,
+                    'pegawai_nama' => $request->nama,
+                    'pegawai_telepon' => $request->telp,
+                    'pegawai_alamat' => $request->alamat
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+        // return $this->home($request);
+        return $this->pegawaiProfile($request);
+    }
+    public function updatePhotoPegawai(Request $request)
+    {
+        $id = pegawai::where("id",session('loggedIn'))->first()->id;
+        $photou = pegawai::where("id",session('loggedIn'))->first()->pegawai_photo;
+        //dd($request->hasFile("photo_user"));
+        if($photou == "" || $photou==null){
+            if($request->hasFile("pegawai_photo")){
+                Storage::putFileAs("/public/photos",$request->file('pegawai_photo'),"Pegawai".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
+                $photo ="Pegawai".$id.".".$request->file('pegawai_photo')->getClientOriginalExtension();
+                try {
+                    pegawai::where('id',$id)->update(
+                        [
+                            'pegawai_photo' => $photo
+                        ]
+                    );
+                } catch (\Exception $e) {
+                    return response()->json($e->getMessage());
+                }
+            }
+        }else{
+            if($request->hasFile("pegawai_photo")){
+                Storage::delete("/public/photos","User".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
+                Storage::putFileAs("/public/photos",$request->file('pegawai_photo'),"Pegawai".$id.'.'.$request->file('pegawai_photo')->getClientOriginalExtension());
+
+            }
+        }
+        // return $this->home($request);
+        return $this->pegawaiProfile($request);
+    }
+    public function updatePhoto(Request $request)
+    {
+        $id = user::where("id",session('loggedIn'))->first()->id;
+        $photou = user::where("id",session('loggedIn'))->first()->user_photo;
+        //dd($request->hasFile("photo_user"));
+        if($photou == "" || $photou==null){
+            if($request->hasFile("photo_user")){
+                Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('user_photo')->getClientOriginalExtension());
+                $photo ="User".$id.".".$request->file('photo_user')->getClientOriginalExtension();
+                try {
+                    user::where('id',$id)->update(
+                        [
+                            'user_photo' => $photo
+                        ]
+                    );
+                    // dd(user::where('id',$id)->get());
+                } catch (\Exception $e) {
+                    return response()->json($e->getMessage());
+                }
+            }
+        }else{
+            if($request->hasFile("photo_user")){
+                Storage::delete("/public/photos","User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
+                Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
+            }
+        }
+        // return $this->home($request);
+        return $this->profileUser($request);
+    }
     public function prosesEditKategori(Request $request, $id)
     {
-
         $rules = [
             'nama' => 'required'
         ];
@@ -448,20 +577,20 @@ class HomeController extends Controller
                     'user_email' => $request->input("user_login_email"),
                     'password' => $request->input("user_login_pass"),
                 ];
-                if(Auth::guard('web_user')->attempt($data)){
-                    $request->session()->regenerate();
-                    $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
-                    return redirect("/home/user");
-                }
-                else{
-                    return view('index',['error'=>'ERROR']);
-                }
+                // if(Auth::guard('web_user')->attempt($data)){
+                //     $request->session()->regenerate();
+                //     $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
+                //     $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
+                //     return redirect("/home/user");
+                // }
+                // else{
+                //     return view('index',['error'=>'ERROR']);
+                // }
                 // AUTH END
 
-                // $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
-                // $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
-                // return redirect("/home/user");
+                $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
+                $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
+                return redirect("/home/user");
 
             }
             else if(pegawai::where('pegawai_email',$email)->first() != null){
@@ -474,25 +603,25 @@ class HomeController extends Controller
                 ]);
 
                 // AUTH START
-                $data = [
-                    'pegawai_email' => $request->input("user_login_email"),
-                    'password' => $request->input("user_login_pass"),
-                ];
-                if(Auth::guard('web_pegawai')->attempt($data)){
-                    $request->session()->regenerate();
-                    $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
-                    // dd(session()->all());
-                    return redirect("/home/pegawai");
-                }
-                else{
-                    return view('index',['error'=>'ERROR']);
-                }
+                // $data = [
+                //     'pegawai_email' => $request->input("user_login_email"),
+                //     'password' => $request->input("user_login_pass"),
+                // ];
+                // if(Auth::guard('web_pegawai')->attempt($data)){
+                //     $request->session()->regenerate();
+                //     $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
+                //     $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
+                //     // dd(session()->all());
+                //     return redirect("/home/pegawai");
+                // }
+                // else{
+                //     return view('index',['error'=>'ERROR']);
+                // }
                 // AUTH END
 
-                // $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
-                // $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
-                // return redirect("/home/pegawai");
+                $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
+                $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
+                return redirect("/home/pegawai");
             }
             else if(admin::where('admin_email',$email)->first()!=null){
                 $request->validate([
@@ -504,24 +633,24 @@ class HomeController extends Controller
                 ]);
 
                 //AUTH START
-                $data = [
-                    'admin_email' => $request->input("user_login_email"),
-                    'password' => $request->input("user_login_pass"),
-                ];
-                if(Auth::guard('web_admin')->attempt($data)){
-                    $request->session()->regenerate();
-                    $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
-                    return redirect("/home/admin");
-                }
-                else{
-                    return view('index',['error'=>'ERROR']);
-                }
+                // $data = [
+                //     'admin_email' => $request->input("user_login_email"),
+                //     'password' => $request->input("user_login_pass"),
+                // ];
+                // if(Auth::guard('web_admin')->attempt($data)){
+                //     $request->session()->regenerate();
+                //     $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
+                //     $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
+                //     return redirect("/home/admin");
+                // }
+                // else{
+                //     return view('index',['error'=>'ERROR']);
+                // }
                 //AUTH END
 
-                // $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
-                // $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
-                // return redirect("/home/admin");
+                $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
+                $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
+                return redirect("/home/admin");
             }
             else {
                 return view('index',['error'=>'ERROR']);

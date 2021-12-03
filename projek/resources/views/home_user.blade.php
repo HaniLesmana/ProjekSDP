@@ -174,7 +174,7 @@
             </div>
 
             <div class="col-md-4 col-xl-3">
-                <a href="{{ url('/user/topUp')}}">
+                <a href="{{ url('/user/withdraw')}}">
                 <div class="card bg-c order-card gradient3">
                     <div class="card-block">
                         <h5 class="m-b-20">Withdraw</h5>

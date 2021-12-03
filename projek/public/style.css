@@ -6,6 +6,11 @@
 .navbar-brand{
     font-family: viga;
     font-size: 33px;
+    margin-top:50px;
+}
+
+body{
+    font-family:Roboto, sans-serif;
 }
 
 /* Jumbotron */
@@ -31,10 +36,10 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    height: 70px;
+    height: 50px;
     width: 250px;
+    margin-top:6px;
     position:inherit;
-    margin-bottom:50px;
 }
 
 .jumbotron::after{

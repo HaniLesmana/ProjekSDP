@@ -117,6 +117,10 @@ Route::middleware(['is_login'])->group(function () {
         {
             return view('user.user_topup');
         });
+        Route::get("/withdraw",function ()
+        {
+            return view('user.user_withdraw');
+        });
         Route::get("/cart",function ()
         {
             return view('user.user_cart');
@@ -126,6 +130,8 @@ Route::middleware(['is_login'])->group(function () {
             return view('user.user_checkout');
         });
         Route::get("/profile", [HomeController::class, "profileUser"]);
+        Route::post("/editProfile", [HomeController::class, "editProfile"]);
+        Route::post("/updatePhoto", [HomeController::class, "updatePhoto"]);
         // Route::get("/ajax1", [HomeController::class, "ajax1"]);
         Route::post("/gotocart", [HomeController::class, "gotocart"]);
         Route::post("/gotocheckout", [HomeController::class, "gotocheckout"]);
@@ -156,9 +162,12 @@ Route::middleware(['is_login'])->group(function () {
 
         Route::get("/status_pesanan_finish/{id}", [UserController::class, "status_pesanan_finish"]);
         Route::get("/rating/{id}", [UserController::class, "rating"]);
+        Route::get("/ajax_rating/{id}/{id1}/{id2}", [UserController::class, "ajax_rating"]);
 
     });
     Route::prefix("pegawai")->group(function(){
+        Route::post("/editProfile", [HomeController::class, "editProfilePegawai"]);
+        Route::post("/updatePhoto", [HomeController::class, "updatePhotoPegawai"]);
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
         Route::get('/pesanan_acc/{id}', [HomeController::class, "pegawaiOrderacc"]);
         Route::get('/pesanan_cancel/{id}', [HomeController::class, "pegawaiOrdercancel"]);
