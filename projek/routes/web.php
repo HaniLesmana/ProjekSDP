@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\voucherController;
 use App\Http\Middleware\checkLogout;
@@ -20,7 +21,7 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('/listRequest', [HomeController::class, "listRequest"]);
     Route::get('/listWithdraw', [HomeController::class, "listWithdraw"]);
 
-    Route::post('payments/notif', 'PaymentController@notif');
+    Route::post('payments/notif', [PaymentController::class,'notif']);
     Route::get('payments/sukses', 'PaymentController@sukses');
     Route::get('payments/gagal', 'PaymentController@gagal');
     Route::get('payments/pending', 'PaymentController@pending');
