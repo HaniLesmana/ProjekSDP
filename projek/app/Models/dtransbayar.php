@@ -17,6 +17,7 @@ class dtransbayar extends Model
     public $timestamps=true;
     protected $fillable=[
         'hBayar_id',
-        'dBayar_id'
+        'dSewa_id',
+        'subtotal'
     ];
 }

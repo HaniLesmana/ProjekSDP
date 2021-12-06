@@ -1404,23 +1404,23 @@ class HomeController extends Controller
     }
     public function listpembayaranpegawai(){
         $datapegawai=pegawai::all();
-        $datalogsaldo=logsaldo::all();
+        $datalogsaldo=logsaldo::where("jenis",0)->withTrashed()->get();;
+        //dd($datalogsaldo);
         $p=array();
         //if($p != null){
-            foreach ($datalogsaldo as $key => $log) {
-                if($log->dtranssewa->pegawai_id==1){
-                    array_push($p,$log);
-                }
-            }
+            // foreach ($datalogsaldo as $key => $log) {
+            //     if($log->dtranssewa->pegawai_id==1){
+            //         array_push($p,$log);
+            //     }
+            // }
         //}
 
-        return view("admin.listpembayaranpegawai",['datalogsaldo'=>$p]);
+        return view("admin.listpembayaranpegawai",['datalogsaldo'=>$datalogsaldo]);
     }
 
     public function listpembayaranpegawaifiltered($idpeg){
         $datapegawai=pegawai::all();
         $datalogsaldo=logsaldo::where("jenis",0)->withTrashed()->get();
-        dd(logsaldo::all());
         $temp=array();
         // foreach ($datalogsaldo as $key => $log){
         //     if(count($temp)==0){

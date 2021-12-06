@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //tambahan
-        SamuelTerra22\ReportGenerator\ServiceProvider::class,
+        // SamuelTerra22\ReportGenerator\ServiceProvider::class,
 
     ],
 
@@ -233,7 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //tambahan
-        'PdfReport'     => SamuelTerra22\ReportGenerator\Facades\PdfReportFacade::class,
+        // 'PdfReport'     => SamuelTerra22\ReportGenerator\Facades\PdfReportFacade::class,
 
     ],
 
