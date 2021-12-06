@@ -144,8 +144,12 @@
   @foreach ($datachat as $chat)
     @if ($chat->chat_from == "user")
         <div class="msg right-msg">
-            <div class="msg-img"
-            ></div>
+
+            @if ($chat->user_sender->user_photo=="" || $chat->user_sender->user_photo==null)
+                <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;width:48px;" alt="...">
+            @else
+                <img src="{{asset('/storage/photos/'.$chat->user_sender->user_photo)}}" class="card-img-top rounded" style="height:48px;width:48px;" alt="...">
+            @endif
 
             <div class="msg-bubble">
                 <div class="msg-info">
@@ -160,10 +164,11 @@
         </div>
     @else
         <div class="msg left-msg">
-        <div
-        class="msg-img"
-        style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-        ></div>
+            @if ($chat->user_destination->pegawai_photo=="" || $chat->user_destination->pegawai_photo==null)
+                <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;width:48px;" alt="...">
+            @else
+                <img src="{{asset('/storage/photos/'.$chat->user_destination->pegawai_photo)}}" class="card-img-top rounded" style="height:48px;width:48px;" alt="...">
+            @endif
 
         <div class="msg-bubble">
             <div class="msg-info">

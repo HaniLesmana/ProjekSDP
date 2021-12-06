@@ -49,11 +49,13 @@
                         @if($cart->pegawai_id==$peg->id)
                             <div style="float:left;">
                                 <div class="" style="width: 13rem;">
-                                    @if ($peg->pegawai_jasa=="Cleaning")
-                                        <img src="{{asset('img/img2.png')}}" class="card-img-top rounded" style="height:11rem;" alt="...">
+
+                                    @if ($peg->pegawai_photo=="" || $peg->pegawai_photo==null)
+                                        <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:11rem;" alt="...">
                                     @else
-                                        <img src="{{asset('img/img1.png')}}" class="card-img-top rounded" style="height:11rem;" alt="...">
+                                        <img src="{{asset('/storage/photos/'.$peg->pegawai_photo)}}" class="card-img-top rounded" style="height:11rem;" alt="...">
                                     @endif
+
                                 </div>
                             </div>
                             <div style="float:left;padding:0px 0px 0px 30px;font-size:18px;width:140px;">

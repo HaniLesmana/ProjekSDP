@@ -121,7 +121,7 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);
     Route::get('/listpembayaranpegawai', [HomeController::class, "listpembayaranpegawai"]);
     Route::get('/accpembayaran/{id}/{id1}', [HomeController::class, "accpembayaran"]);
-
+    Route::get('/accpembayaransemua', [HomeController::class, "accpembayaransemua"]);
     });
     Route::prefix("user")->group(function(){
         Route::get("/topUp",function ()

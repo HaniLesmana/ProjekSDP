@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\BarangFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,5 +31,10 @@ class barang extends Model
     }
     public function dtransbarang(){
         return $this->hasOne(dtransbarang::class, 'barang_id','id');
+    }
+
+    protected static function newFactory()
+    {
+        return BarangFactory::new();
     }
 }

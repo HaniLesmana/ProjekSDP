@@ -17,6 +17,7 @@ class CreateDtransbayarsTable extends Migration
             $table->id();
             $table->string("hBayar_id");
             $table->string("dBayar_id");
+            $table->integer("subtotal");
             $table->timestamps();
             $table->softDeletes();
         });

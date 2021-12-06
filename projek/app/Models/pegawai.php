@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\PegawaiFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticable;
@@ -35,5 +36,10 @@ class pegawai extends Authenticable
     }
     public function dtranssewa(){
         return $this->hasOne(dtranssewa::class, 'pegawai_id','id');
+    }
+
+    protected static function newFactory()
+    {
+        return PegawaiFactory::new();
     }
 }

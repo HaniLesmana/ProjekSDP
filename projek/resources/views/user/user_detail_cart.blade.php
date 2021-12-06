@@ -80,7 +80,13 @@
             @csrf
             <div id="contPeg" style="margin-left:15px;">
                 <div style="float:left;">
-                    <img src="{{asset('img/img2.png')}}" class="card-img-top" style="height=50px;width:100px;" alt="...">
+
+                    @if($pegawai->pegawai_photo=="" || $pegawai->pegawai_photo==null)
+                        <img src="{{asset('/img/profile.png')}}" class="card-img-top" style="height=50px;width:100px;" alt="...">
+                    @else
+                        <img src="{{asset('/storage/photos/'.$pegawai->pegawai_photo)}}" class="card-img-top" style="height=50px;width:100px;" alt="...">
+                    @endif
+
                 </div>
                 <div style="float:left;margin-left:10px;">
                     Nama <br>

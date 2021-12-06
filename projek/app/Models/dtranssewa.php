@@ -28,4 +28,7 @@ class dtranssewa extends Model
     public function htranssewa(){
         return $this->belongsTo(htranssewa::class, 'hSewa_id','id');
     }
+    public function logsaldo(){
+        return $this->hasOne(logsaldo::class, 'dtrans_id','id');
+    }
 }

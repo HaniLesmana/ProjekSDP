@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\kategori;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class KategoriSeeder extends Seeder

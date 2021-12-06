@@ -222,7 +222,13 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-
+            <div>
+                <form action="{{ url('/admin/accpembayaransemua') }}" method="get">
+                    <button type="submit" class="btn btn-primary">
+                        Bayar Semua
+                    </button>
+                </form>
+            </div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -236,21 +242,30 @@ $(document).ready(function(){
                 <tbody>
                 @foreach($datalogsaldo as $key => $logsaldo)
                     <tr>
-                        <td>{{$logsaldo->dtransewa->pegawai->pegawai_nama}}</td>
-                        @if($logsaldo->dtranssewa->pegawai->pegawai_jenis == 'Cleaning')
+                        <td>{{$logsaldo->dtranssewa->pegawai->pegawai_nama}}</td>
+                        <!-- <td>{{$logsaldo->dtranssewa->pegawai_id}}</td> -->
+                        @if($logsaldo->dtranssewa->pegawai->pegawai_jasa == 'Cleaning')
                             <td>Rp 150.000,-</td>
-                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jenis == 'Plumbing')
+                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jasa == 'Plumbing')
                             <td>Rp 200.000,-</td>
-                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jenis == 'Painting')
+                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jasa == 'Painting')
                             <td>Rp 150.000,-</td>
-                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jenis == 'Electrical')
+                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jasa == 'Electrical')
                             <td>Rp 150.000,-</td>
-                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jenis == 'Repair')
+                        @elseif($logsaldo->dtranssewa->pegawai->pegawai_jasa == 'Repair')
                             <td>Rp 150.000,-</td>
                         @endif
-                        <form action="{{ url('/admin/accpembayaran/'.$logsaldo->id.'/'.$logsaldo->dtransewa->pegawai_id) }}" method="get">
-                            <td><button type="submit" class="btn btn-primary">Bayar</button></td>
-                        </form>
+                        @if($logsaldo->deleted_at==null)
+                            <td>Belum dibayar</td>
+                        @else
+                            <td>Sudah dibayar</td>
+                        @endif
+                        @if($logsaldo->deleted_at==null)
+                            <form action="{{ url('/admin/accpembayaran/'.$logsaldo->id.'/'.$logsaldo->dtranssewa->pegawai_id) }}" method="get">
+                                <td><button type="submit" class="btn btn-primary">Bayar</button></td>
+                            </form>
+                        @endif
+
                     </tr>
                 @endforeach
             </tbody>

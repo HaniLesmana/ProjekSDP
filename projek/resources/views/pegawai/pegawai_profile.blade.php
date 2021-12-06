@@ -56,10 +56,10 @@
                     @csrf
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                         @if($pegawai->pegawai_photo=="" || $pegawai->pegawai_photo==null)
-                        <img src="https://i.imgur.com/wvxPV9S.png" style="transition: all 0.5s" height="100" width="100" />
+                            <img src="https://i.imgur.com/wvxPV9S.png" style="transition: all 0.5s" height="100" width="100" />
 
                         @else
-                        <img class="rounded-circle mt-5" width="150px" src={{asset('/storage/photos/'.$pegawai->pegawai_photo)}}>
+                            <img class="rounded-circle mt-5" width="150px" src={{asset('/storage/photos/'.$pegawai->pegawai_photo)}}>
                         @endif
                         <label for="files" class="btn"style="font-style:underline">Select Your New Profile Photo</label>
                         <input id="files" name="pegawai_photo" style="visibility:hidden;" type="file">

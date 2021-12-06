@@ -127,6 +127,7 @@ class voucherController extends Controller
                 user_voucher::create(
                     [
                         'user_id' => session('loggedIn'),
+                        //'jumlah' => $arrJumlah[$i],
                         'voucher_id'=> $arrVoucher[$i]->id
                     ]
                 );

@@ -28,11 +28,11 @@ class chat extends Model
         return $this->belongsTo(pegawai::class, 'chat_destination','id');
     }
 
-    function pegawai_sender(){
-        return $this->belongsTo(pegawai::class, 'chat_sender','id');
-    }
+    // function pegawai_sender(){
+    //     return $this->belongsTo(pegawai::class, 'chat_sender','id');
+    // }
 
-    function pegawai_destination(){
-        return $this->belongsTo(user::class, 'chat_destination','id');
-    }
+    // function pegawai_destination(){
+    //     return $this->belongsTo(user::class, 'chat_destination','id');
+    // }
 }

@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\barang;
+use App\Models\kategori;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
+//use Kategori;
 
 class BarangSeeder extends Seeder
 {
@@ -22,5 +25,18 @@ class BarangSeeder extends Seeder
             'barang_stok'=>10
         ]);
         $barang->save();
+
+        // $kategori = kategori::all();
+        // $katgori=kategori::inRandomOrder()->get();
+        // $kategori = kategori::all()->random(1)->first()->id;
+        Barang::factory()->state(
+            new Sequence(
+                function($sequence){
+                    return[
+                        "barang_kategori" => kategori::inRandomOrder()->first()->id
+                    ];
+                }
+            )
+        )->count(50)->create();
     }
 }

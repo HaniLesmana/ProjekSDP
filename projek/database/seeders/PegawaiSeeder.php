@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\pegawai;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class PegawaiSeeder extends Seeder
@@ -26,56 +27,6 @@ class PegawaiSeeder extends Seeder
             "pegawai_saldo"=>10000,
             "pegawai_deskripsi"=>"sudah pernah menjadi pegawai rumah tangga"
         ]);
-
-        $pegawai=pegawai::create([
-            "pegawai_nik"=>"P006",
-            "pegawai_email"=>"ffff@a.com",
-            "pegawai_nama"=>"ffff",
-            "pegawai_telepon"=>"41234",
-            "pegawai_alamat"=>"ffff",
-            "password"=>bcrypt("123"),
-            "pegawai_jasa"=>"Repair",
-            "pegawai_saldo"=>23000,
-            "pegawai_deskripsi"=>"sudah berpengalaman dalam menjalankan tugas",
-        ]);
-
-        $pegawai=pegawai::create([
-            "pegawai_nik"=>"P007",
-            "pegawai_email"=>"qqqq@a.com",
-            "pegawai_nama"=>"qqqq",
-            "pegawai_telepon"=>"41234",
-            "pegawai_alamat"=>"qqqq",
-            "password"=>bcrypt("123"),
-            "pegawai_jasa"=>"Repair",
-            "pegawai_saldo"=>23000,
-            "pegawai_deskripsi"=>"sudah berpengalaman dalam menjalankan tugas",
-        ]);
-
-        $pegawai=pegawai::create([
-            "pegawai_nik"=>"P008",
-            "pegawai_email"=>"wwww@a.com",
-            "pegawai_nama"=>"wwww",
-            "pegawai_telepon"=>"41234",
-            "pegawai_alamat"=>"wwww",
-            "password"=>bcrypt("123"),
-            "pegawai_jasa"=>"Repair",
-            "pegawai_saldo"=>23000,
-            "pegawai_deskripsi"=>"sudah berpengalaman dalam menjalankan tugas",
-        ]);
-
-        $pegawai=pegawai::create([
-            "pegawai_nik"=>"P009",
-            "pegawai_email"=>"eeee@a.com",
-            "pegawai_nama"=>"eeee",
-            "pegawai_telepon"=>"41234",
-            "pegawai_alamat"=>"eeee",
-            "password"=>bcrypt("123"),
-            "pegawai_jasa"=>"Repair",
-            "pegawai_saldo"=>23000,
-            "pegawai_deskripsi"=>"sudah berpengalaman dalam menjalankan tugas",
-        ]);
-
-
 
         //
 
@@ -128,5 +79,15 @@ class PegawaiSeeder extends Seeder
         ]);
 
         $pegawai->save();
+
+        Pegawai::factory()->count(20)->state(
+            new Sequence(
+                function($sequence){
+                    return[
+
+                    ];
+                }
+            )
+        )->create();
     }
 }
