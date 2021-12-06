@@ -1,4 +1,4 @@
-@extends('user.base-layout')
+    @extends('user.base-layout')
     <!-- Navbar -->
     @section('header')
         @include('user.navbarUser')
@@ -6,7 +6,7 @@
 
     @section('main')
     <div class="container">
-    <h2>Top Up</h2>
+    <h2>Withdraw</h2>
     <form method="post" action="{{ url('/user/gotocart') }}">
         @csrf
         <!-- NEW GRID -->
@@ -102,149 +102,16 @@
             }
         </style>
         <div class="container" style="margin-top:32px;">
-            <div class="row">
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 10.000</span></h2>
-
-                            <p class="m-b-0 plusMinus"><span class="">
-                                <button class="btnMinus" type="button" id="btnkurang10k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid10k" id="hid10k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah10k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 20.000-</span></h2>
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang20k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid20k" id="hid20k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah20k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 50.000-</span></h2>
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang50k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid50k" id="hid50k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah50k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 75.000-</span></h2>
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang75k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid75k" id="hid75k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah75k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 100.000</span></h2>
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang100k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid100k" id="hid100k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah100k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 125.000-</span></h2>
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang125k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid125k" id="hid125k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah125k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 190.000-</span></h2>
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang190k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid190k" id="hid190k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah190k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-xl-3">
-                    <div class="card bg-c-yellow order-card gradient1">
-                        <div class="card-block">
-                            <h5 class="m-b-20">Saldo</h5>
-                            <h2><span>Rp. 250.000-</span></h2>
-
-                            <p class="m-b-0 plusMinus"><span class="">
-
-                                <button class="btnMinus" type="button" id="btnkurang250k" style=""><img class="imgMinus" src="{{ url('img/minus.png') }}" alt=""></button>
-                                <input type="text" name="hid250k" id="hid250k" value="0" style="width:40px;text-align:center;color:white;background:transparent;border:none;">
-                                <button class="btnPlus" type="button" id="btntambah250k" style=""><img class="imgAdd" src="{{ url('img/add.png') }}" alt=""></button>
-
-
-                            </span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            <h5 style="background-color:#95D1CC;height:45px;padding-top:10px;padding-left:20px;border-radius:5px">Saldo: Rp.{{$saldo}}</h5>
+            <input class="form-control" type="number" placeholder="Total withdraw">
             <div class="row">
                 <div style="display:inline-block;width:100%;margin-top:20px;padding:0px 1.2%;">
                     <div style="float:left">
-                        <a href="{{ url('/home/user') }}"><button type="submit" class="btn btn-danger" style="color:white;padding:12px 20px;font-size:18px;">Back</button></a>
+                        <a href="{{ url('/home/user') }}"><button type="button" class="btn btn-danger" style="color:white;padding:12px 20px;font-size:18px;">Cancel</button></a>
                     </div>
 
                     <div style="float:right;">
-                        <button type="submit" class="btn btn-warning" id="btncart" style="color:white;padding:12px 20px;font-size:18px;">Next</button>
+                        <button type="submit" class="btn btn-warning" id="btncart" style="color:white;padding:12px 20px;font-size:18px;">Withdraw</button>
                     </div>
                 </div>
             </div>

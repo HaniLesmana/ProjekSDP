@@ -135,10 +135,15 @@ class voucherController extends Controller
 
         $total = $request->totalHidden;
         $oldSaldo = user::where('id',session('loggedIn'))->first()->user_saldo;
-        $newsaldo = $oldSaldo - $total;
-        user::where('id',session('loggedIn'))->update(
-            ['user_saldo'=>$newsaldo]
-        );
-        return redirect("/home/user");
+        if($oldSaldo >= $total){
+            $newsaldo = $oldSaldo - $total;
+            user::where('id',session('loggedIn'))->update(
+                ['user_saldo'=>$newsaldo]
+            );
+            return redirect("/home/user");
+        }
+        else{
+            return back()->withErrors(['msg' => 'Saldo tidak mencukupi']);
+        }
     }
 }

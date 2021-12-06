@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\voucherController;
 use App\Http\Middleware\checkLogout;
@@ -25,6 +26,9 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('payments/sukses', 'PaymentController@sukses');
     Route::get('payments/gagal', 'PaymentController@gagal');
     Route::get('payments/pending', 'PaymentController@pending');
+
+    //Report
+    Route::get('report/transaksi_user', [ReportController::class,'coba']);
 
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);
@@ -124,10 +128,7 @@ Route::middleware(['is_login'])->group(function () {
         {
             return view('user.user_topup');
         });
-        Route::get("/withdraw",function ()
-        {
-            return view('user.user_withdraw');
-        });
+        Route::get("/withdraw",[HomeController::class,"withdraw"]);
         Route::get("/cart",function ()
         {
             return view('user.user_cart');

@@ -84,7 +84,7 @@ body {
   </div>
 </div> --}}
 
-<div class="vertical-nav" id="sidebar" style="background-color:#396EB0;min-height:100vh">
+<div class="vertical-nav" id="sidebar" style="background-color:#5584AC;min-height:100vh">
 
     <ul class="nav flex-column mb-0">
         <a class="navbar-brand" id="gambar" href="#"></a>
@@ -126,6 +126,21 @@ body {
         <!-- <i class="far fa-money-bill-alt"></i> -->
                 <i class="far fa-money-bill-alt"> Pembayaran Pegawai</i>
               </a>
+      </li>
+      <li class="nav-item">
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: transparent; color:white;border:none;margin-left:10px">
+                <label style="font-size: 13px;">REPORT</label>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color:#5584AC">
+              <a class="dropdown-item" href="/report/transaksi_user">R. transaksi user</a>
+              <a class="dropdown-item" href="#">R. pembelian barang</a>
+              <a class="dropdown-item" href="#">R. pendapatan pegawai</a>
+              <a class="dropdown-item" href="#">R. rating review pegawai</a>
+              <a class="dropdown-item" href="#">R. topup withdraw</a>
+              <a class="dropdown-item" href="#">R. pembelian voucher</a>
+            </div>
+          </div>
       </li>
     </ul>
     <form action="{{url('/logout')}}" method="get">

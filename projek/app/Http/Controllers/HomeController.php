@@ -781,6 +781,12 @@ class HomeController extends Controller
         $total=(10000*$request->hid10k)+(20000*$request->hid20k)+(50000*$request->hid50k)+(75000*$request->hid75k)+(100000*$request->hid100k)+(125000*$request->hid125k)+(190000*$request->hid190k)+(250000*$request->hid250k);
         return view('user.user_cart',['data'=>json_encode($arr)],['total'=>$total]);
     }
+    function withdraw(Request $request)
+    {
+        $user = user::where('id',session('loggedIn'))->first();
+        $saldo = $user->user_saldo;
+        return view('user.user_withdraw',['saldo'=>$saldo]);
+    }
     function gotocheckout(Request $request){
         $data=json_decode($request->data);
         $total = $request->total;
@@ -796,7 +802,7 @@ class HomeController extends Controller
         \Midtrans\Config::$is3ds = true;
         $params = array(
             'transaction_details' => array(
-                'order_id' => 3,
+                'order_id' => 4,
                 'gross_amount' => $total,
             ),
             'customer_details' => array(
@@ -819,7 +825,7 @@ class HomeController extends Controller
             'htranstpwd_tipe' => 'topup',
             'htranstpwd_status' => 2,
             'token_payment' => $snapToken,
-            'status_payment'=>"Pending" ,
+            'status_payment'=>"Kosong" ,
         ]);
 
         $mx = htransTopup::all();
@@ -1299,8 +1305,11 @@ class HomeController extends Controller
     public function listVoucher()
     {
         $voucher = voucher::get();
-        $datavoucher["datavoucher"]=$voucher;
-        return view("user.user_voucher",$datavoucher);
+        $datavoucher=$voucher;
+        $user = user::where('id',session('loggedIn'))->first();
+        $saldo = $user->user_saldo;
+        // return view("user.user_voucher",$datavoucher);
+        return view("user.user_voucher",['datavoucher'=>$datavoucher, 'saldo'=>$saldo]);
     }
     public function pegawaiChat(Request $request){
         $pegawai=pegawai::where("id",$request->session()->get('loggedIn'))->first();

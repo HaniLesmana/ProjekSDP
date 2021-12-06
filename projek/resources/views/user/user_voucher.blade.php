@@ -13,209 +13,215 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <style>
-body {
-    color: #566787;
-    background: #f5f5f5;
-    font-family: 'Varela Round', sans-serif;
-    font-size: 13px;
-}
-.table-responsive {
-    margin: 30px 0;
-}
-.table-wrapper {
-    min-width: 1000px;
-    background: #fff;
-    padding: 20px 25px;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
-.table-title {
-    padding-bottom: 15px;
-    background: #299be4;
-    color: #fff;
-    padding: 16px 30px;
-    margin: -20px -25px 10px;
-    border-radius: 3px 3px 0 0;
-}
-.table-title h2 {
-    margin: 5px 0 0;
-    font-size: 24px;
-}
-.table-title .btn {
-    color: #566787;
-    float: right;
-    font-size: 13px;
-    background: #fff;
-    border: none;
-    min-width: 50px;
-    border-radius: 2px;
-    border: none;
-    outline: none !important;
-    margin-left: 10px;
-}
-.table-title .btn:hover, .table-title .btn:focus {
-    color: #566787;
-    background: #f2f2f2;
-}
-.table-title .btn i {
-    float: left;
-    font-size: 21px;
-    margin-right: 5px;
-}
-.table-title .btn span {
-    float: left;
-    margin-top: 2px;
-}
-table.table tr th, table.table tr td {
-    border-color: #e9e9e9;
-    padding: 12px 15px;
-    vertical-align: middle;
-}
-table.table tr th:first-child {
-    width: 60px;
-}
-table.table tr th:last-child {
-    width: 100px;
-}
-table.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #fcfcfc;
-}
-table.table-striped.table-hover tbody tr:hover {
-    background: #f5f5f5;
-}
-table.table th i {
-    font-size: 13px;
-    margin: 0 5px;
-    cursor: pointer;
-}
-table.table td:last-child i {
-    opacity: 0.9;
-    font-size: 22px;
-    margin: 0 5px;
-}
-table.table td a {
-    font-weight: bold;
-    color: #566787;
-    display: inline-block;
-    text-decoration: none;
-}
-table.table td a:hover {
-    color: #2196F3;
-}
-table.table td a.settings {
-    color: #2196F3;
-}
-table.table td a.delete {
-    color: #F44336;
-}
-table.table td i {
-    font-size: 19px;
-}
-table.table .avatar {
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 10px;
-}
-.status {
-    font-size: 30px;
-    margin: 2px 2px 0 0;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 10px;
-}
-.text-success {
-    color: #10c469;
-}
-.text-info {
-    color: #62c9e8;
-}
-.text-warning {
-    color: #FFC107;
-}
-.text-danger {
-    color: #ff5b5b;
-}
-.pagination {
-    float: right;
-    margin: 0 0 5px;
-}
-.pagination li a {
-    border: none;
-    font-size: 13px;
-    min-width: 30px;
-    min-height: 30px;
-    color: #999;
-    margin: 0 2px;
-    line-height: 30px;
-    border-radius: 2px !important;
-    text-align: center;
-    padding: 0 6px;
-}
-.pagination li a:hover {
-    color: #666;
-}
-.pagination li.active a, .pagination li.active a.page-link {
-    background: #03A9F4;
-}
-.pagination li.active a:hover {
-    background: #0397d6;
-}
-.pagination li.disabled i {
-    color: #ccc;
-}
-.pagination li i {
-    font-size: 16px;
-    padding-top: 6px
-}
-.hint-text {
-    float: left;
-    margin-top: 10px;
-    font-size: 13px;
-}
-.imgAdd{
-    margin-top:-1px;
-    margin-left:-5.9px;
-    width:23px;
-    height:23px;
-}
-.imgMinus{
-    margin-top:-1px;
-    margin-left:-5.9px;
-    width:23px;
-    height:23px;
-}
-.btnPlus{
-    background:#03A9F4;
-    border-radius :100px;
-    width:23px;
-    height:23px;
-    background:#03A9F4;
-    border:none;
-}
-.btnPlus:focus{
-    outline: none;
-}
-.btnMinus{
-    background:#03A9F4;
-    border-radius :100px;
-    width:23px;
-    height:23px;
-    border:none;
-}
-.btnMinus:focus{
-    outline: none;
-}
-.plusMinus{
-    margin:auto;text-align:center;margin-top:10px;
-}
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Varela Round', sans-serif;
+        font-size: 13px;
+    }
+    .table-responsive {
+        margin: 30px 0;
+    }
+    .table-wrapper {
+        min-width: 1000px;
+        background: #fff;
+        padding: 20px 25px;
+        border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 15px;
+        background: #299be4;
+        color: #fff;
+        padding: 16px 30px;
+        margin: -20px -25px 10px;
+        border-radius: 3px 3px 0 0;
+    }
+    .table-title h2 {
+        margin: 5px 0 0;
+        font-size: 24px;
+    }
+    .table-title .btn {
+        color: #566787;
+        float: right;
+        font-size: 13px;
+        background: #fff;
+        border: none;
+        min-width: 50px;
+        border-radius: 2px;
+        border: none;
+        outline: none !important;
+        margin-left: 10px;
+    }
+    .table-title .btn:hover, .table-title .btn:focus {
+        color: #566787;
+        background: #f2f2f2;
+    }
+    .table-title .btn i {
+        float: left;
+        font-size: 21px;
+        margin-right: 5px;
+    }
+    .table-title .btn span {
+        float: left;
+        margin-top: 2px;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+    table.table tr th:first-child {
+        width: 60px;
+    }
+    table.table tr th:last-child {
+        width: 100px;
+    }
+    table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fcfcfc;
+    }
+    table.table-striped.table-hover tbody tr:hover {
+        background: #f5f5f5;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table td:last-child i {
+        opacity: 0.9;
+        font-size: 22px;
+        margin: 0 5px;
+    }
+    table.table td a {
+        font-weight: bold;
+        color: #566787;
+        display: inline-block;
+        text-decoration: none;
+    }
+    table.table td a:hover {
+        color: #2196F3;
+    }
+    table.table td a.settings {
+        color: #2196F3;
+    }
+    table.table td a.delete {
+        color: #F44336;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+    table.table .avatar {
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .status {
+        font-size: 30px;
+        margin: 2px 2px 0 0;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 10px;
+    }
+    .text-success {
+        color: #10c469;
+    }
+    .text-info {
+        color: #62c9e8;
+    }
+    .text-warning {
+        color: #FFC107;
+    }
+    .text-danger {
+        color: #ff5b5b;
+    }
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+    .pagination li a {
+        border: none;
+        font-size: 13px;
+        min-width: 30px;
+        min-height: 30px;
+        color: #999;
+        margin: 0 2px;
+        line-height: 30px;
+        border-radius: 2px !important;
+        text-align: center;
+        padding: 0 6px;
+    }
+    .pagination li a:hover {
+        color: #666;
+    }
+    .pagination li.active a, .pagination li.active a.page-link {
+        background: #03A9F4;
+    }
+    .pagination li.active a:hover {
+        background: #0397d6;
+    }
+    .pagination li.disabled i {
+        color: #ccc;
+    }
+    .pagination li i {
+        font-size: 16px;
+        padding-top: 6px
+    }
+    .hint-text {
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+    .imgAdd{
+        margin-top:-1px;
+        margin-left:-5.9px;
+        width:23px;
+        height:23px;
+    }
+    .imgMinus{
+        margin-top:-1px;
+        margin-left:-5.9px;
+        width:23px;
+        height:23px;
+    }
+    .btnPlus{
+        background:#03A9F4;
+        border-radius :100px;
+        width:23px;
+        height:23px;
+        background:#03A9F4;
+        border:none;
+    }
+    .btnPlus:focus{
+        outline: none;
+    }
+    .btnMinus{
+        background:#03A9F4;
+        border-radius :100px;
+        width:23px;
+        height:23px;
+        border:none;
+    }
+    .btnMinus:focus{
+        outline: none;
+    }
+    .plusMinus{
+        margin:auto;text-align:center;margin-top:10px;
+    }
 </style>
 <!-- <script>
  $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
  });
 </script> -->
+
 <form method="post" action="{{url('/user/dotransvoucher')}}">
 @csrf
+@if($errors->any())
+    <script>
+        alert("{{$errors->first()}}");
+    </script>
+@endif
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -223,6 +229,7 @@ table.table .avatar {
                 <div class="row">
                     <div class="col-sm-5">
                         <h2>List <b>Voucher</b></h2>
+                        <input type="hidden" name="saldo" id="saldo" value="{{$saldo}}">
                     </div>
                     <div class="col-sm-7">
                         <!-- <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
@@ -249,7 +256,7 @@ table.table .avatar {
                             <td>Rp {{ $voucher->voucher_harga }},-</td>
                             <td>
                                 <button class="btnMinus" type="button" id="btnmin{{$voucher->id}}" ><img class="imgMinus" src="{{ url('img/minus.png') }}" onclick="btnmin(''+{{$voucher->id}},{{$voucher->voucher_harga}})"  alt=""></button>
-                                <input type="text" name="jumlah[]" id="jumlah{{$voucher->id}}" value="0" onclick="jumlah(''+{{$voucher->id}})" style="width:40px;text-align:center;color:black;background:transparent;border:2px solid black;border-radius :5px;">
+                                <input type="text" name="jumlah[]" readonly id="jumlah{{$voucher->id}}" value="0" onclick="jumlah(''+{{$voucher->id}})" style="width:40px;text-align:center;color:black;background:transparent;border:2px solid black;border-radius :5px;">
                                 <button class="btnPlus" type="button" id="btnplus{{$voucher->id}}"><img class="imgAdd" onclick="btnplus(''+{{$voucher->id}},{{$voucher->voucher_harga}})" src="{{ url('img/add.png') }}" alt=""></button>
                             </td>
                         </tr>
@@ -258,9 +265,9 @@ table.table .avatar {
             </table>
 
             <div>
-                <h4>Total : <label id="total">0</label></h4>
+                <h4>Total : Rp<label id="total">0</label>,-</h4>
                 <input type="hidden" name="totalHidden" id="totalHidden" value="0">
-                <button class="btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal" style="color:white;">Checkout</button>
+                <button class="btn btn-warning" type="button" id="cekout" data-toggle="modal" data-target="#exampleModal" style="color:white;">Checkout</button>
             </div>
 
         </div>
@@ -271,7 +278,7 @@ table.table .avatar {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -296,14 +303,22 @@ table.table .avatar {
     // }
     function btnmin(id,harga){
         let jum = parseInt($('#jumlah'+id).val());
+        let total;
+        let hargaint = parseInt(harga);
+        let newjum = jum-1;
+        let jum2 = parseInt(newjum);
+        total = hargaint*jum2;
         if(jum>0){
-            let hargaint = parseInt(harga);
-            let newjum = jum-1;
-            let jum2 = parseInt(newjum);
-            let total = hargaint*jum2;
             $('#jumlah'+id).val(newjum);
             $('#total').html(total);
             $('#totalHidden').val(total);
+        }
+        let saldo = parseInt($('#saldo').val());
+        let temp = saldo - total;
+        if(temp>=0){
+            $('#cekout').prop('disabled',false);
+        }else{
+            $('#cekout').prop('disabled',true);
         }
     }
 
@@ -315,6 +330,13 @@ table.table .avatar {
         $('#jumlah'+id).val(newjum);
         $('#total').html(total);
         $('#totalHidden').val(total);
+        let saldo = parseInt($('#saldo').val());
+        let temp = saldo - total;
+        if(temp<0){
+            $('#cekout').prop('disabled',true);
+        }else{
+            $('#cekout').prop('disabled',false);
+        }
     }
 
 </script>

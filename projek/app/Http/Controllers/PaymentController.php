@@ -85,7 +85,7 @@ class PaymentController extends Controller
     }
     public function sukses(Request $request)
     {
-        # code...
+        dd("berhasil boy");
     }
     public function gagal(Request $request)
     {
