@@ -278,7 +278,12 @@ body{
                 <ul class="list-unstyled chat-list mt-2 mb-0">
                     @foreach ($arr as $i => $a)
                     <li class="clearfix" onclick="btnpilih({{$a->chat_sender}})">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                        @if ($a->user_destination->pegawai_photo == "" || $a->user_destination->pegawai_photo==null)
+                            <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                        @else
+                            <img src="{{asset('/storage/photos/'.$a->user_destination->pegawai_photo)}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                        @endif
+
                         <div class="about" id="{{$a->chat_sender}}">
                             <div class="name">{{$a->user_sender->user_nama}}</div>
                             <div class="status"> <i class="fa fa-circle offline"></i> {{$a->chat_text}}</div>
@@ -328,7 +333,13 @@ body{
                     <div class="row">
                         <div class="col-lg-6">
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                                {{-- <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"> --}}
+
+                                @if ($a->user_sender->user_photo == "" || $a->user_sender->user_photo==null)
+                                    <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                                @else
+                                    <img src="{{asset('/storage/photos/'.$a->user_sender->user_photo)}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                                @endif
                             </a>
                             <div class="chat-about">
                                 <h6 class="m-b-0" id="namachat">{{$a->user_sender->user_nama}}</h6>

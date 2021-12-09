@@ -23,11 +23,12 @@
         <div class="shadow-lg" style="height: 100px;width:100%;padding:10px;">
             <div style="float:left;">
                 <div style="">
-                    @if ($pegawai->pegawai_jasa=="Cleaning")
-                        <img src="{{asset('img/img2.png')}}" class="card-img-top rounded" style="height:80px;width:80px;border-radius: 50%;object-fit: cover;" alt="...">
+                    @if ($pegawai->pegawai_photo=="" || $pegawai->pegawai_photo==null)
+                        <img src="{{asset('img/profile.png')}}" class="card-img-top rounded" style="height:80px;width:80px;border-radius: 50%;object-fit: cover;" alt="...">
                     @else
-                        <img src="{{asset('img/img1.png')}}" class="card-img-top rounded" style="height:80px;width:80px;border-radius: 50%;" alt="...">
+                        <img src="{{asset('/storage/photos/'.$pegawai->pegawai_photo)}}" class="card-img-top rounded" style="height:80px;width:80px;border-radius: 50%;" alt="...">
                     @endif
+
                 </div>
             </div>
             <div style="float:left;padding:8px 0px 0px 30px;font-size:18px;width:140px;">

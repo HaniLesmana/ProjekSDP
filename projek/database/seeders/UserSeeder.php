@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\user;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -24,5 +25,15 @@ class UserSeeder extends Seeder
             "user_poin"=>12,
         ]);
         $user->save();
+
+        User::factory()->count(20)->state(
+            new Sequence(
+                function($sequence){
+                    return[
+
+                    ];
+                }
+            )
+        )->create();
     }
 }

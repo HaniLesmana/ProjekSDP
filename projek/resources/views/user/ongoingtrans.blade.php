@@ -17,11 +17,12 @@
             @foreach ($dtransewa as $key =>$d)
             <div class="shadow-lg" style="display: flex;border-radius:5px;">
                 <div class="card" style="float:left;">
-                    @if ($d->pegawai->pegawai_jasa=="cleaning")
-                    <img src="{{asset('img/img2.png')}}" class="card-img-top" style="height:9rem;width:10rem;">
+                    @if ($d->pegawai->pegawai_photo=="" || $d->pegawai->pegawai_photo==null)
+                        <img src="{{asset('/img/profile.png')}}" class="card-img-top" style="height:9rem;width:10rem;">
                     @else
-                    <img src="{{asset('img/img1.png')}}" class="card-img-top" style="height:9rem;width:10rem;">
+                        <img src="{{asset('/storage/photos/'.$d->pegawai->pegawai_photo)}}" class="card-img-top" style="height:9rem;width:10rem;">
                     @endif
+
                 </div>
                 <div class="card-body" style="width:15rem;float:left;">
                     <h5 class="card-title">{{$d->pegawai->pegawai_nama}}</h5>

@@ -16,7 +16,6 @@ class htransbayar extends Model
     public $incrementing=true;
     public $timestamps=true;
     protected $fillable=[
-        'hBayar_total',
-        'pegawai_id'
+        'total',
     ];
 }

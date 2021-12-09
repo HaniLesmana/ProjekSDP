@@ -15,8 +15,8 @@ class CreateHtransbayarsTable extends Migration
     {
         Schema::create('htransbayar', function (Blueprint $table) {
             $table->id();
-            $table->integer("hBayar_total");
-            $table->string("pegawai_id");
+            $table->integer("total");
+            //$table->string("pegawai_id");
             $table->timestamps();
             $table->softDeletes();
         });

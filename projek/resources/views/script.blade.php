@@ -31,12 +31,10 @@
 @foreach ($pegawai as $i => $p)
     <div class="col-md-3 single-product" style="float:left;padding-bottom:40px;">
         <div class="product-f-image">
-            <!-- <img src="img/product-2.jpg" alt="" style="height:350px;"> -->
-
-            @if ($p->pegawai_jasa=="Cleaning")
-                <img src="{{asset('img/img2.png')}}" class="card-img-top" style="height:280px;" alt="...">
+            @if($p->pegawai_photo=="" || $p->pegawai_photo==null)
+                <img src="{{asset('/img/profile.png')}}" class="card-img-top" style="height:280px;" alt="...">
             @else
-                <img src="{{asset('img/img1.png')}}" class="card-img-top" style="height:280px;" alt="...">
+                <img src="{{asset('/storage/photos/'.$p->pegawai_photo)}}" class="card-img-top" style="height:280px;" alt="...">
             @endif
 
             <div class="product-hover">

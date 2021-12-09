@@ -13,8 +13,10 @@ use App\Models\admin;
 use App\Models\chat;
 use App\Models\logstok;
 use App\Models\dtransbarang;
+use App\Models\dtransbayar;
 use App\Models\dtranssewa;
 use App\Models\dtranstpwd;
+use App\Models\htransbayar;
 use App\Models\htranssewa;
 use App\Models\logsaldo;
 use App\Models\user_voucher;
@@ -1148,6 +1150,11 @@ class HomeController extends Controller
 
                     }else{
                         user_voucher::where("user_id",session("loggedIn"))->where("voucher_id",$request->datavoucher)->delete();
+                        // user_voucher::where("user_id",session("loggedIn"))->where("voucher_id",$request->datavoucher)->update(
+                        //     [
+                        //         'jumlah'=
+                        //     ]
+                        // );
                     }
                     return redirect("/home/user");
                 }
@@ -1397,22 +1404,36 @@ class HomeController extends Controller
     }
     public function listpembayaranpegawai(){
         $datapegawai=pegawai::all();
-        $datalogsaldo=logsaldo::all();
+        $datalogsaldo=logsaldo::where("jenis",0)->withTrashed()->get();;
+        //dd($datalogsaldo);
         $p=array();
-        if($p != null){
-            foreach ($datalogsaldo as $key => $log) {
-                if($log->dtranssewa->pegawai_id==1){
-                    array_push($p,$log);
-                }
-            }
-        }
+        //if($p != null){
+            // foreach ($datalogsaldo as $key => $log) {
+            //     if($log->dtranssewa->pegawai_id==1){
+            //         array_push($p,$log);
+            //     }
+            // }
+        //}
 
-        return view("admin.listpembayaranpegawai",['datalogsaldo'=>$p]);
+        return view("admin.listpembayaranpegawai",['datalogsaldo'=>$datalogsaldo]);
     }
 
     public function listpembayaranpegawaifiltered($idpeg){
         $datapegawai=pegawai::all();
-        $datalogsaldo=logsaldo::where("jenis",0)->get();
+        $datalogsaldo=logsaldo::where("jenis",0)->withTrashed()->get();
+        $temp=array();
+        // foreach ($datalogsaldo as $key => $log){
+        //     if(count($temp)==0){
+        //         array_push($temp,$log);
+        //     }
+        //     else{
+        //         foreach ($temp as $key => $t) {
+        //             if($t->pegawai_id==$log->pegawai_id){
+
+        //             }
+        //         }
+        //     }
+        // }
         return view("admin.listpembayaranpegawai",['datalogsaldo'=>$datalogsaldo]);
     }
     public function accpembayaran($id,$id1){
@@ -1420,7 +1441,43 @@ class HomeController extends Controller
         pegawai::where("id",$id1)->update([
             "pegawai_saldo"=>$saldo
         ]);
+        htransbayar::create([
+            //'total'=>logsaldo::where("id",$id)->first()->jumlah
+            'total'=>logsaldo::where("id",$id)->first()->dtranssewa->dSewa_harga
+        ]);
+        dtransbayar::create([
+            "hBayar_id"=>htransbayar::latest("id")->first()->id,
+            "subtotal"=>logsaldo::where("id",$id)->first()->dtranssewa->dSewa_harga,
+            "dSewa_id"=>logsaldo::where("id",$id)->first()->dtrans_id,
+        ]);
         logsaldo::where("id",$id)->delete();
+
+        // logsaldo::where("id",$id)->update([
+        //     'jenis'=>1
+        // ]);
+        return $this->listpembayaranpegawai();
+    }
+    public function accpembayaran_semua(){
+        $datalog=logsaldo::all();
+        $total=0;
+        foreach ($datalog as $key => $dl) {
+            $total=$total+$dl->dtranssewa->dSewa_harga;
+        }
+        htransbayar::create([
+            'total'=>$total
+        ]);
+        foreach ($datalog as $key => $dl) {
+            $saldo=(pegawai::where("id",$dl->dtranssewa->pegawai_id)->first()->pegawai_saldo)+logsaldo::where("id",$dl->id)->first()->dtranssewa->dSewa_harga;
+            pegawai::where("id",$dl->dtranssewa->pegawai_id)->update([
+                "pegawai_saldo"=>$saldo
+            ]);
+            dtransbayar::create([
+                "hBayar_id"=>htransbayar::latest("id")->first()->id,
+                "subtotal"=>logsaldo::where("id",$dl->id)->first()->dtranssewa->dSewa_harga,
+                "dSewa_id"=>logsaldo::where("id",$dl->id)->first()->dtrans_id,
+            ]);
+            logsaldo::where("id",$dl->id)->delete();
+        }
         return $this->listpembayaranpegawai();
     }
 }

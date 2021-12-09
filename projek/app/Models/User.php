@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticable;
@@ -36,5 +37,11 @@ class user extends Authenticable
     }
     public function user_voucher(){
         return $this->hasMany(user_voucher::class, 'user_id','id');
+    }
+
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }

@@ -166,6 +166,8 @@ table.table .avatar {
 	border-radius: 50%;
 	vertical-align: middle;
 	margin-right: 10px;
+    height:50px;
+    width:50px;
 }
 .status {
 	font-size: 30px;
@@ -307,10 +309,10 @@ $(document).ready(function(){
                         @foreach ($dtransewa as $i =>$dt)
                         <tr>
                             <td>{{$i+1}}</td>
-                            @if($dt->pegawai_photo==null)
-                                <td><a href="#"><img src="{{asset('img/person.png')}}" class="avatar" alt="Avatar" style="height:50px;"> {{$dt->pegawai->pegawai_nama}}</a></td>
+                            @if($dt->pegawai->pegawai_photo=="" || $dt->pegawai->pegawai_photo==null)
+                                <td><a href="#"><img src="{{asset('/img/profile.png')}}" class="avatar" alt="Avatar" style="height:50px;"> {{$dt->pegawai->pegawai_nama}}</a></td>
                             @else
-                                <td><a href="#"><img src="{{asset('storage/'.'P'.$dt->pegawai_id)}}" class="avatar" alt="Avatar"> {{$dt->pegawai->pegawai_nama}}</a></td>
+                                <td><a href="#"><img src="{{asset('/storage/photos/'.$dt->pegawai->pegawai_photo)}}" class="avatar" alt="Avatar"> {{$dt->pegawai->pegawai_nama}}</a></td>
                             @endif
 
                             <td>{{$dt->dSewa_alamat}}</td>
