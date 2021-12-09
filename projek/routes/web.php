@@ -7,6 +7,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\voucherController;
 use App\Http\Middleware\checkLogout;
+use App\Models\dtranssewa;
+use App\Models\htranssewa;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,8 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('payments/pending', 'PaymentController@pending');
 
     //Report
-    Route::get('report/transaksi_user', [ReportController::class,'coba']);
+    Route::get('report/transaksi_user', [ReportController::class,'transaksiUser']);
+    Route::get('report/transaksi_userPDF', [ReportController::class,'pdfTransaksiUser']);
 
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);

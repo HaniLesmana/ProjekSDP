@@ -175,8 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        //tambahan
-        // SamuelTerra22\ReportGenerator\ServiceProvider::class,
+    
 
     ],
 
@@ -232,8 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        //tambahan
-        // 'PdfReport'     => SamuelTerra22\ReportGenerator\Facades\PdfReportFacade::class,
+
 
     ],
 
