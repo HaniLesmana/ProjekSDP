@@ -2,83 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\dtranssewa;
+use App\Models\htranssewa;
 use Illuminate\Http\Request;
-use PdfReport;
+use Dompdf\Dompdf;
 
 class ReportController extends Controller
 {
-    public function coba(Request $request)
+    function transaksiUser(Request $request)
     {
-        // Retrieve any filters
-        $fromDate = $request->input('from_date');
-        $toDate = $request->input('to_date');
-        $sortBy = $request->input('sort_by');
+        $htranssewa = htranssewa::all();
+        $dtranssewa = dtranssewa::all();
+        return view('admin.report.transaksi_user',['htranssewa'=>$htranssewa, 'dtranssewa'=> $dtranssewa]);
+    }
+    function pdfTransaksiUser(Request $request)
+    {
+        // instantiate and use the dompdf class
+        $htranssewa = htranssewa::all();
+        $dtranssewa = dtranssewa::all();
+        $html =view('admin.report.trans_user_pdf',['htranssewa'=>$htranssewa,'dtranssewa'=>$dtranssewa]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
 
-        // Report title
-        $title = 'Registered User Report';
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
 
-        // For displaying filters description on header
-        $meta = [
-            'Registered on' => $fromDate . ' To ' . $toDate,
-            'Sort By'       => $sortBy
-        ];
+        // Render the HTML as PDF
+        $dompdf->render();
 
-        // Do some querying..
-        $queryBuilder = User::select([
-            'name',
-            'balance',
-            'registered_at'
-        ])
-            ->whereBetween('registered_at', [
-                $fromDate,
-                $toDate
-            ])
-            ->orderBy($sortBy);
-
-        // Set Column to be displayed
-        $columns = [
-            'Name' => 'name',
-            'Registered At',
-            // if no column_name specified, this will automatically seach for snake_case of column name (will be registered_at) column from query result
-            'Total Balance' => 'balance',
-            'Status' => function ($result) { // You can do if statement or any action do you want inside this closure
-                return ($result->balance > 100000) ? 'Rich Man' : 'Normal Guy';
-            }
-        ];
-
-        /*
-            Generate Report with flexibility to manipulate column class even manipulate column value (using Carbon, etc).
-
-            - of()         : Init the title, meta (filters description to show), query, column (to be shown)
-            - editColumn() : To Change column class or manipulate its data for displaying to report
-            - editColumns(): Mass edit column
-            - showTotal()  : Used to sum all value on specified column on the last table (except using groupBy method). 'point' is a type for displaying total with a thousand separator
-            - groupBy()    : Show total of value on specific group. Used with showTotal() enabled.
-            - limit()      : Limit record to be showed
-            - make()       : Will producing DomPDF / SnappyPdf instance so you could do any other DomPDF / snappyPdf method such as stream() or download()
-        */
-        return PdfReport::of($title, $meta, $queryBuilder, $columns)
-            ->editColumn('Registered At', [
-                'displayAs' => function ($result) {
-                    return $result->registered_at->format('d M Y');
-                }
-            ])
-            ->editColumn('Total Balance', [
-                'displayAs' => function ($result) {
-                    return thousandSeparator($result->balance);
-                }
-            ])
-            ->editColumns([
-                'Total Balance',
-                'Status'
-            ], [
-                'class' => 'right bold'
-            ])
-            ->showTotal([
-                'Total Balance' => 'point'
-                // if you want to show dollar sign ($) then use 'Total Balance' => '$'
-            ])
-            ->limit(20)
-            ->stream(); // or download('filename here..') to download pdf
+        // Output the generated PDF to Browser
+        $dompdf->stream();
     }
 }
