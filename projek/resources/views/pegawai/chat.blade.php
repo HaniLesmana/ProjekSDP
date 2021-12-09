@@ -276,21 +276,24 @@ body{
                     <input type="text" class="form-control" placeholder="Search...">
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0">
-                    @foreach ($arr as $i => $a)
-                    <li class="clearfix" onclick="btnpilih({{$a->chat_sender}})">
-                        @if ($a->user_destination->pegawai_photo == "" || $a->user_destination->pegawai_photo==null)
-                            <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;" alt="...">
-                        @else
-                            <img src="{{asset('/storage/photos/'.$a->user_destination->pegawai_photo)}}" class="card-img-top rounded" style="height:48px;" alt="...">
-                        @endif
+                    @if(count($arr) > 0)
+                        @foreach ($arr as $i => $a)
+                        <li class="clearfix" onclick="btnpilih({{$a->chat_sender}})">
+                            @if ($a->user_destination->pegawai_photo == "" || $a->user_destination->pegawai_photo==null)
+                                <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                            @else
+                                <img src="{{asset('/storage/photos/'.$a->user_destination->pegawai_photo)}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                            @endif
 
-                        <div class="about" id="{{$a->chat_sender}}">
-                            <div class="name">{{$a->user_sender->user_nama}}</div>
-                            <div class="status"> <i class="fa fa-circle offline"></i> {{$a->chat_text}}</div>
-                        </div>
-                    </li>
-                    <input type="hidden" id="hidden{{$a->chat_sender}}" value="{{$a->user_sender->user_nama}}">
-                    @endforeach
+                            <div class="about" id="{{$a->chat_sender}}">
+                                <div class="name">{{$a->user_sender->user_nama}}</div>
+                                <div class="status"> <i class="fa fa-circle offline"></i> {{$a->chat_text}}</div>
+                            </div>
+                        </li>
+                        <input type="hidden" id="hidden{{$a->chat_sender}}" value="{{$a->user_sender->user_nama}}">
+                        @endforeach
+                    @endif
+
                     {{-- <li class="clearfix active">
                         <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                         <div class="about">
@@ -329,31 +332,34 @@ body{
                 </ul>
             </div>
             <div class="chat">
-                <div class="chat-header clearfix">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                {{-- <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"> --}}
 
-                                @if ($a->user_sender->user_photo == "" || $a->user_sender->user_photo==null)
-                                    <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;" alt="...">
-                                @else
-                                    <img src="{{asset('/storage/photos/'.$a->user_sender->user_photo)}}" class="card-img-top rounded" style="height:48px;" alt="...">
-                                @endif
-                            </a>
-                            <div class="chat-about">
-                                <h6 class="m-b-0" id="namachat">{{$a->user_sender->user_nama}}</h6>
-                                <small>Last seen: 2 hours ago</small>
+                @if(count($arr) > 0)
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    {{-- <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"> --}}
+
+                                    @if ($a->user_sender->user_photo == "" || $a->user_sender->user_photo==null)
+                                        <img src="{{asset('/img/profile.png')}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                                    @else
+                                        <img src="{{asset('/storage/photos/'.$a->user_sender->user_photo)}}" class="card-img-top rounded" style="height:48px;" alt="...">
+                                    @endif
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0" id="namachat">{{$a->user_sender->user_nama}}</h6>
+                                    <small>Last seen: 2 hours ago</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 hidden-sm text-right">
+                                {{-- <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a> --}}
                             </div>
                         </div>
-                        <div class="col-lg-6 hidden-sm text-right">
-                            {{-- <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a> --}}
-                        </div>
                     </div>
-                </div>
+                @endif
                 <div id="ajaxchat"></div>
                 {{-- <div class="chat-history">
                     <ul class="m-b-0">
