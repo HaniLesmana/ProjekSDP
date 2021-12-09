@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TransaksiSelesai;
 use App\Models\addon;
 use Illuminate\Http\Request;
 use App\Models\barang;
@@ -25,6 +26,7 @@ use Carbon\Carbon;
 use Database\Seeders\DtranssewaSeeder;
 // use Facade\FlareClient\Http\Client;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Mail;
 use Xendit\Xendit;
 
 class UserController extends Controller
@@ -339,6 +341,13 @@ class UserController extends Controller
         admin::where("id",1)->update([
             "admin_saldo"=>$saldo
         ]);
+
+        //MAIL TO USER
+        Mail::to($dtransewa->htranssewa->user->user_email)->send(new TransaksiSelesai($id,"0"));
+
+        //MAIL TO PEGAWAI
+        Mail::to($dtransewa->pegawai->pegawai_email)->send(new TransaksiSelesai($id,"1"));
+
         return redirect("/home/ongoingtrans");
     }
     public function history(Request $request){

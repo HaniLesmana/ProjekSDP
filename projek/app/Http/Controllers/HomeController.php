@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TransaksiSelesai;
 use App\Models\addon;
 use App\Models\barang;
 use App\Models\Cart;
@@ -19,6 +20,7 @@ use App\Models\dtranstpwd;
 use App\Models\htransbayar;
 use App\Models\htranssewa;
 use App\Models\logsaldo;
+use App\Models\review;
 use App\Models\user_voucher;
 use App\Models\voucher;
 use App\Rules\cek_password;
@@ -31,6 +33,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -93,7 +96,18 @@ class HomeController extends Controller
             }
         }
 
-        return view("pegawai.home_pegawai",["totaldtranssewa"=>$totaldtranssewa,"totalnewdtranssewa"=>$totalnewdtranssewa,"totalchat"=>$totalchat,"newchat"=>$ctr,"arr"=>$chat,"pendapatan_pegawai"=>$pendapatan_pegawai,"pendapatan_pegawai_per_bulan"=>$pendapatan_pegawai_per_bulan]);
+        $datarating_review=review::where("pegawai_id",session("loggedIn"))->get();
+        $jumlahrating_review=count($datarating_review);
+        $jumlahrating=0;
+        foreach ($datarating_review as $key => $rat) {
+            $jumlahrating=$jumlahrating+$rat->rating;
+        }
+        $ratarating=0;
+        if ($jumlahrating_review!=0){
+            $ratarating=$jumlahrating/$jumlahrating_review;
+        }
+        //dd($jumlahrating_review);
+        return view("pegawai.home_pegawai",["totaldtranssewa"=>$totaldtranssewa,"totalnewdtranssewa"=>$totalnewdtranssewa,"totalchat"=>$totalchat,"newchat"=>$ctr,"arr"=>$chat,"pendapatan_pegawai"=>$pendapatan_pegawai,"pendapatan_pegawai_per_bulan"=>$pendapatan_pegawai_per_bulan,"jumlah_review"=>$jumlahrating_review,"rata_rating"=>$ratarating]);
     }
 
     function home_admin(){
@@ -749,6 +763,17 @@ class HomeController extends Controller
         dtranssewa::where("id",$id)->update([
             "dSewa_status_accpegawai"=>1
         ]);
+
+        $dtrans = dtranssewa::where("id",$id)->first();
+        $userid = $dtrans->htranssewa->user->id;
+        $peg = pegawai::where("id",session('loggedIn'))->first();
+        chat::create([
+            'chat_sender' => $userid,
+            'chat_destination' => session('loggedIn'),
+            'chat_from' => 'pegawai',
+            'chat_text' => 'Halo, salam dari '.$peg->pegawai_nama.', saya siap melayani anda!',
+            'read' => 0
+        ]);
         return redirect("/pegawai/pesanan");
     }
     public function pegawaiOrdercancel($id){
@@ -1047,7 +1072,7 @@ class HomeController extends Controller
                             "dSewa_harga"=>200000,
                             "dSewa_alamat"=>$cart->alamat,
                             "dSewa_status_accpegawai"=>2,
-                            "hSewa_id"=>htranssewa::latest("id")->first(),
+                            "hSewa_id"=>htranssewa::latest("id")->first()->id,
                         ]);
                         foreach ($dataaddon as $key => $addon) {
                             if($addon->id_pegawai==$cart->pegawai_id){
@@ -1072,7 +1097,7 @@ class HomeController extends Controller
                             "dSewa_harga"=>300000,
                             "dSewa_alamat"=>$cart->alamat,
                             "dSewa_status_accpegawai"=>2,
-                            "hSewa_id"=>htranssewa::latest("id")->first(),
+                            "hSewa_id"=>htranssewa::latest("id")->first()->id,
                         ]);
                         foreach ($dataaddon as $key => $addon) {
                             if($addon->id_pegawai==$cart->pegawai_id){
@@ -1097,7 +1122,7 @@ class HomeController extends Controller
                             "dSewa_harga"=>500000,
                             "dSewa_alamat"=>$cart->alamat,
                             "dSewa_status_accpegawai"=>2,
-                            "hSewa_id"=>htranssewa::latest("id")->first(),
+                            "hSewa_id"=>htranssewa::latest("id")->first()->id,
                         ]);
                         foreach ($dataaddon as $key => $addon) {
                             if($addon->id_pegawai==$cart->pegawai_id){
@@ -1122,7 +1147,7 @@ class HomeController extends Controller
                             "dSewa_harga"=>400000,
                             "dSewa_alamat"=>$cart->alamat,
                             "dSewa_status_accpegawai"=>2,
-                            "hSewa_id"=>htranssewa::latest("id")->first(),
+                            "hSewa_id"=>htranssewa::latest("id")->first()->id,
                         ]);
                         foreach ($dataaddon as $key => $addon) {
                             if($addon->id_pegawai==$cart->pegawai_id){
@@ -1355,6 +1380,7 @@ class HomeController extends Controller
         ]);
         return view("pegawai.chat_ajax",["datachat"=>$datachat]);
     }
+
     public function chat_ajax_pegawai_insert(Request $request){
         $chat=$request->post("datachat");
         $iduser=$request->post("iduser");
@@ -1396,6 +1422,11 @@ class HomeController extends Controller
                     admin::where("id",1)->update([
                         "admin_saldo"=>$saldo
                     ]);
+                    $dtranssewa=dtranssewa::where("id",$dt->id)->first();
+                    Mail::to($dtranssewa->htranssewa->user->user_email)->send(new TransaksiSelesai($dt->id,"0"));
+
+                    //MAIL TO PEGAWAI
+                    Mail::to($dtranssewa->pegawai->pegawai_email)->send(new TransaksiSelesai($dt->id,"1"));
                 }
             }
         }
@@ -1457,7 +1488,7 @@ class HomeController extends Controller
         // ]);
         return $this->listpembayaranpegawai();
     }
-    public function accpembayaran_semua(){
+    public function accpembayaransemua (){
         $datalog=logsaldo::all();
         $total=0;
         foreach ($datalog as $key => $dl) {
