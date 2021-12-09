@@ -802,7 +802,7 @@ class HomeController extends Controller
         \Midtrans\Config::$is3ds = true;
         $params = array(
             'transaction_details' => array(
-                'order_id' => 4,
+                'order_id' => 6,
                 'gross_amount' => $total,
             ),
             'customer_details' => array(
