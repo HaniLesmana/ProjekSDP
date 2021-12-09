@@ -23,6 +23,7 @@ use App\Models\logsaldo;
 use App\Models\review;
 use App\Models\user_voucher;
 use App\Models\voucher;
+use App\Notifications\CheckoutNotification;
 use App\Rules\cek_password;
 use App\Rules\cek_uniq;
 use App\Rules\ConfirmPassword;
@@ -881,7 +882,6 @@ class HomeController extends Controller
             }
         }
         return view('user.user_cart',["bayar"=>$snapToken,"data"=>json_encode($data), "total"=>$total]);
-        // return view('user.user_checkout',['total'=>$total, 'email'=>$email]);
     }
     function prosesAcc($id){
         $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
@@ -1181,12 +1181,17 @@ class HomeController extends Controller
                         //     ]
                         // );
                     }
+
+                    // $user = user::where('id',session('loggedIn'))->first();
+                    $user = user::find(session('loggedIn'));
+                    $htranssewa=htranssewa::latest("id")->first();
+                    $user->notify(new CheckoutNotification($htranssewa));
+
                     return redirect("/home/user");
                 }
             }
 
         }
-
     }
     function do_transaksi_sewa(Request $request){
         $cek = true;

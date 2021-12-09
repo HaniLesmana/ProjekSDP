@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class user extends Authenticable
 {
     use HasFactory;
     use SoftDeletes;
+    use Notifiable;
 
     protected $primaryKey="id";
     public $incrementing=true;
@@ -43,5 +45,9 @@ class user extends Authenticable
     protected static function newFactory()
     {
         return UserFactory::new();
+    }
+
+    public function routeNotificationForMail($notification){
+        return $this->user_email;
     }
 }

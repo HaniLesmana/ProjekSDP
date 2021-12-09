@@ -22,6 +22,7 @@ use App\Models\logsaldo;
 use App\Models\review;
 use App\Models\user_voucher;
 use App\Models\voucher;
+use App\Notifications\CheckoutNotification;
 use Carbon\Carbon;
 use Database\Seeders\DtranssewaSeeder;
 // use Facade\FlareClient\Http\Client;
