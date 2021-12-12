@@ -142,7 +142,7 @@ body {
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color:#5584AC">
               <a class="dropdown-item" href="/report/transaksi_user">R. transaksi user</a>
-              <a class="dropdown-item" href="#">R. pembelian barang</a>
+              <a class="dropdown-item" href="/report/transaksi_barang">R. pembelian barang</a>
               <a class="dropdown-item" href="#">R. pendapatan pegawai</a>
               <a class="dropdown-item" href="#">R. rating review pegawai</a>
               <a class="dropdown-item" href="#">R. topup withdraw</a>

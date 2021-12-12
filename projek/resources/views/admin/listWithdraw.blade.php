@@ -19,22 +19,44 @@
       </tr>
     </thead>
     <tbody>
-        <td>1</td>
-        <td>Clarissa</td>
-        <th>15.000</th>
-        <td>10.000</td>
-        <td>
-        <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-            <a href="#" style="text-decoration: :none; color:white;">
-                Accept
-            </a>
-        </button>
-        <button type="submit" style="border-radius:3px;border:1px solid black; background-color:red;">
-            <a href="#" style="text-decoration: :none; color:white;">
-                Decline
-            </a>
-        </button>
-        </td>
+        <?php $ctr=1; ?>
+        @foreach ($wd as $i )
+            <tr>
+                <td>{{$ctr}}</td>
+                <td>
+                    @foreach ($user as $o=>$y )
+                        @if ($y->id == $i->user_id)
+                        {{$y->user_email}} || ID:{{$y->id}}
+                        @endif
+                    @endforeach
+                </td>
+                <th>
+                    @foreach ($user as $y )
+                        @if ($y->id == $i->user_id)
+                        Rp.{{$y->user_saldo}},-
+                        @endif
+                    @endforeach
+                </th>
+                <td>Rp.{{$i->htranstpwd_total}},-</td>
+                <td>
+                <form action="">
+                    <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
+                        <a href="#" style="text-decoration: :none; color:white;">
+                            Accept
+                        </a>
+                    </button>
+                </form>
+                <form action="">
+                    <button type="submit" style="border-radius:3px;border:1px solid black; background-color:red;">
+                        <a href="#" style="text-decoration: :none; color:white;">
+                            Decline
+                        </a>
+                    </button>
+                </form>
+                </td>
+            </tr>
+            <?php $ctr++; ?>
+        @endforeach
     </tbody>
   </table>
   </div>

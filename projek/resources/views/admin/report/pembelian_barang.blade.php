@@ -2,9 +2,9 @@
 @section('main')
 <div class="container">
     <div class="row">
-        <div class="col-sm-11"><h2>Laporan Transaksi User</h2></div>
+        <div class="col-sm-11"><h2>Laporan Transaksi Barang</h2></div>
         <div class="col-md-12" style="margin:10px 0 10px 0;">
-            <form action="transaksi_userPDF" method="GET">
+            <form action="transaksi_barangPDF" method="GET">
                 <button type="submit" class="btn btn-primary"> Print PDF <i class="fas fa-file-pdf"></i></button>
             </form>
         </div>
@@ -15,7 +15,7 @@
       <tr>
         <th>ID</th>
         <th>User ID</th>
-        <th>Voucher ID </th>
+        <th>Pegawai ID </th>
         <th>Total</th>
         <th></th>
       </tr>
@@ -25,12 +25,8 @@
         <tr>
             <td>{{$p->id}}</td>
             <td>{{$p->user_id}}</td>
-            @if ($p->voucher_id == null)
-                <td>-</td>
-            @else
-                <td>{{$p->voucher_id}}</td>
-            @endif
-            <td>Rp.{{$p->hSewa_total}},-</td>
+            <td>{{$p->pegawai_id}}</td>
+            <td>Rp.{{$p->hBarang_total}},-</td>
             <td>
                 <button type="button" class="btn btn-warning"" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">
                     Detail
@@ -49,14 +45,15 @@
                     </div>
                     <div class="modal-body">
                         @foreach ($dtranssewa as $y => $x)
-                            @if ($x->hSewa_id == $p->id)
+                            @if ($x->dSewa_id == $p->id)
                                 <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
                                     <div>Dtrans ID :{{$x->id}}</div>
-                                    <div>Pegawai ID :{{$x->pegawai_id}}</div>
-                                    <div>Tanggal sewa :{{$x->dSewa_tanggal}}</div>
-                                    <div>Harga sewa : Rp.{{$x->dSewa_harga}},-</div>
-                                    <div>Alamat :{{$x->dSewa_alamat}}</div>
-                                    <div>Status :{{$x->dSewa_status_accpegawai}}</div>
+                                    @foreach ($barang as $t => $q )
+                                        @if ($q->id == $x->barang_id)
+                                        <div>Barang :{{$x->barang_id}}, {{$q->barang_nama}}</div>
+                                        @endif
+                                    @endforeach
+                                    <div>Jumlah :{{$x->barang_jumlah}}</div>
                                 </div>
                             @endif
                         @endforeach

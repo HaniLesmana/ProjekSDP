@@ -124,7 +124,9 @@ class HomeController extends Controller
     }
     public function listWithdraw()
     {
-        return view("admin.listWithdraw");
+        $wd = htransTopup::where('htranstpwd_tipe',"withdraw")->get();
+        $user = user::all();
+        return view("admin.listWithdraw",['wd'=>$wd, 'user'=>$user]);
     }
 
 
@@ -812,8 +814,26 @@ class HomeController extends Controller
     function withdraw(Request $request)
     {
         $user = user::where('id',session('loggedIn'))->first();
+        $wd = htransTopup::where('user_id',session('loggedIn'))->where('htranstpwd_tipe',"withdraw")->get();
         $saldo = $user->user_saldo;
-        return view('user.user_withdraw',['saldo'=>$saldo]);
+        return view('user.user_withdraw',['saldo'=>$saldo,'wd'=>$wd]);
+    }
+    function do_wd(Request $request){
+        $data=json_decode($request->data);
+        $total = $request->total;
+        $user = user::where('id',session('loggedIn'))->first();
+        $email = $user->user_email;
+        $id = $user->id;
+        htransTopup::create([
+            'user_id' => $id,
+            'htranstpwd_tanggal' => date("Y/m/d"),
+            'htranstpwd_total' => $total,
+            'htranstpwd_tipe' => 'withdraw',
+            'htranstpwd_status' => 2,
+            'token_payment' => "withdraw",
+            'status_payment'=>"null" ,
+        ]);
+        return redirect('/user/withdraw');
     }
     function gotocheckout(Request $request){
         $data=json_decode($request->data);

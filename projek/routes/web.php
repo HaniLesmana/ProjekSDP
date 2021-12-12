@@ -32,6 +32,8 @@ Route::middleware(['is_login'])->group(function () {
     //Report
     Route::get('report/transaksi_user', [ReportController::class,'transaksiUser']);
     Route::get('report/transaksi_userPDF', [ReportController::class,'pdfTransaksiUser']);
+    Route::get('report/transaksi_barang', [ReportController::class,'transaksiBarang']);
+    Route::get('report/transaksi_barangPDF', [ReportController::class,'pdfTransaksiBarang']);
 
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);
@@ -132,6 +134,7 @@ Route::middleware(['is_login'])->group(function () {
             return view('user.user_topup');
         });
         Route::get("/withdraw",[HomeController::class,"withdraw"]);
+        Route::post("/do_wd",[HomeController::class,"do_wd"]);
         Route::get("/cart",function ()
         {
             return view('user.user_cart');

@@ -7,7 +7,7 @@
     @section('main')
     <div class="container">
     <h2>Withdraw</h2>
-    <form method="post" action="{{ url('/user/gotocart') }}">
+    <form method="post" action="{{ url('/user/do_wd') }}">
         @csrf
         <!-- NEW GRID -->
         <style>
@@ -103,7 +103,7 @@
         </style>
         <div class="container" style="margin-top:32px;">
             <h5 style="background-color:#95D1CC;height:45px;padding-top:10px;padding-left:20px;border-radius:5px">Saldo: Rp.{{$saldo}}</h5>
-            <input class="form-control" type="number" placeholder="Total withdraw">
+            <input class="form-control" type="number" name="total" placeholder="Total withdraw">
             <div class="row">
                 <div style="display:inline-block;width:100%;margin-top:20px;padding:0px 1.2%;">
                     <div style="float:left">
@@ -111,16 +111,54 @@
                     </div>
 
                     <div style="float:right;">
-                        <button type="submit" class="btn btn-warning" id="btncart" style="color:white;padding:12px 20px;font-size:18px;">Withdraw</button>
+                        <button type="button" class="btn btn-warning" id="btncart" data-toggle="modal" data-target="#exampleModal" style="color:white;padding:12px 20px;font-size:18px;">Withdraw</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- NEW GRID -->
 
-
+        {{-- modal detail --}}
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Withdraw Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                Are you sure?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+            </div>
+        </div>
     </form>
-
+        <table class="table table-striped" style="margin-top: 100px">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach ($wd as $p=>$i)
+                <tr>
+                    <th scope="row">{{$p+1}}</th>
+                    <td>{{$i->htranstpwd_tanggal}}</td>
+                    <td>{{$i->htranstpwd_total}}</td>
+                    <td>{{($i->htranstpwd_status == 2) ? 'Pending' : 'Success'}}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
 
     <footer>

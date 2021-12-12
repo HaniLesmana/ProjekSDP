@@ -34,7 +34,7 @@
     }
 </style>
 <body>
-    <?php
+<?php
     $path = 'img/title.png';
     $type = pathinfo($path, PATHINFO_EXTENSION);
     $data = file_get_contents($path);
@@ -43,29 +43,25 @@
 <div class="container">
     <img src="<?php echo $base64?>" width="250" height="60"/><br>
     <div style="clear: both"></div>
-    <h1>Laporan Transasi User</h1>
+    <h1>Laporan Transasi Barang</h1>
   {{-- <p>The .table-hover class enables a hover state on table rows:</p> --}}
   <table class="table table-hover">
     <thead>
       <tr>
         <th>ID</th>
         <th>User ID</th>
-        <th>Voucher ID</th>
+        <th>Pegawai ID </th>
         <th>Total</th>
         <th>Detail</th>
       </tr>
     </thead>
     <tbody>
         @foreach ($htranssewa as $i => $p)
-            <tr style="border-bottom: 1px solid black">
+            <tr style="border-bottom: 2px solid black">
                 <td>{{$p->id}}</td>
                 <td>{{$p->user_id}}</td>
-                @if ($p->voucher_id == null)
-                    <td>-</td>
-                @else
-                    <td>{{$p->voucher_id}}</td>
-                @endif
-                <td>Rp.{{$p->hSewa_total}},-</td>
+                <td>{{$p->pegawai_id}}</td>
+                <td>Rp.{{$p->hBarang_total}},-</td>
                 <td>
                     <table style="width:500px;border:1px solid black;">
                         <tr style="border:1px solid black">
@@ -78,14 +74,15 @@
                         </tr>
                         @foreach ($dtranssewa as $y => $x)
                             @if ($x->hSewa_id == $p->id)
-                                <tr>
-                                    <td> {{$x->pegawai_id}}</td>
-                                    <td>{{$x->pegawai_id}}</td>
-                                    <td>{{$x->dSewa_tanggal}}</td>
-                                    <td>Rp.{{$x->dSewa_harga}},-</td>
-                                    <td>{{$x->dSewa_alamat}}</td>
-                                    <td>{{$x->dSewa_status_accpegawai}}</td>
-                                </tr>
+                                <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
+                                    <div>Dtrans ID :{{$x->id}}</div>
+                                    @foreach ($barang as $t => $q )
+                                        @if ($q->id == $x->barang_id)
+                                        <div>Barang :{{$x->barang_id}}, {{$q->barang_nama}}</div>
+                                        @endif
+                                    @endforeach
+                                    <div>Jumlah :{{$x->barang_jumlah}}</div>
+                                </div>
                             @endif
                         @endforeach
                       </table>
