@@ -19,6 +19,7 @@ class CreateBarangsTable extends Migration
             $table->string("barang_nama");
             $table->integer("barang_harga");
             $table->integer("barang_stok");
+            $table->integer("barang_photo")->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

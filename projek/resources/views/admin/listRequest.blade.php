@@ -20,42 +20,31 @@
         <th></th>
       </tr>
     </thead>
-    <?php
-        if(isset($data)){
-            $data = json_decode($data);
-            foreach ($data as $data) {
-                echo '<tbody>';
-                    echo'<td>'.$data->htranstpwd_id.'</td>';
-                    $temp = DB::select("select * from user where user_id = '$data->user_id'");
-                    echo'<td>'.data_get($temp,'0.user_nama').'</td>';
-                    echo'<td>'.$data->htranstpwd_total.'</td>';
-                    echo'<td>'.$data->htranstpwd_tipe.'</td>';
-                    $myDateTime = DateTime::createFromFormat('Y-m-d',$data->htranstpwd_tanggal);
-                    $formatteddate = $myDateTime->format('d-m-Y h:m:s');
-                    echo'<td>'.$formatteddate.'</td>';
-                    //status = 0:declined, 1:accepted, 2=pending
-                    if($data->htranstpwd_status == "0"){
-                        echo'<td>Declined</td>';
-                    }
-                    else if($data->htranstpwd_status == "1"){
-                        echo'<td>Accepted</td>';
-                    }
-                    else{
-                        echo'<td>Pending</td>';
-                    }
-                    ?>
-                    <td>
-                        <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                            <a href="{{ url('/admin/detailTopUp/'.$data->htranstpwd_id.'/'.data_get($temp,'0.user_email') )}}" style="text-decoration: :none; color:white;">
-                                Detail
-                            </a>
-                        </button>
-                    </td>
-                    <?php
-                echo '</tbody>';
-            }
-        }
-    ?>
+    @if (isset($datas))
+        @foreach ($datas as $data)
+            <tbody>
+                <td>{{ $data->htranstpwd_id }}</td>
+                <td>{{ $data->user->user_nama }}</td>
+                <td>{{ $data->htranstpwd_total }}</td>
+                <td>{{ $data->htranstpwd_tipe }}</td>
+                <td>{{ date('d-m-Y h:m:s', strtotime($data->htranstpwd_tanggal)) }}</td>
+                @if ($data->htranstpwd_status == "0")
+                    <td>Declined</td>
+                @elseif ($data->htranstpwd_status == "1")
+                    <td>Accepted</td>
+                @else
+                    <td>Pending</td>
+                @endif
+                <td>
+                    <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
+                        <a href="{{ url('admin/detailTopUp/'.$data->htranstpwd_id.'/'.$data->user->user_email )}}" style="text-decoration:none; color:white;">
+                            Detail
+                        </a>
+                    </button>
+                </td>
+            </tbody>
+        @endforeach
+    @endif
     {{-- <tbody>
         <td>1</td>
         <td>Clarissa</td>

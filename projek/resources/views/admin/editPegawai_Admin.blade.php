@@ -23,7 +23,7 @@
                 {{-- <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="id" placeholder="ID Pegawai" value="{{old('id') ? old('id') : $p->pegawai_id}}"> </div>
+                            <input class="form-control" type="text" name="id" placeholder="ID Pegawai" value="{{old('id') ? old('id') : $p->id}}"> </div>
                             @error('nik')
                                 <span style='color: red'>{{ $message }}</span>
                             @enderror

@@ -31,4 +31,7 @@ class dtranssewa extends Model
     public function logsaldo(){
         return $this->hasOne(logsaldo::class, 'dtrans_id','id');
     }
+    public function dtransbarang(){
+        return $this->hasOne(dtransbarang::class, 'dSewa_id','id');
+    }
 }

@@ -116,15 +116,15 @@ class HomeController extends Controller
     }
     public function listRequest()
     {
-        $data = DB::select("select * from htranstpwd where htranstpwd_status = 2");
-        $data = json_encode($data);
+        $data = htransTopup::where('htranstpwd_status',2)->where('htranstpwd_tipe','topup')->get();
+        // $data = json_encode($data);
         // dd($data);
-        return view("admin.listRequest",['data'=> $data]);
+        return view("admin.listRequest",['datas'=> $data]);
 
     }
     public function listWithdraw()
     {
-        $wd = htransTopup::where('htranstpwd_tipe',"withdraw")->get();
+        $wd = htransTopup::where('htranstpwd_tipe',"withdraw")->orderBy('htranstpwd_id','desc')->get();
         $user = user::all();
         return view("admin.listWithdraw",['wd'=>$wd, 'user'=>$user]);
     }
@@ -374,10 +374,21 @@ class HomeController extends Controller
         return view('admin.addBarang_Admin',['kategori'=>$kat]);
     }
     public function prosesAddBarang(Request $request){
-        //dd($request->kategori);
-        barang::create(
-            ['barang_kategori' => $request->kategori, 'barang_nama' => $request->nama, 'barang_harga' => $request->harga, 'barang_stok' => $request->stok]
-        );
+        $barang = new barang;
+        $barang->barang_kategori = $request->kategori;
+        $barang->barang_nama = $request->nama;
+        $barang->barang_harga = $request->harga;
+        $barang->barang_stok = $request->stok;
+        $barang->save();
+        // barang::create(
+        //     ['barang_kategori' => $request->kategori, 'barang_nama' => $request->nama, 'barang_harga' => $request->harga, 'barang_stok' => $request->stok]
+        // );
+        $id = barang::orderBy('created_at','desc')->first()->id;
+        if($request->hasFile("photo_barang")){
+            Storage::putFileAs("/public/photos",$request->file('photo_barang'),"Barang".$id.'.'.$request->file('photo_barang')->getClientOriginalExtension());
+            $photo ="Barang".$id.".".$request->file('photo_barang')->getClientOriginalExtension();
+        }
+
         return redirect('/admin/listbarang');
     }
     public function EditBarang($id){
@@ -438,10 +449,9 @@ class HomeController extends Controller
         return view("admin.editPegawai_Admin",['id'=>$id],['pegawai' => $pegawai]);
     }
 
-    function prosesDeletePegawai(Request $request){
-        $id = $request->id;
-        DB::table('pegawai')->where('pegawai_id', $id)->update(['pegawai_status'=>0]);
-        $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
+    function prosesDeletePegawai($id){
+        pegawai::where('id', $id)->delete();
+        $pegawai = pegawai::all();
         return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
     }
 
@@ -487,7 +497,7 @@ class HomeController extends Controller
         ];
         $request->validate($rules, $message);
 
-        pegawai::where('pegawai_id', $id)->update([
+        pegawai::where('id', $id)->update([
             'pegawai_nik'=>$nik,
             'pegawai_email'=>$email,
             'pegawai_nama'=>$nama,
@@ -496,8 +506,6 @@ class HomeController extends Controller
             'password'=>$password,
             'pegawai_jasa' => $jenis
         ]);
-        // $pegawai = DB::table('pegawai')->where('pegawai_status','1')->get();
-        // return view("admin.listPegawai_Admin",['pegawai' => $pegawai]);
         return $this->home_list_pegawai();
     }
 
@@ -904,20 +912,23 @@ class HomeController extends Controller
         return view('user.user_cart',["bayar"=>$snapToken,"data"=>json_encode($data), "total"=>$total]);
     }
     function prosesAcc($id){
-        $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
-        $total = (int)data_get($htranstpwd,'0.htranstpwd_total');
-        $status = DB::update('update htranstpwd set htranstpwd_status = 1 where htranstpwd_id = ?', [$id]);
+        //proses acc withdraw
+        $htranstpwd = htransTopup::where('htranstpwd_id',$id)->first();
+        $total = (int)$htranstpwd->htranstpwd_total;
+        $htranstpwd->htranstpwd_status = 1; //1 = sukses
+        $htranstpwd->save();
 
-        $userID = data_get($htranstpwd,'0.user_id');
-        $users = DB::select("select * from user where user_id = '$userID'");
-        $saldo = (int)data_get($users,'0.user_saldo');
-
-        $saldo = $saldo + $total;
-        $status = DB::update("update user set user_saldo = '$saldo' where user_id = '$userID'");
-        return view('admin.home_admin');
+        $saldo = (int)$htranstpwd->user->user_saldo;
+        $saldo = $saldo - $total;
+        user::where('id',$htranstpwd->user->id)->update([
+            'user_saldo' => $saldo
+        ]);
+        return back();
     }
     function prosesDecline($id){
-        $status = DB::update('update htranstpwd set htranstpwd_status = 0 where htranstpwd_id = ?', [$id]);
+        htransTopup::where('htranstpwd_id',$id)->update([
+            'htranstpwd_status' => 0
+        ]);
         return view('admin.home_admin');
     }
     function add_cart($id,Request $request){
@@ -1203,14 +1214,16 @@ class HomeController extends Controller
                     }
 
                     // $user = user::where('id',session('loggedIn'))->first();
-                    $user = user::find(session('loggedIn'));
-                    $htranssewa=htranssewa::latest("id")->first();
-                    $user->notify(new CheckoutNotification($htranssewa));
 
-                    return redirect("/home/user");
+
                 }
-            }
 
+                $user = user::find(session('loggedIn'));
+                $htranssewa=htranssewa::latest("id")->first();
+                $user->notify(new CheckoutNotification($htranssewa));
+
+                return $this->home_user($request);
+            }
         }
     }
     function do_transaksi_sewa(Request $request){
@@ -1314,9 +1327,6 @@ class HomeController extends Controller
                     $ctr++;
                 }
             }
-
-
-
 
             return $this->home_user($request);
         }
@@ -1460,8 +1470,8 @@ class HomeController extends Controller
     }
     public function listpembayaranpegawai(){
         $datapegawai=pegawai::all();
-        $datalogsaldo=logsaldo::where("jenis",0)->withTrashed()->get();;
-        //dd($datalogsaldo);
+        //$datalogsaldo=logsaldo::where("jenis",0)->withTrashed()->get();
+        $datalogsaldo=logsaldo::all();
         $p=array();
         //if($p != null){
             // foreach ($datalogsaldo as $key => $log) {
@@ -1535,5 +1545,13 @@ class HomeController extends Controller
             logsaldo::where("id",$dl->id)->delete();
         }
         return $this->listpembayaranpegawai();
+    }
+    public function history_pegawai(){
+        $datadtrans=dtranssewa::where("pegawai_id",session('loggedIn'))->get();
+        return view('pegawai.history',['dtransewa'=>$datadtrans]);
+    }
+    public function history_pegawaiajax($id1,$id2){
+        $datadtrans=dtranssewa::where("pegawai_id",session('loggedIn'))->where('dSewa_tanggal','=>',$id1)->where('dSewa_tanggal','<=',$id2)->get();
+        return view('pegawai.history_ajax',['dtransewa'=>$datadtrans]);
     }
 }

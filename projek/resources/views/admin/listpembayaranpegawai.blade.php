@@ -234,6 +234,9 @@ $(document).ready(function(){
                     </tr>
                 </thead>
                 <tbody>
+                @isset($datalogsaldo)
+
+
                 @foreach($datalogsaldo as $key => $logsaldo)
                     <tr>
                         <td>{{$logsaldo->dtranssewa->pegawai->pegawai_nama}}</td>
@@ -262,6 +265,7 @@ $(document).ready(function(){
 
                     </tr>
                 @endforeach
+                @endisset
             </tbody>
             </table>
         </div>

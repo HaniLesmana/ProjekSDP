@@ -21,8 +21,8 @@
             <h4 class="card-title mb-3" style="text-align: center;">Detail</h4>
             <div class="row">
                 {{-- FOTO BUKTI TF --}}
-                Tanggal&nbsp;&nbsp;&nbsp;&nbsp;: {{ data_get($dataheader,'0.htranstpwd_tanggal') }} <br>
-                Tipe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ data_get($dataheader,'0.htranstpwd_tipe') }} <br>
+                Tanggal&nbsp;&nbsp;&nbsp;&nbsp;: {{ $dataheader->htranstpwd_tanggal }} <br>
+                Tipe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $dataheader->htranstpwd_tipe }} <br>
                 Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{$email}} <br> <br>
                 <table class="table table-striped">
                     <thead style="background-color:#E8D0B3;">

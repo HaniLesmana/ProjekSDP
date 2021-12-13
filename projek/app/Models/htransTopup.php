@@ -27,4 +27,8 @@ class htransTopup extends Model
         return $this->hasMany(dtransTopup::class, 'htranstpwd_id', 'htranstpwd_id');
     }
 
+    public function user(){
+        return $this->belongsTo(user::class, 'user_id', 'id');
+    }
+
 }

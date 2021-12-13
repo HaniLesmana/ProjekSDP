@@ -16,7 +16,7 @@
 </style>
 <div class="container mt-5 mb-5 d-flex justify-content-center" style="padding-top:20px; padding-bottom:20px;background-color:#DBD0C0">
     <div class="card px-1 py-4">
-        <form method="post" action="{{ url('/admin/prosesAddBarang') }}">
+        <form enctype="multipart/form-data" method="post" action="{{ url('/admin/prosesAddBarang') }}">
             @csrf
             <div class="card-body" style="width:400px;padding-top:30px; padding-bottom:30px;">
             {{-- <form action="/pegawai/insert" method="post">
@@ -75,6 +75,9 @@
                         </div>
                     </div>
                 </div>
+
+                <input type="file" name="photo_barang" class="" style=""> <br>
+
                 <button type="submit" style="color:white;margin-top:8px;color:white;height:35px;width: 375px;border-radius:3px;border:1px solid black; background-color:#FACE7F;text-align:center;">
                     Add
                 </button>

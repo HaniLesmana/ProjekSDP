@@ -21,7 +21,7 @@ class htranssewa extends Model
         'hSewa_total',
         'voucher_id'
     ];
-    public function dtranssewa(){
+    public function dtranssewas(){
         return $this->hasMany(dtranssewa::class, 'hSewa_id','id');
     }
     public function user(){

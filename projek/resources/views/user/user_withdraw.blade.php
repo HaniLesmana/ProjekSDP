@@ -103,7 +103,7 @@
         </style>
         <div class="container" style="margin-top:32px;">
             <h5 style="background-color:#95D1CC;height:45px;padding-top:10px;padding-left:20px;border-radius:5px">Saldo: Rp.{{$saldo}}</h5>
-            <input class="form-control" type="number" name="total" placeholder="Total withdraw">
+            <input class="form-control" type="number" min="50000" name="total" placeholder="Total withdraw (min. Rp.50.0000,-)">
             <div class="row">
                 <div style="display:inline-block;width:100%;margin-top:20px;padding:0px 1.2%;">
                     <div style="float:left">

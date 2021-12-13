@@ -57,7 +57,7 @@ class UserController extends Controller
 
     function dotambahaddon(Request $request){
         $barang = barang::where('id',$request->id)->first();
-        $new = ['id'=>$barang->id,'barang_nama'=>$barang->barang_nama,'barang_harga'=>$barang->barang_harga,'jumlah'=>$request->jumlah];
+        $new = ['id'=>$barang->id,'barang_nama'=>$barang->barang_nama,'barang_harga'=>$barang->barang_harga,'jumlah'=>$request->jumlah,'barang_photo'=>$request->photo];
 
         if(session()->exists('addons')){
             $addons = json_decode(session('addons'),true);

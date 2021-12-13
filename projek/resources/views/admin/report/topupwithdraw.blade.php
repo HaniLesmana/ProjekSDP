@@ -35,9 +35,9 @@
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-sm-11"><h2>Laporan Transaksi User</h2></div>
+        <div class="col-sm-11"><h2>Laporan Top Up Withdraw</h2></div>
         <div class="col-md-12" style="margin:10px 0 10px 0;">
-            <form action="transaksi_userPDF" method="GET">
+            <form action="topupPDF" method="GET">
                 <button type="submit" class="btn btn-primary"> Print PDF <i class="fas fa-file-pdf"></i></button>
             </form>
         </div>
@@ -62,50 +62,55 @@
   <table class="table table-striped" id="myTable">
     <thead style="background-color:#E8D0B3;">
       <tr>
-        <th>ID</th>
+        <th>Id Transaksi</th>
         <th>User ID</th>
-        <th>Voucher ID </th>
+        <th>Tanggal</th>
         <th>Total</th>
+        <th>Tipe</th>
+        <th>Status</th>
+        <th>Token</th>
+        <th>Payment Status</th>
         <th></th>
       </tr>
     </thead>
-    <tbody id="reportSewa">
-    @foreach ($htranssewa as $i => $p)
+    <tbody id="listReport">
+    @foreach ($htranstpwd as $i => $p)
         <tr>
-            <td>{{$p->id}}</td>
+            <td>{{$p->htranstpwd_id}}</td>
             <td>{{$p->user_id}}</td>
-            @if ($p->voucher_id == null)
-                <td>-</td>
-            @else
-                <td>{{$p->voucher_id}}</td>
-            @endif
-            <td>Rp.{{$p->hSewa_total}},-</td>
+            <td>{{$p->htranstpwd_tanggal}}</td>
+            <td>{{ $p->htranstpwd_total }}</td>
+            <td>{{ $p->htranstpwd_tipe }}</td>
+            <td>{{ $p->htranstpwd_status }}</td>
+            <td>{{ $p->token_payment }}</td>
+            <td>{{ $p->status_payment }}</td>
             <td>
-                <button type="button" class="btn btn-warning"" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">
+                <button type="button" class="btn btn-warning"" data-toggle="modal" data-target="#exampleModal{{$p->htranstpwd_id}}" style="text-decoration: none; border:none; text-align:center;">
                     Detail
                 </button>
             </td>
         </tr>
         {{-- modal detail --}}
-        <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal{{$p->htranstpwd_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Detail Transaksi</h3>
+                        @if ($p->htranstpwd_tipe=="topup")
+                        <h3 class="modal-title" id="exampleModalLabel">Detail TopUp</h3>
+                        @else
+                        <h3 class="modal-title" id="exampleModalLabel">Detail Withdraw</h3>
+                        @endif
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
                     <div class="modal-body">
-                        @foreach ($dtranssewa as $y => $x)
-                            @if ($x->hSewa_id == $p->id)
+                        @foreach ($dtranstpwd as $y => $x)
+                            @if ($x->htranstpwd_id == $p->htranstpwd_id)
                                 <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
                                     <div>Dtrans ID :{{$x->id}}</div>
-                                    <div>Pegawai ID :{{$x->pegawai_id}}</div>
-                                    <div>Tanggal sewa :{{$x->dSewa_tanggal}}</div>
-                                    <div>Harga sewa : Rp.{{$x->dSewa_harga}},-</div>
-                                    <div>Alamat :{{$x->dSewa_alamat}}</div>
-                                    <div>Status :{{$x->dSewa_status_accpegawai}}</div>
+                                    <div>Jumlah :{{$x->htranstpwd_jumlah}}</div>
+                                    <div>Nominal :{{$x->htranstpwd_nominal}}</div>
                                 </div>
                             @endif
                         @endforeach
@@ -122,40 +127,39 @@
   </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $("#search1").change(function(){
-            //alert($("#search1").val());
-            //filter();
-            if ($("#search1").val()==""||$("#search2").val()==""){
-                alert("tanggal masih ada yang kosong");
-            }
-            else{
-                // alert("ok");
-                filter();
-            }
-        });
-        $("#search2").on('change',function(){
-            //alert(this.value);
-            if ($("#search1").val()==""||$("#search2").val()==""){
-                alert("tanggal masih ada yang kosong");
-            }
-            else{
-                 //alert($("#search2").val());
-                filter();
-            }
-        });
-    });
-    function filter(){
-        if ($("#search1").val()!=""&&$("#search2").val()!=""){
-            $.ajax({
-                type: 'get',
-                url: '/report/reportsewa_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
-                success: function(data) {
-                    $("#reportSewa").empty();
-                    $("#reportSewa").append(data);
-                }
-            });
+$(document).ready(function() {
+    $("#search1").change(function(){
+        //alert($("#search1").val());
+        //filter();
+        if ($("#search1").val()==""||$("#search2").val()==""){
+            alert("tanggal masih ada yang kosong");
         }
+        else{
+            filter();
+        }
+    });
+    $("#search2").on('change',function(){
+        //alert(this.value);
+        if ($("#search1").val()==""||$("#search2").val()==""){
+            alert("tanggal masih ada yang kosong");
+        }
+        else{
+            filter();
+        }
+    });
+});
+function filter(){
+    if ($("#search1").val()!=""&&$("#search2").val()!=""){
+        $.ajax({
+            type: 'get',
+            url: '/report/reporttpwd_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
+            success: function(data) {
+                $("#listReport").empty();
+                $("#listReport").append(data);
+            }
+        });
     }
-    </script>
+}
+</script>
+
 @endsection

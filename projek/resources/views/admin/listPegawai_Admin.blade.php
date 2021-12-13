@@ -37,11 +37,9 @@
         <th>Email</th>
         <th>Nama</th>
         <th>Alamat</th>
-        <th>Password</th>
         <th>Telepon</th>
         <th>Jasa</th>
         <th>Saldo</th>
-        <th>Status</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -51,34 +49,32 @@
         <tr>
             <td>{{$i+1}}</td>
             <td>{{$p->pegawai_nik}}</td>
-            <td>{{$p->pegawai_id}}</td>
+            <td>{{$p->id}}</td>
             <td>{{$p->pegawai_email}}</td>
             <td>{{$p->pegawai_nama}}</td>
             <td>{{$p->pegawai_alamat}}</td>
-            <td>{{$p->pegawai_password}}</td>
             <td>{{$p->pegawai_telepon}}</td>
             <td>{{$p->pegawai_jasa}}</td>
             <td>{{$p->pegawai_saldo}}</td>
-            <td>{{$p->pegawai_status}}</td>
             <td>
                 <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;margin-top:3px;">
-                    <a href="/admin/EditPegawai/{{$p->pegawai_id}}" style="text-decoration: :none; color:white;">
+                    <a href="{{ url('admin/EditPegawai/'.$p->id) }}" style="text-decoration:none; color:white;">
                         Edit
                     </a>
                 </button>
             </td>
             <td>
                 <!-- BUTTON DELETE -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="text-decoration: none; border:none; background-color:transparent; text-align:center;">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; background-color:transparent; text-align:center;">
                     <i class="fa fa-trash" style="font-size:18px;color:red; "></i>
                 </button>
-                <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
+                <!-- <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
 
-                </button>
+                </button> -->
             </td>
         </tr>
         <!-- MODAL CONFIRM DELETE -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -92,7 +88,7 @@
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <form method="get" action="{{ url("/admin/prosesDeletePegawai/".$p->pegawai_id) }}">
+                    <form method="get" action="{{ url('admin/prosesDeletePegawai/'.$p->id) }}">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                     </div>

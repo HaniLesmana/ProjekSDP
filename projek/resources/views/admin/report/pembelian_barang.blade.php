@@ -9,32 +9,50 @@
             </form>
         </div>
     </div>
+    <form action="" method="get">
+    <div class="table-filter">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="filter-group">
+                    <label>From Date</label>
+                    <input type="date" class="form-control" id="search1">
+                </div>
+                <div class="filter-group">
+                    <label>To Date</label>
+                    <input type="date" class="form-control" id="search2">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </form>
   <div class="table-responsive" id="contentss">
   <table class="table table-striped" id="myTable">
     <thead style="background-color:#E8D0B3;">
       <tr>
         <th>ID</th>
-        <th>User ID</th>
-        <th>Pegawai ID </th>
+        <th>User Nama</th>
+        <th>Pegawai Nama </th>
         <th>Total</th>
         <th></th>
       </tr>
     </thead>
-    <tbody>
-    @foreach ($htranssewa as $i => $p)
+    <tbody id="listReport">
+    <!-- @foreach ($htranssewa as $i => $p) -->
+        @foreach ($dtranssewa as $d)
         <tr>
-            <td>{{$p->id}}</td>
-            <td>{{$p->user_id}}</td>
-            <td>{{$p->pegawai_id}}</td>
-            <td>Rp.{{$p->hBarang_total}},-</td>
+            <td>{{$d->id}}</td>
+            <td>{{$d->htranssewa->user->user_nama}}</td>
+            <td>{{$d->pegawai->pegawai_nama}}</td>
+            <td>Rp.{{$d->htranssewa->hSewa_total}},-</td>
             <td>
-                <button type="button" class="btn btn-warning"" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">
                     Detail
                 </button>
             </td>
         </tr>
         {{-- modal detail --}}
-        <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -44,29 +62,73 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        @foreach ($dtranssewa as $y => $x)
-                            @if ($x->dSewa_id == $p->id)
+                        <!-- @foreach ($dtranssewa as $y => $x)
+                            @if ($x->id == $p->id) -->
                                 <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
                                     <div>Dtrans ID :{{$x->id}}</div>
-                                    @foreach ($barang as $t => $q )
+                                    <div>Barang: {{$x->dtransbarang->barang_id}},{{$x->dtransbarang->barang->barang_nama}}</div>
+                                    <!-- @foreach ($barang as $t => $q )
                                         @if ($q->id == $x->barang_id)
                                         <div>Barang :{{$x->barang_id}}, {{$q->barang_nama}}</div>
                                         @endif
-                                    @endforeach
-                                    <div>Jumlah :{{$x->barang_jumlah}}</div>
+                                    @endforeach -->
+                                    <div>Jumlah :{{$x->dtransbarang->barang_jumlah}}</div>
                                 </div>
-                            @endif
-                        @endforeach
+                            <!-- @endif -->
+                        <!-- @endforeach -->
                     </div>
                     <div class="modal-footer">
                     </div>
                 </div>
             </div>
         </div>
+        @endforeach
 
-    @endforeach
+
+    <!-- @endforeach -->
     </tbody>
   </table>
   </div>
 </div>
+<script>
+$(document).ready(function() {
+    $("#search1").change(function(){
+        if ($("#search1").val()==""||$("#search2").val()==""){
+            alert("tanggal masih ada yang kosong");
+        }
+        else{
+            filter();
+        }
+    });
+    $("#search2").on('change',function(){
+        //alert(this.value);
+        if ($("#search1").val()==""||$("#search2").val()==""){
+            alert("tanggal masih ada yang kosong");
+        }
+        else{
+            filter();
+        }
+    });
+});
+function filter(){
+    if ($("#search1").val()!=""&&$("#search2").val()!=""){
+        $.ajax({
+            type: 'get',
+            url: '/report/reportpembelianbarang_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
+            success: function(data) {
+                // alert('testif($("#listReport").){
+                if($("#listReport").isEmptyObject() == true){
+                    $("#listReport").append(data);
+                }
+                else{
+                    alert('test');
+                    $("#listReport").empty();
+                    $("#listReport").append(data);
+                }
+
+            }
+        });
+    }
+}
+</script>
 @endsection

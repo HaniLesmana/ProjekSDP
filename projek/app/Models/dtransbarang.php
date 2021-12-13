@@ -24,4 +24,7 @@ class dtransbarang extends Model
     public function barang(){
         return $this->belongsTo(barang::class, 'barang_id','id');
     }
+    public function dtranssewa(){
+        return $this->belongsTo(dtranssewa::class, 'dSewa_id','id');
+    }
 }

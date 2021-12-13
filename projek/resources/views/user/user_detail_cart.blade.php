@@ -136,7 +136,13 @@
                                     <div class="single-new-arrival-bg">
 
                                         {{-- Gambar barang --}}
-                                        <img src="{{asset('img/sapu.png')}}" alt="new-arrivals images" style="object-fit:fill;">
+                                        <!-- <img src="{{asset('img/sapu.png')}}" alt="new-arrivals images" style="object-fit:fill;"> -->
+                                        @if($addon['barang_photo']=="" || $addon['barang_photo'] == null)
+                                            <!-- <img src="{{asset('/img/profile.png')}}" alt="new-arrivals images" style="object-fit:fill;"> -->
+                                            <img src="{{asset('/img/sapu.png')}}" alt="new-arrivals images" style="object-fit:fill;">
+                                        @else
+                                            <img src="{{asset('/storage/photos/'.$addon['barang_photo'])}}" class="card-img-top" style="height:280px;" alt="...">
+                                        @endif
 
                                         <div class="single-new-arrival-bg-overlay"></div>
 
@@ -239,7 +245,11 @@
                                         @endphp
 
                                         {{-- Gambar barang --}}
-                                        <img src="{{asset('img/sapu.png')}}" alt="new-arrivals images" style="object-fit:fill;">
+                                        @if($barang->barang_photo == "" || $barang->barang_photo == null)
+                                            <img src="{{asset('/img/sapu.png')}}" alt="new-arrivals images" style="object-fit:fill;">
+                                        @else
+                                            <img src="{{asset('/storage/photos/'.$barang->barang_photo)}}" alt="new-arrivals images" style="object-fit:fill;">
+                                        @endif
 
                                         <div class="single-new-arrival-bg-overlay"></div>
                                         @if($addon != null)
@@ -309,6 +319,7 @@
                                                 </select>
                                                 <input type="hidden" name="id" value="{{ $barang->id }}">
                                                 <input type="hidden" name="idpegawai" value="{{ $pegawai->id }}">
+                                                <input type="hidden" name="photo" value="{{ $barang->barang_photo }}">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

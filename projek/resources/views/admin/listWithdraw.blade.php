@@ -15,46 +15,43 @@
         <th>Nama</th>
         <th>Saldo</th>
         <th>Jumlah Withdraw</th>
+        <th>Tanggal</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
         <?php $ctr=1; ?>
         @foreach ($wd as $i )
-            <tr>
-                <td>{{$ctr}}</td>
-                <td>
-                    @foreach ($user as $o=>$y )
-                        @if ($y->id == $i->user_id)
-                        {{$y->user_email}} || ID:{{$y->id}}
+            <form action="/admin/acc_wd/{{$i->htranstpwd_id}}" method="get">
+                <tr>
+                    <td>{{$ctr}}</td>
+                    <td>
+                        @foreach ($user as $o=>$y )
+                            @if ($y->id == $i->user_id)
+                            {{$y->user_email}} || ID:{{$y->id}}
+                            @endif
+                        @endforeach
+                    </td>
+                    <th>
+                        @foreach ($user as $y )
+                            @if ($y->id == $i->user_id)
+                            Rp.{{$y->user_saldo}},-
+                            @endif
+                        @endforeach
+                    </th>
+                    <td>Rp.{{$i->htranstpwd_total}},-</td>
+                    <td>{{$i->htranstpwd_tanggal}}</td>
+                    <td>
+                        @if ($i->htranstpwd_status == 1)
+                            Success
+                        @else
+                            <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
+                                Accept
+                            </button>
                         @endif
-                    @endforeach
-                </td>
-                <th>
-                    @foreach ($user as $y )
-                        @if ($y->id == $i->user_id)
-                        Rp.{{$y->user_saldo}},-
-                        @endif
-                    @endforeach
-                </th>
-                <td>Rp.{{$i->htranstpwd_total}},-</td>
-                <td>
-                <form action="">
-                    <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;">
-                        <a href="#" style="text-decoration: :none; color:white;">
-                            Accept
-                        </a>
-                    </button>
-                </form>
-                <form action="">
-                    <button type="submit" style="border-radius:3px;border:1px solid black; background-color:red;">
-                        <a href="#" style="text-decoration: :none; color:white;">
-                            Decline
-                        </a>
-                    </button>
-                </form>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            </form>
             <?php $ctr++; ?>
         @endforeach
     </tbody>

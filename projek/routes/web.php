@@ -8,7 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\voucherController;
 use App\Http\Middleware\checkLogout;
 use App\Models\dtranssewa;
+use App\Models\dtranstpwd;
 use App\Models\htranssewa;
+use App\Models\htransTopup;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,14 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('report/transaksi_userPDF', [ReportController::class,'pdfTransaksiUser']);
     Route::get('report/transaksi_barang', [ReportController::class,'transaksiBarang']);
     Route::get('report/transaksi_barangPDF', [ReportController::class,'pdfTransaksiBarang']);
+    Route::get('report/reportTopUp', [ReportController::class,'reportTopUp']);
+    Route::get('report/topupPDF', [ReportController::class,'topupPDF']);
+    Route::get('report/reportRatingReview', [ReportController::class,'reportRatingReview']);
+    Route::get('report/reportPendapatan', [ReportController::class,'reportPendapatan']);
+    Route::get('report/reportRatingReviewPDF', [ReportController::class,'reportRatingReviewPDF']);
+    Route::get("report/reportpembelianbarang_ajax/{id1}/{id2}", [ReportController::class, "reportpembelianbarang_ajax"]);
+    Route::get("report/reporttpwd_ajax/{id1}/{id2}", [ReportController::class, "reporttpwd_ajax"]);
+    Route::get("report/reportsewa_ajax/{id1}/{id2}", [ReportController::class, "reportsewa_ajax"]);
 
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);
@@ -53,80 +63,80 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/history_filter_pegawai_status/{id}', [UserController::class, "history_filter_pegawai_status"]);
     });
     Route::prefix("admin")->group(function(){
-    //Route::get("/listpegawai",function ()
-    //{
-        //return view('admin.listPegawai_Admin');
-        //Route::get("/listPegawai_Admin", [HomeController::class, "home_list_pegawai"]);
-    //});
+        //Route::get("/listpegawai",function ()
+        //{
+            //return view('admin.listPegawai_Admin');
+            //Route::get("/listPegawai_Admin", [HomeController::class, "home_list_pegawai"]);
+        //});
 
 
-    //MASTER KATEGORI
-    Route::get('/listKategori', [HomeController::class, "listKategori"]);
-    Route::get("/addKategori",function ()
-    {
-        return view('admin.kategori.addKategori_Admin');
-    });
-    Route::get('/editKategori/{id}', [HomeController::class, "editKategori"]);
-    Route::post('/prosesAddKategori', [HomeController::class, "prosesAddKategori"]);
-    Route::post('/prosesEditKategori/{id}', [HomeController::class, "prosesEditKategori"]);
-    Route::any('/prosesDeleteKategori/{id}', [HomeController::class, "prosesDeleteKategori"]);
-    //MASTER KATEGORI
+        //MASTER KATEGORI
+        Route::get('/listKategori', [HomeController::class, "listKategori"]);
+        Route::get("/addKategori",function ()
+        {
+            return view('admin.kategori.addKategori_Admin');
+        });
+        Route::get('/editKategori/{id}', [HomeController::class, "editKategori"]);
+        Route::post('/prosesAddKategori', [HomeController::class, "prosesAddKategori"]);
+        Route::post('/prosesEditKategori/{id}', [HomeController::class, "prosesEditKategori"]);
+        Route::any('/prosesDeleteKategori/{id}', [HomeController::class, "prosesDeleteKategori"]);
+        //MASTER KATEGORI
 
 
-    //MASTER BARANG
-    Route::get('/listbarang', [HomeController::class, "listBarang"]);
-    Route::get('/addBarang', [HomeController::class, "addBarang"]);
-    // Route::get("/editBarang/{id}",function ()
-    // {
-    //     return view('admin.editBarang_Admin');
-    // });
-    Route::get('/editBarang/{id}', [HomeController::class, "EditBarang"]);
-    Route::post('/prosesAddBarang', [HomeController::class, "prosesAddBarang"]);
-    Route::post('/prosesEditBarang/{id}', [HomeController::class, "prosesEditBarang"]);
-    Route::any('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);
-    Route::get('/prosesEditStock/{id}', [HomeController::class, "prosesEditStock"]);
-    //MASTER BARANG
+        //MASTER BARANG
+        Route::get('/listbarang', [HomeController::class, "listBarang"]);
+        Route::get('/addBarang', [HomeController::class, "addBarang"]);
+        // Route::get("/editBarang/{id}",function ()
+        // {
+        //     return view('admin.editBarang_Admin');
+        // });
+        Route::get('/editBarang/{id}', [HomeController::class, "EditBarang"]);
+        Route::post('/prosesAddBarang', [HomeController::class, "prosesAddBarang"]);
+        Route::post('/prosesEditBarang/{id}', [HomeController::class, "prosesEditBarang"]);
+        Route::any('/prosesDeleteBarang/{id}', [HomeController::class, "prosesDeleteBarang"]);
+        Route::get('/prosesEditStock/{id}', [HomeController::class, "prosesEditStock"]);
+        //MASTER BARANG
 
 
-    //MASTER PEGAWAI
-    Route::get("/listpegawai", [HomeController::class, "home_list_pegawai"]);
-    Route::get('/EditPegawai/{id}', [HomeController::class, "EditPegawai"]);
-    Route::get("/addPegawai",function ()
-    {
-        return view('admin.addPegawai_Admin');
-    });
-    Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
-    Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
-    Route::any('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
-    //MASTER PEGAWAI
+        //MASTER PEGAWAI
+        Route::get("/listpegawai", [HomeController::class, "home_list_pegawai"]);
+        Route::get('/EditPegawai/{id}', [HomeController::class, "EditPegawai"]);
+        Route::get("/addPegawai",function ()
+        {
+            return view('admin.addPegawai_Admin');
+        });
+        Route::get('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
+        Route::get('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
+        Route::get('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
+        //MASTER PEGAWAI
 
-    //MASTER VOUCHER
-    Route::get("/listVoucher", [voucherController::class, "listVoucher"]);
-    Route::get('/editVoucher/{id}', [voucherController::class, "editVoucher"]);
-    Route::get("/addVoucher",function ()
-    {
-        return view('admin.voucher.addVoucher');
-    });
-    Route::post('/prosesAddVoucher', [voucherController::class, "prosesAddVoucher"]);
-    Route::post('/prosesEditVoucher/{id}', [voucherController::class, "prosesEditVoucher"]);
-    Route::any('/prosesDeleteVoucher/{id}', [voucherController::class, "prosesDeleteVoucher"]);
-    //MASTER VOUCHER
+        //MASTER VOUCHER
+        Route::get("/listVoucher", [voucherController::class, "listVoucher"]);
+        Route::get('/editVoucher/{id}', [voucherController::class, "editVoucher"]);
+        Route::get("/addVoucher",function ()
+        {
+            return view('admin.voucher.addVoucher');
+        });
+        Route::post('/prosesAddVoucher', [voucherController::class, "prosesAddVoucher"]);
+        Route::post('/prosesEditVoucher/{id}', [voucherController::class, "prosesEditVoucher"]);
+        Route::any('/prosesDeleteVoucher/{id}', [voucherController::class, "prosesDeleteVoucher"]);
+        //MASTER VOUCHER
 
-    //TRANSAKSI TOPUP WITHDRAW
-    Route::get("/detailTopUp/{id}/{email}",function ($id,$email)
-    {
-        $htranstpwd = DB::select("select * from htranstpwd where htranstpwd_id = '$id'");
-        $dtranstpwd = DB::select("select * from dtranstpwd where htranstpwd_id = '$id'");
-        return view('admin.detailTopUp',['id'=>$id,'email'=>$email,'dataheader'=>$htranstpwd,'datadetail'=>$dtranstpwd]);
-    });
-    Route::post('/detailTopUp/actionAccept/{id}', [HomeController::class, "prosesAcc"]);
-    Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);
-    //TRANSAKSI TOPUP WITHDRAW
+        //TRANSAKSI TOPUP WITHDRAW
+        Route::get("/detailTopUp/{id}/{email}",function ($id,$email)
+        {
+            $htranstpwd = htransTopup::where('htranstpwd_id',$id)->first();
+            $dtranstpwd = dtranstpwd::where('htranstpwd_id',$id)->get();
+            return view('admin.detailTopUp',['id'=>$id,'email'=>$email,'dataheader'=>$htranstpwd,'datadetail'=>$dtranstpwd]);
+        });
+        Route::get('/acc_wd/{id}', [HomeController::class, "prosesAcc"]);
+        Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);
+        //TRANSAKSI TOPUP WITHDRAW
 
-    Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);
-    Route::get('/listpembayaranpegawai', [HomeController::class, "listpembayaranpegawai"]);
-    Route::get('/accpembayaran/{id}/{id1}', [HomeController::class, "accpembayaran"]);
-    Route::get('/accpembayaransemua', [HomeController::class, "accpembayaransemua"]);
+        Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);
+        Route::get('/listpembayaranpegawai', [HomeController::class, "listpembayaranpegawai"]);
+        Route::get('/accpembayaran/{id}/{id1}', [HomeController::class, "accpembayaran"]);
+        Route::get('/accpembayaransemua', [HomeController::class, "accpembayaransemua"]);
     });
     Route::prefix("user")->group(function(){
         Route::get("/topUp",function ()
@@ -193,6 +203,9 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/chat", [HomeController::class, "pegawaiChat"]);
         Route::post("/chat_ajax_pegawai_insert", [HomeController::class, "chat_ajax_pegawai_insert"]);
         Route::post("/chat_ajax_pegawai", [HomeController::class, "chat_ajax_pegawai"]);
+
+        Route::get("/history", [HomeController::class, "history_pegawai"]);
+        Route::get("/history_ajax/{id1}/{id2}", [HomeController::class, "history_pegawaiajax"]);
     });
 });
 

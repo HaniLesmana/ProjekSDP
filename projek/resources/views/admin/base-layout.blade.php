@@ -143,9 +143,9 @@ body {
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color:#5584AC">
               <a class="dropdown-item" href="/report/transaksi_user">R. transaksi user</a>
               <a class="dropdown-item" href="/report/transaksi_barang">R. pembelian barang</a>
-              <a class="dropdown-item" href="#">R. pendapatan pegawai</a>
-              <a class="dropdown-item" href="#">R. rating review pegawai</a>
-              <a class="dropdown-item" href="#">R. topup withdraw</a>
+              <a class="dropdown-item" href="/report/reportPendapatan">R. pendapatan pegawai</a>
+              <a class="dropdown-item" href="/report/transaksi_barang">R. rating review pegawai</a>
+              <a class="dropdown-item" href="/report/reportRatingReview">R. topup withdraw</a>
               <a class="dropdown-item" href="#">R. pembelian voucher</a>
             </div>
           </div>
@@ -165,7 +165,6 @@ body {
 </div>
 {{--End Tampilan--}}
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
