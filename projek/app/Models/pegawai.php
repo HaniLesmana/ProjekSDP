@@ -38,6 +38,10 @@ class pegawai extends Authenticable
         return $this->hasOne(dtranssewa::class, 'pegawai_id','id');
     }
 
+    public function reviews(){
+        return $this->hasMany(review::class, 'pegawai_id','id');
+    }
+
     protected static function newFactory()
     {
         return PegawaiFactory::new();

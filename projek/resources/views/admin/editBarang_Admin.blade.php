@@ -20,6 +20,12 @@
             <input type="hidden" name="data_item" value= "@if(isset($data_item)){{$data_item}}@endif"> --}}
             <h5 class="card-title mb-3" style="text-align: center;">Edit Barang</h5>
             @foreach ($barang as $b)
+
+                @if($b->barang_photo == "" || $b->barang_photo == null)
+                    <img src="{{asset('/img/sapu.png')}}" alt="new-arrivals images"  height="350px" width="100%" style="object-fit:fill;margin-bottom:10px;border-radius:5px;">
+                @else
+                    <img src="{{asset('/storage/photos/'.$b->barang_photo)}}" alt="new-arrivals images"  height="350px" width="100%" style="object-fit:fill;margin-bottom:10px;border-radius:5px;">
+                @endif
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">

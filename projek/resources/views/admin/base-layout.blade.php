@@ -144,9 +144,8 @@ body {
               <a class="dropdown-item" href="/report/transaksi_user">R. transaksi user</a>
               <a class="dropdown-item" href="/report/transaksi_barang">R. pembelian barang</a>
               <a class="dropdown-item" href="/report/reportPendapatan">R. pendapatan pegawai</a>
-              <a class="dropdown-item" href="/report/transaksi_barang">R. rating review pegawai</a>
-              <a class="dropdown-item" href="/report/reportRatingReview">R. topup withdraw</a>
-              <a class="dropdown-item" href="#">R. pembelian voucher</a>
+              <a class="dropdown-item" href="/report/reportRatingReview">R. rating review pegawai</a>
+              <a class="dropdown-item" href="/report/reportTopUp">R. topup withdraw</a>
             </div>
           </div>
       </li>

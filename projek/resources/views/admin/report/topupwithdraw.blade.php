@@ -42,22 +42,31 @@
             </form>
         </div>
     </div>
+    <form action="{{ url('/report/reporttpwd_ajax/')}}" method="get">
     <div class="table-filter">
         <div class="row">
             <div class="col-sm-12">
                 <div class="filter-group">
                     <label>From Date</label>
-                    <input type="date" class="form-control" id="search1">
+                    <input type="date" class="form-control" id="search1" name="search1">
                 </div>
                 <div class="filter-group">
                     <label>To Date</label>
-                    <input type="date" class="form-control" id="search2">
+                    <input type="date" class="form-control" id="search2" name="search2">
                 </div>
-
+                <div class="filter-group">
+                    <label>Tipe</label>
+                    <select class="form-control" id="filterTipe" name="filterTipe">
+                        <option>All</option>
+                        <option>Withdraw</option>
+                        <option>Top Up</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-warning">Search</button>
             </div>
         </div>
     </div>
-
+    </form>
   <div class="table-responsive" id="contentss">
   <table class="table table-striped" id="myTable">
     <thead style="background-color:#E8D0B3;">
@@ -85,7 +94,7 @@
             <td>{{ $p->token_payment }}</td>
             <td>{{ $p->status_payment }}</td>
             <td>
-                <button type="button" class="btn btn-warning"" data-toggle="modal" data-target="#exampleModal{{$p->htranstpwd_id}}" style="text-decoration: none; border:none; text-align:center;">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$p->htranstpwd_id}}" style="text-decoration: none; border:none; text-align:center;">
                     Detail
                 </button>
             </td>
@@ -127,39 +136,43 @@
   </div>
 </div>
 <script>
-$(document).ready(function() {
-    $("#search1").change(function(){
-        //alert($("#search1").val());
-        //filter();
-        if ($("#search1").val()==""||$("#search2").val()==""){
-            alert("tanggal masih ada yang kosong");
-        }
-        else{
-            filter();
-        }
-    });
-    $("#search2").on('change',function(){
-        //alert(this.value);
-        if ($("#search1").val()==""||$("#search2").val()==""){
-            alert("tanggal masih ada yang kosong");
-        }
-        else{
-            filter();
-        }
-    });
-});
-function filter(){
-    if ($("#search1").val()!=""&&$("#search2").val()!=""){
-        $.ajax({
-            type: 'get',
-            url: '/report/reporttpwd_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
-            success: function(data) {
-                $("#listReport").empty();
-                $("#listReport").append(data);
-            }
-        });
-    }
-}
+// $(document).ready(function() {
+//     $("#search1").change(function(){
+//         //alert($("#search1").val());
+//         //filter();
+//         if ($("#search1").val()==""||$("#search2").val()==""){
+//             alert("tanggal masih ada yang kosong");
+//         }
+//         else{
+//             filter();
+//         }
+//     });
+//     $("#search2").on('change',function(){
+//         //alert(this.value);
+//         if ($("#search1").val()==""||$("#search2").val()==""){
+//             alert("tanggal masih ada yang kosong");
+//         }
+//         else{
+//             filter();
+//         }
+//     });
+//     $("#filterTipe").on('change',function(){
+//         filter();
+//     });
+// });
+// function filter(){
+//     if ($("#search1").val()!=""&&$("#search2").val()!=""){
+//         if($("#filterTipe").val()=="All")
+//         $.ajax({
+//             type: 'get',
+//             url: '/report/reporttpwd_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
+//             success: function(data) {
+//                 $("#listReport").empty();
+//                 $("#listReport").append(data);
+//             }
+//         });
+//     }
+// }
 </script>
 
 @endsection
