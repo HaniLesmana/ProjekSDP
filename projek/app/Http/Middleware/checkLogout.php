@@ -23,7 +23,6 @@ class checkLogout
         {
             $request->session()->forget('loggedIn');
         }
-
         if(Auth::guard("web_user")->check())
         {
             Auth::guard("web_user")->logout();
