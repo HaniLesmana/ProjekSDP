@@ -40,7 +40,7 @@
               <tr>
                     <td>{{$p->id}}</td>
                     <td>{{$p->pegawai_nama}}</td>
-                    <td><?= echo round($rata2,2)?></td>
+                    <td><?= round($rata2,2)?></td>
                     <td>{{$p->pegawai_photo }}</td>
                     <td>
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">

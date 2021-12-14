@@ -24,7 +24,7 @@
     }
 
     td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid black;
     text-align: left;
     padding: 8px;
     }
@@ -72,7 +72,7 @@
                 <td>{{ $p->token_payment }}</td>
                 <td>{{ $p->status_payment }}</td>
                 <td>
-                    <table style="width:500px;border:1px solid black;">
+                    <table style="border:1px solid black;">
                         <tr style="border:1px solid black">
                             <th> Dtrans ID</th>
                             <th> Nominal </th>

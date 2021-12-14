@@ -24,7 +24,7 @@
     }
 
     td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid black;
     text-align: left;
     padding: 8px;
     }
@@ -43,7 +43,7 @@
 <div class="container">
     <img src="<?php echo $base64?>" width="250" height="60"/><br>
     <div style="clear: both"></div>
-    <h1>Laporan Rating Review User</h1>
+    <h1>Laporan Pendapatan Pegawai</h1>
   {{-- <p>The .table-hover class enables a hover state on table rows:</p> --}}
   <table class="table table-hover">
     <thead>
@@ -51,34 +51,33 @@
         <th>Pegawai Id</th>
         <th>Nama</th>
         <th>Saldo</th>
+        <td>Detail</td>
       </tr>
     </thead>
     <tbody>
         @foreach ($pegawai as $i => $p)
-        @php
-            $rata2 = 0;
-            $temp = 0;
-        @endphp
-        @foreach ($p->reviews as $r)
-            @php
-                $temp += $r->rating;
-            @endphp
+            <tr>
+                <td>{{$p->id}}</td>
+                <td>{{$p->pegawai_nama}}</td>
+                <td>{{$p->pegawai_saldo }}</td>
+                <td>
+                    <table style="border:1px solid black;">
+                        <tr style="border:1px solid black">
+                            <th> Jumlah Transaksi</th>
+                        </tr>
+                        <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
+                            <?php $ctr=0; ?>
+                            @foreach ($dtranssewa as $y => $x)
+                                @if ($x->pegawai_id == $p->id)
+                                    <?php $ctr++; ?>
+                                @endif
+                                <div>{{$ctr}}</div>
+                            @endforeach
+                        </div>
+                    </table>
+                </td>
+            </tr>
         @endforeach
-        @foreach ($pegawai as $i => $p)
-        <tr>
-            <td>{{$p->id}}</td>
-            <td>{{$p->pegawai_nama}}</td>
-            <td>{{$p->pegawai_saldo }}</td>
-        </tr>
-        <?php $ctr=0; ?>
-        @foreach ($dtranssewa as $y => $x)
-            @if ($x->pegawai_id == $p->id)
-            <?php $ctr++; ?>
-            @endif
-        @endforeach
-        <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
-            <div>Jumlah Transaksi: <?= $ctr ?></div>
-        </div>
     </tbody>
   </table>
 </div>

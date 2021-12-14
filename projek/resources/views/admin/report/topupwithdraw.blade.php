@@ -48,15 +48,15 @@
             <div class="col-sm-12">
                 <div class="filter-group">
                     <label>From Date</label>
-                    <input type="date" class="form-control" id="search1" name="search1">
+                    <input type="date" class="form-control" id="search1" name="search1" required>
                 </div>
                 <div class="filter-group">
                     <label>To Date</label>
-                    <input type="date" class="form-control" id="search2" name="search2">
+                    <input type="date" class="form-control" id="search2" name="search2" required>
                 </div>
                 <div class="filter-group">
                     <label>Tipe</label>
-                    <select class="form-control" id="filterTipe" name="filterTipe">
+                    <select class="form-control" id="filterTipe" name="filterTipe" style="height: 30px">
                         <option>All</option>
                         <option>Withdraw</option>
                         <option>Top Up</option>

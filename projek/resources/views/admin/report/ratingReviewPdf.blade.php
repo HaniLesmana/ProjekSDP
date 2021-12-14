@@ -24,7 +24,7 @@
     }
 
     td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid black;
     text-align: left;
     padding: 8px;
     }
@@ -43,7 +43,7 @@
 <div class="container">
     <img src="<?php echo $base64?>" width="250" height="60"/><br>
     <div style="clear: both"></div>
-    <h1>Laporan Rating Review User</h1>
+    <h1>Laporan Rating Review User </h1>
   {{-- <p>The .table-hover class enables a hover state on table rows:</p> --}}
   <table class="table table-hover">
     <thead>
@@ -51,51 +51,50 @@
         <th>Pegawai Id</th>
         <th>Nama</th>
         <th>Rating</th>
+        <th>Detail</th>
       </tr>
     </thead>
     <tbody>
         @foreach ($pegawai as $i => $p)
-        @php
-            $rata2 = 0;
-            $temp = 0;
-        @endphp
-        @foreach ($p->reviews as $r)
             @php
-                $temp += $r->rating;
+                $rata2 = 0;
+                $temp = 0;
             @endphp
-        @endforeach
-        <?php
-            if(count($p->reviews) > 0){
-                $rata2 = $temp / count($p->reviews);
-            }
-        ?>
-              <tr>
-                    <td>{{$p->id}}</td>
-                    <td>{{$p->pegawai_nama}}</td>
-                    <td><?= $rata2?></td>
-                    <td>{{$p->pegawai_photo }}</td>
-                    <td>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">
-                            Detail
-                        </button>
-                    </td>
-                </tr>
-                @foreach ($rating as $y => $x)
-                @if ($x->pegawai_id == $p->id)
-                @foreach ($user as $z => $u )
-                    @if ($u->id == $x->user_id)
-                        <div style="background-color: #F5EEDC; padding:5px 5px 5px 5px; border-radius:5px; margin-bottom:7px;">
-                            <div>User Id : {{ $u->id }}</div>
-                            <div>User : {{ $u->user_nama }}</div>
-                            <div>Rating : {{ $x->rating }}</div>
-                            <div>Review : {{ $x->review }}</div>
-                        </div>
-                    @endif
-                @endforeach
-
-                @endif
+            @foreach ($p->reviews as $r)
+                @php
+                    $temp += $r->rating;
+                @endphp
             @endforeach
-                      </table>
+            <?php
+                if(count($p->reviews) > 0){
+                    $rata2 = $temp / count($p->reviews);
+                }
+            ?>
+            <tr>
+                <td>{{$p->id}}</td>
+                <td>{{$p->pegawai_nama}}</td>
+                <td><?= round($rata2,2)?></td>
+                <td>
+                    <table style="border:1px solid black;">
+                        <tr style="border:1px solid black">
+                            <th>User Id</th>
+                            <th>User </th>
+                            <th>Rating</th>
+                            <th>Review</th>
+                        </tr>
+                        @foreach ($rating as $y => $x)
+                            @if ($x->pegawai_id == $p->id)
+                                @foreach ($user as $z => $u )
+                                    @if ($u->id == $x->user_id)
+                                        <td>{{ $u->id }}</td>
+                                        <td>{{ $u->user_nama }}</td>
+                                        <td>{{ $x->rating }}</td>
+                                        <td>{{ $x->review }}</td>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </table>
                 </td>
             </tr>
         @endforeach

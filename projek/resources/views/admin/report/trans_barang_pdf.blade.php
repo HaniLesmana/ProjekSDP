@@ -24,7 +24,7 @@
     }
 
     td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid black;
     text-align: left;
     padding: 8px;
     }
@@ -43,7 +43,7 @@
 <div class="container">
     <img src="<?php echo $base64?>" width="250" height="60"/><br>
     <div style="clear: both"></div>
-    <h1>Laporan Transasi Barang</h1>
+    <h1>Laporan Transaksi Barang</h1>
   {{-- <p>The .table-hover class enables a hover state on table rows:</p> --}}
   <table class="table table-hover">
     <thead>
