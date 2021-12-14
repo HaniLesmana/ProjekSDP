@@ -613,15 +613,15 @@ class HomeController extends Controller
                     'user_email' => $request->input("user_login_email"),
                     'password' => $request->input("user_login_pass"),
                 ];
-                // if(Auth::guard('web_user')->attempt($data)){
-                //     $request->session()->regenerate();
-                //     $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
-                //     $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
-                //     return redirect("/home/user");
-                // }
-                // else{
-                //     return view('index',['error'=>'ERROR']);
-                // }
+                if(Auth::guard('web_user')->attempt($data)){
+                    $request->session()->regenerate();
+                    $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
+                    $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
+                    return redirect("/home/user");
+                }
+                else{
+                    return view('index',['error'=>'ERROR']);
+                }
                 // AUTH END
 
                 $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
@@ -639,20 +639,20 @@ class HomeController extends Controller
                 ]);
 
                 // AUTH START
-                // $data = [
-                //     'pegawai_email' => $request->input("user_login_email"),
-                //     'password' => $request->input("user_login_pass"),
-                // ];
-                // if(Auth::guard('web_pegawai')->attempt($data)){
-                //     $request->session()->regenerate();
-                //     $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
-                //     $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
-                //     // dd(session()->all());
-                //     return redirect("/home/pegawai");
-                // }
-                // else{
-                //     return view('index',['error'=>'ERROR']);
-                // }
+                $data = [
+                    'pegawai_email' => $request->input("user_login_email"),
+                    'password' => $request->input("user_login_pass"),
+                ];
+                if(Auth::guard('web_pegawai')->attempt($data)){
+                    $request->session()->regenerate();
+                    $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
+                    $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
+                    // dd(session()->all());
+                    return redirect("/home/pegawai");
+                }
+                else{
+                    return view('index',['error'=>'ERROR']);
+                }
                 // AUTH END
 
                 $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
@@ -669,19 +669,19 @@ class HomeController extends Controller
                 ]);
 
                 //AUTH START
-                // $data = [
-                //     'admin_email' => $request->input("user_login_email"),
-                //     'password' => $request->input("user_login_pass"),
-                // ];
-                // if(Auth::guard('web_admin')->attempt($data)){
-                //     $request->session()->regenerate();
-                //     $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
-                //     $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
-                //     return redirect("/home/admin");
-                // }
-                // else{
-                //     return view('index',['error'=>'ERROR']);
-                // }
+                $data = [
+                    'admin_email' => $request->input("user_login_email"),
+                    'password' => $request->input("user_login_pass"),
+                ];
+                if(Auth::guard('web_admin')->attempt($data)){
+                    $request->session()->regenerate();
+                    $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
+                    $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
+                    return redirect("/home/admin");
+                }
+                else{
+                    return view('index',['error'=>'ERROR']);
+                }
                 //AUTH END
 
                 $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
