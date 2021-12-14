@@ -387,6 +387,14 @@ class HomeController extends Controller
         if($request->hasFile("photo_barang")){
             Storage::putFileAs("/public/photos",$request->file('photo_barang'),"Barang".$id.'.'.$request->file('photo_barang')->getClientOriginalExtension());
             $photo ="Barang".$id.".".$request->file('photo_barang')->getClientOriginalExtension();
+            try {
+                barang::where('id',$id)->update([
+                    'barang_photo'=>$photo,
+                ]);
+            } catch (\Throwable $th) {
+                dd("ERROR");
+            }
+
         }
 
         return redirect('/admin/listbarang');

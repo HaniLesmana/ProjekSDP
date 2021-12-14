@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-11"><h2>Laporan Pendapatan</h2></div>
         <div class="col-md-12" style="margin:10px 0 10px 0;">
-            <form action="topupPDF" method="GET">
+            <form action="reportPendapatanPDF" method="GET">
                 <button type="submit" class="btn btn-primary"> Print PDF <i class="fas fa-file-pdf"></i></button>
             </form>
         </div>

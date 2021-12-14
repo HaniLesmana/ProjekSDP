@@ -42,22 +42,23 @@
             </form>
         </div>
     </div>
+    <form action="{{ url('/report/reportsewa_ajax/')}}" method="get">
     <div class="table-filter">
         <div class="row">
             <div class="col-sm-12">
                 <div class="filter-group">
                     <label>From Date</label>
-                    <input type="date" class="form-control" id="search1">
+                    <input type="date" class="form-control" id="search1" name="search1">
                 </div>
                 <div class="filter-group">
                     <label>To Date</label>
-                    <input type="date" class="form-control" id="search2">
+                    <input type="date" class="form-control" id="search2" name="search2">
                 </div>
-
+                <button type="submit" class="btn btn-warning">Search</button>
             </div>
         </div>
     </div>
-
+    </form>
   <div class="table-responsive" id="contentss">
   <table class="table table-striped" id="myTable">
     <thead style="background-color:#E8D0B3;">
@@ -122,40 +123,40 @@
   </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $("#search1").change(function(){
-            //alert($("#search1").val());
-            //filter();
-            if ($("#search1").val()==""||$("#search2").val()==""){
-                alert("tanggal masih ada yang kosong");
-            }
-            else{
-                // alert("ok");
-                filter();
-            }
-        });
-        $("#search2").on('change',function(){
-            //alert(this.value);
-            if ($("#search1").val()==""||$("#search2").val()==""){
-                alert("tanggal masih ada yang kosong");
-            }
-            else{
-                 //alert($("#search2").val());
-                filter();
-            }
-        });
-    });
-    function filter(){
-        if ($("#search1").val()!=""&&$("#search2").val()!=""){
-            $.ajax({
-                type: 'get',
-                url: '/report/reportsewa_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
-                success: function(data) {
-                    $("#reportSewa").empty();
-                    $("#reportSewa").append(data);
-                }
-            });
-        }
-    }
+    // $(document).ready(function() {
+    //     $("#search1").change(function(){
+    //         //alert($("#search1").val());
+    //         //filter();
+    //         if ($("#search1").val()==""||$("#search2").val()==""){
+    //             alert("tanggal masih ada yang kosong");
+    //         }
+    //         else{
+    //             // alert("ok");
+    //             filter();
+    //         }
+    //     });
+    //     $("#search2").on('change',function(){
+    //         //alert(this.value);
+    //         if ($("#search1").val()==""||$("#search2").val()==""){
+    //             alert("tanggal masih ada yang kosong");
+    //         }
+    //         else{
+    //              //alert($("#search2").val());
+    //             filter();
+    //         }
+    //     });
+    // });
+    // function filter(){
+    //     if ($("#search1").val()!=""&&$("#search2").val()!=""){
+    //         $.ajax({
+    //             type: 'get',
+    //             url: '/report/reportsewa_ajax/'+$("#search1").val()+"/"+$("#search2").val(),
+    //             success: function(data) {
+    //                 $("#reportSewa").empty();
+    //                 $("#reportSewa").append(data);
+    //             }
+    //         });
+    //     }
+    // }
     </script>
 @endsection

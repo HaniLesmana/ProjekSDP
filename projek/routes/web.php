@@ -40,10 +40,11 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('report/topupPDF', [ReportController::class,'topupPDF']);
     Route::get('report/reportRatingReview', [ReportController::class,'reportRatingReview']);
     Route::get('report/reportPendapatan', [ReportController::class,'reportPendapatan']);
+    Route::get('report/reportPendapatanPDF', [ReportController::class,'reportPendapatanPDF']);
     Route::get('report/reportRatingReviewPDF', [ReportController::class,'reportRatingReviewPDF']);
-    Route::get("report/reportpembelianbarang_ajax/{id1}/{id2}", [ReportController::class, "reportpembelianbarang_ajax"]);
-    Route::get("report/reporttpwd_ajax/{id1}/{id2}", [ReportController::class, "reporttpwd_ajax"]);
-    Route::get("report/reportsewa_ajax/{id1}/{id2}", [ReportController::class, "reportsewa_ajax"]);
+    Route::get("report/reportpembelianbarang_ajax/", [ReportController::class, "reportpembelianbarang_ajax"]);
+    Route::get("report/reporttpwd_ajax/", [ReportController::class, "reporttpwd_ajax"]);
+    Route::get("report/reportsewa_ajax/", [ReportController::class, "reportsewa_ajax"]);
 
     Route::prefix("home")->group(function(){
         Route::get("/user", [HomeController::class, "home_user"]);

@@ -69,16 +69,33 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="line-height:18px;">
+            <div class="modal-body" style="line-height:18px;display:flex;">
                 <div style="float:left;width:100px;">
                     <label>Nama</label> <br>
-                    <label>Bio</label> <br>
-                    <label>Rating</label>
+                    <label>Rating</label><br>
+                    <label>Bio</label>
+
                 </div>
-                <div style="float:left;">
+                <div style="float:left;width:auto;">
                     <label>: {{ $p->pegawai_nama }}</label> <br>
-                    <label>: Bio pegawai</label> <br>
-                    <label>: 4.5</label>
+                    <label>:
+                        @php
+                            $rata2 = 0;
+                            $temp = 0;
+                        @endphp
+                        @foreach ($p->reviews as $r)
+                            @php
+                                $temp += $r->rating;
+                            @endphp
+                        @endforeach
+                        <?php
+                            if(count($p->reviews) > 0){
+                                $rata2 = $temp / count($p->reviews);
+                            }
+                            echo round($rata2,2);
+                        ?></label><br>
+                    <label>: {{ $p->pegawai_deskripsi}}</label> <br>
+
                 </div>
 
             </div>
