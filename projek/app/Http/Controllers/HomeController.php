@@ -858,7 +858,8 @@ class HomeController extends Controller
     }
     function gotocheckout(Request $request){
         $data=json_decode($request->data);
-        $ctr = htransTopup::max('htranstpwd_id');
+        $ctr = (htransTopup::max('htranstpwd_id'))+1;
+        // dd($ctr);
         $total = $request->total;
         $user = user::where('id',session('loggedIn'))->first();
         // $email = $user->user_email;
@@ -873,7 +874,7 @@ class HomeController extends Controller
         \Midtrans\Config::$is3ds = true;
         $params = array(
             'transaction_details' => array(
-                'order_id' => "INV".$ctr,
+                'order_id' => "TES".$ctr,
                 'gross_amount' => $total,
             ),
             'customer_details' => array(

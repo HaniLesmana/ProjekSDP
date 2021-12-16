@@ -16,8 +16,8 @@ class PaymentController extends Controller
     {
         $payload = $request->getContent();
         $notification = json_decode($payload);
-        $validateSignatureKey = hash('SHA512', $notification->order_id,$notification->status_code .$notification->gross_amount. env('MIDTRANS_SERVER_KEY'));
-        dd($validateSignatureKey);
+        $validateSignatureKey = hash('SHA512', $notification->order_id . $notification->status_code . $notification->gross_amount . env('MIDTRANS_SERVER_KEY'));
+        // dd($notification);
         if($notification->signature_key != $validateSignatureKey){
             return response(['message' =>'Invalid signature'],403);
         }
@@ -36,7 +36,6 @@ class PaymentController extends Controller
         $order_id = $paymentNotification->order_id;
         $fraud = $paymentNotification->fraud_status;
         $paymentStatus = null;
-        $order = htransTopup::where('htranstpwd_id',$paymentNotification->order_id)->first();
 
         if ($transaction == 'capture') {
             // For credit card transaction, we need to check whether transaction is challenge by FDS or not
@@ -66,17 +65,18 @@ class PaymentController extends Controller
             // TODO set payment status in merchant's database to 'Denied'
             $paymentStatus = htransTopup::CANCEL;
         }
-        // if($paymentStatus != null){
-        //     $order->status_payment = $paymentStatus;
-        //     $order->save();
-        //     if($paymentStatus == htransTopup::SUCCESS ||$paymentStatus == htransTopup::SETLE ){
-        //         $cust_id = $order->user_id;
-        //         $user = User::where('id',$cust_id)->first();
-        //         $temp = $user->user_saldo;
-        //         $user->user_saldo = $order->htranstpwd_total + $temp;
-        //         $user->save();
-        //     }
-        // }
+        if($paymentStatus != null){
+            $order = htransTopup::where('htranstpwd_id',$paymentNotification->order_id)->first();
+            $order->status_payment = $paymentStatus;
+            $order->save();
+            if($paymentStatus == htransTopup::SUCCESS ||$paymentStatus == htransTopup::SETLE ){
+                $cust_id = $order->user_id;
+                $user = User::where('id',$cust_id)->first();
+                $temp = $user->user_saldo;
+                $user->user_saldo = $order->htranstpwd_total + $temp;
+                $user->save();
+            }
+        }
         $responses=[
             'code'=> 200,
             'message'=>"sukses",
