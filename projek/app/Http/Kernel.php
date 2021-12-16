@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
 
         'is_login' => \App\Http\Middleware\checkLogin::class,
         'is_logout' => \App\Http\Middleware\checkLogout::class,
+        'checkrole' => \App\Http\Middleware\checkRole::class,
     ];
 
     protected $middlewarePriority = [
