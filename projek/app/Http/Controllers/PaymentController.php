@@ -7,6 +7,7 @@ use App\Models\user;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
@@ -15,10 +16,8 @@ class PaymentController extends Controller
     {
         $payload = $request->getContent();
         $notification = json_decode($payload);
-        dd("berhasil boy");
-        // dd('testing');
-        $validateSignatureKey = hash('sha512', $notification->order_id,$notification->status_code, $notification->gross_amount, env('MIDTRANS_SERVER_KEY'));
-
+        $validateSignatureKey = hash('SHA512', $notification->order_id,$notification->status_code .$notification->gross_amount. env('MIDTRANS_SERVER_KEY'));
+        dd($validateSignatureKey);
         if($notification->signature_key != $validateSignatureKey){
             return response(['message' =>'Invalid signature'],403);
         }
@@ -67,20 +66,20 @@ class PaymentController extends Controller
             // TODO set payment status in merchant's database to 'Denied'
             $paymentStatus = htransTopup::CANCEL;
         }
-        if($paymentStatus != null){
-            $order->status_payment = $paymentStatus;
-            $order->save();
-            if($paymentStatus == htransTopup::SUCCESS ||$paymentStatus == htransTopup::SETLE ){
-                $cust_id = $order->user_id;
-                $user = User::where('id',$cust_id)->first();
-                $temp = $user->user_saldo;
-                $user->user_saldo = $order->htranstpwd_total + $temp;
-                $user->save();
-            }
-        }
+        // if($paymentStatus != null){
+        //     $order->status_payment = $paymentStatus;
+        //     $order->save();
+        //     if($paymentStatus == htransTopup::SUCCESS ||$paymentStatus == htransTopup::SETLE ){
+        //         $cust_id = $order->user_id;
+        //         $user = User::where('id',$cust_id)->first();
+        //         $temp = $user->user_saldo;
+        //         $user->user_saldo = $order->htranstpwd_total + $temp;
+        //         $user->save();
+        //     }
+        // }
         $responses=[
             'code'=> 200,
-            'message'=>"ahay",
+            'message'=>"sukses",
         ];
         return response($responses, 200);
     }

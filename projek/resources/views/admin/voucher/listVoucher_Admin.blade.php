@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         <!-- BUTTON DELETE -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="text-decoration: none; border:none; background-color:transparent; text-align:center;">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$voucher[$i]->id}}" style="text-decoration: none; border:none; background-color:transparent; text-align:center;">
                             <i class="fa fa-trash" style="font-size:18px;color:red; "></i>
                         </button>
                         <button type="submit" style="text-decoration: none; border:none; background-color:white; text-align:center;">
@@ -59,7 +59,7 @@
                         </button>
                     </td>
                 </tr>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal{{$voucher[$i]->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">

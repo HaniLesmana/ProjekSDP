@@ -21,7 +21,7 @@ class pegawai extends Authenticable
         'pegawai_nama',
         'pegawai_telepon',
         'pegawai_alamat',
-        'pegawai_password',
+        'password',
         'pegawai_jasa',
         'pegawai_saldo',
         'pegawai_deskripsi',

@@ -57,7 +57,6 @@
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                         @if($pegawai->pegawai_photo=="" || $pegawai->pegawai_photo==null)
                             <img src="https://i.imgur.com/wvxPV9S.png" style="transition: all 0.5s" height="100" width="100" />
-
                         @else
                             <img class="rounded-circle mt-5" width="150px" src={{asset('/storage/photos/'.$pegawai->pegawai_photo)}}>
                         @endif
@@ -86,7 +85,7 @@
                             <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" name="telp" id="user_telp" value="{{ $pegawai->pegawai_telepon }}"></div>
                             <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" name="alamat" id="user_alamat" value="{{ $pegawai->pegawai_alamat }}"></div>
                             <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" name="email" id="user_email" value="{{ $pegawai->pegawai_email }}"></div>
-                            <div class="col-md-12"><label class="labels">Saldo</label><input type="text" class="form-control"  value="{{ $pegawai->pegawai_saldo }}" readonly></div>
+                            <div class="col-md-12"><label class="labels">Deskripsi</label><input type="text" class="form-control" name="deskripsi" id="user_deskripsi" value="{{ $pegawai->pegawai_deskripsi }}"></div>
                         </div>
                     <div class="row mt-4">
                         <button class="btn btn-warning" type="button" style="margin-left:16px;" id="btnEdit" onclick="btnClick()">Edit Profile</button>
@@ -115,7 +114,7 @@
                 <div class="p-3 py-5">
                     <div class="col-md-12"><label class="labels">Saldo</label><input type="text" class="form-control"  value="{{ $pegawai->pegawai_saldo }}" readonly></div>
                     <div class="col-md-12"><label class="labels">Jasa</label><input type="text" class="form-control" value="{{ $pegawai->pegawai_jasa }}" readonly></div>
-                    <div class="col-md-12"><label class="labels">Deskripsi</label><input type="text" class="form-control"  value="{{ $pegawai->pegawai_deskripsi }}" readonly></div>
+
                 </div>
             </div>
         </div>
@@ -129,6 +128,7 @@
         $('#user_telp').prop('disabled', true);
         $('#user_alamat').prop('disabled', true);
         $('#user_email').prop('disabled', true);
+        $('#user_deskripsi').prop('disabled', true);
         $('#btnSave').prop('disabled', true);
     });
     function btnClick() {
@@ -136,6 +136,7 @@
         $('#user_telp').prop('disabled', false);
         $('#user_alamat').prop('disabled', false);
         $('#user_email').prop('disabled', false);
+        $('#user_deskripsi').prop('disabled', false);
         $('#btnSave').prop('disabled', false);
     }
 </script>

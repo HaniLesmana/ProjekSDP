@@ -23,7 +23,7 @@ class CreatePegawaisTable extends Migration
             $table->string("password");
             $table->string("pegawai_jasa");
             $table->integer("pegawai_saldo");
-            $table->string("pegawai_deskripsi");
+            $table->string("pegawai_deskripsi")->nullable();
             $table->string("pegawai_photo")->nullable();
             $table->timestamps();
             $table->softDeletes();

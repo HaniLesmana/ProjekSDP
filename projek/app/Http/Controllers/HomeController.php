@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\TransaksiSelesai;
 use App\Models\addon;
 use App\Models\barang;
-use App\Models\Cart;
+use App\Models\cart;
 use App\Models\htransTopup;
 use App\Models\kategori;
 use App\Models\user;
@@ -112,7 +112,8 @@ class HomeController extends Controller
     }
 
     function home_admin(){
-        return view("admin.home_admin");
+        $admin =admin::first()->admin_saldo;
+        return view("admin.home_admin",['admin'=>$admin]);
     }
     public function listRequest()
     {
@@ -237,7 +238,8 @@ class HomeController extends Controller
                     'pegawai_email' => $request->email,
                     'pegawai_nama' => $request->nama,
                     'pegawai_telepon' => $request->telp,
-                    'pegawai_alamat' => $request->alamat
+                    'pegawai_alamat' => $request->alamat,
+                    'pegawai_deskripsi' => $request->deskripsi
                 ]
             );
         } catch (\Exception $e) {
@@ -429,11 +431,17 @@ class HomeController extends Controller
 
     public function hasilCari($nama, Request $req){
         //dd($nama);
+        $pegawai = array();
         if($nama !=""){
-            $pegawai = DB::table('pegawai')->where('nama','like','%'.$nama.'%')->get();
+            $peg = pegawai::all();
+            foreach ($peg as $key => $p) {
+                if(str_contains($p->pegawai_nama,$nama)){
+                     array_push($pegawai,$p);
+                }
+            }
         }
         else{
-            $pegawai = DB::table('pegawai')->get();
+            $peg = pegawai::all();
         }
         return view('admin.hasilCari',['pegawai'=>$pegawai]);
 
@@ -557,25 +565,24 @@ class HomeController extends Controller
         ];
         $request->validate($rules, $message);
 
-        $pegawai = pegawai::all();
-        $id = "";
-        $max = 0;
-        $cek = false;
-        foreach ($pegawai as $peg) {
-            if((int)substr($peg->pegawai_id,1,11) >= $max){
-                $max = (int)substr($peg->pegawai_id,1,11) + 1;
-                $cek = true;
-            }
-        }
-        if($cek){
-            $id = "P".str_pad($max, 11, "0", STR_PAD_LEFT);
-        }
-        else{
-            $id = "P00000000000";
-        }
+        // $pegawai = pegawai::all();
+        // $id = "";
+        // $max = 0;
+        // $cek = false;
+        // foreach ($pegawai as $peg) {
+        //     if((int)substr($peg->pegawai_id,1,11) >= $max){
+        //         $max = (int)substr($peg->pegawai_id,1,11) + 1;
+        //         $cek = true;
+        //     }
+        // }
+        // if($cek){
+        //     $id = "P".str_pad($max, 11, "0", STR_PAD_LEFT);
+        // }
+        // else{
+        //     $id = "P00000000000";
+        // }
 
         pegawai::create(array(
-            'pegawai_id' => $id,
             'pegawai_nik' => $nik,
             'pegawai_email' => $email,
             'pegawai_nama' => $nama,
@@ -834,14 +841,12 @@ class HomeController extends Controller
         $saldo = $user->user_saldo;
         return view('user.user_withdraw',['saldo'=>$saldo,'wd'=>$wd]);
     }
-    function do_wd(Request $request){
+    function do_wd(Request $request){ //user
         $data=json_decode($request->data);
         $total = $request->total;
         $user = user::where('id',session('loggedIn'))->first();
-        $email = $user->user_email;
-        $id = $user->id;
         htransTopup::create([
-            'user_id' => $id,
+            'user_id' => session('loggedIn'),
             'htranstpwd_tanggal' => date("Y/m/d"),
             'htranstpwd_total' => $total,
             'htranstpwd_tipe' => 'withdraw',
@@ -853,10 +858,12 @@ class HomeController extends Controller
     }
     function gotocheckout(Request $request){
         $data=json_decode($request->data);
+        $ctr = htransTopup::max('htranstpwd_id');
         $total = $request->total;
         $user = user::where('id',session('loggedIn'))->first();
-        $email = $user->user_email;
+        // $email = $user->user_email;
         $id = $user->id;
+
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
         \Midtrans\Config::$isProduction = false;
@@ -866,7 +873,7 @@ class HomeController extends Controller
         \Midtrans\Config::$is3ds = true;
         $params = array(
             'transaction_details' => array(
-                'order_id' => 6,
+                'order_id' => "INV".$ctr,
                 'gross_amount' => $total,
             ),
             'customer_details' => array(
@@ -889,7 +896,7 @@ class HomeController extends Controller
             'htranstpwd_tipe' => 'topup',
             'htranstpwd_status' => 2,
             'token_payment' => $snapToken,
-            'status_payment'=>"Kosong" ,
+            'status_payment'=>"Pending" ,
         ]);
 
         $mx = htransTopup::all();
@@ -995,7 +1002,7 @@ class HomeController extends Controller
     }
     function pembayaran(){
         $datacart = cart::where("user_id",session('loggedIn'))->get();
-        $dataaddon=addon::where("id_user",session('loggedIn'))->get();
+        $dataaddon = addon::where("id_user",session('loggedIn'))->get();
         //$total=(count($datacart))*50000;
         $total=0;
         foreach ($datacart as $key => $dc) {
@@ -1023,7 +1030,7 @@ class HomeController extends Controller
         return view("user.pembayaran",["total"=>$total,"datavoucher"=>$datavoucher,"user_voucher"=>$user_voucher]);
     }
     function do_pembayaran(Request $request){
-        $user=user::where("id",session("loggedIn"))->first();
+        $user = user::where('id',session("loggedIn"))->first();
         if($request->totalhidden>$user->user_saldo){
             echo "<script>
             alert('Saldo tidak mencukupi');
@@ -1032,7 +1039,7 @@ class HomeController extends Controller
             //return redirect("/home/user");
         }
         else{
-            $dc=Cart::all();
+            $dc=cart::all();
             $dt=dtranssewa::all();
             $sama=false;
             foreach ($dc as $key => $c) {

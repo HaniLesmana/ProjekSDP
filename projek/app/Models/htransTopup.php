@@ -14,6 +14,7 @@ class htransTopup extends Model
     protected $primaryKey = "htranstpwd_id";
     protected $fillable = ["htranstpwd_id","user_id", "htranstpwd_tanggal", "htranstpwd_total", "htranstpwd_tipe", "htranstpwd_status","token_payment","status_payment"];
     public $timestamps = true;
+    public $incrementing = true;
     public const CHALLENGE = 'changllenge';
     public const SETLE = 'setlement';
     public const PENDING = 'pending';

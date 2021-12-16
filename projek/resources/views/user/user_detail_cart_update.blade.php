@@ -276,7 +276,7 @@
                             <div class="modal fade bd-example-modal-sm" id="modalAddOn{{$barang->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                                     <div class="modal-content">
-                                        <form method="post" action="{{ url('/user/dotambahaddonedit') }}">
+                                        <form method="post" action="/user/dotambahaddonedit/{{$barang->id}}">
                                             @csrf
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLongTitle">Add {{ $barang->barang_nama }}</h5>

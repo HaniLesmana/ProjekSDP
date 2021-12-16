@@ -13,7 +13,7 @@
 <div class="container mt-5 mb-5 d-flex justify-content-center" style="padding-top:20px; padding-bottom:20px;background-color:#DBD0C0">
     <div class="card px-1 py-4">
         <div class="card-body" style="width:400px;padding-top:30px; padding-bottom:30px;">
-        <form action="prosesAddPegawai" method="post">
+        <form action="{{ url('admin/prosesAddPegawai') }}" method="post">
             @csrf
             <h5 class="card-title mb-3" style="text-align: center;">Add Pegawai</h5>
             <div class="row">
@@ -85,8 +85,11 @@
                     <div class="form-group">
                         <div class="input-group">
                             <label style="font-weight: normal">Jenis Pegawai</label> <br>
-                            <input type="radio" name="jenis" value="art" id="art" style="margin-right:5px;"> <label for="art" style="font-weight: normal"> ART</label>
-                            <input type="radio" name="jenis" value="tukang" id="tukang" style="margin-left:15px;margin-right:5px;"> <label for="tukang" style="font-weight: normal"> Tukang</label>
+                            <input type="radio" name="jenis" value="Cleaning" id="art" style="margin-right:5px;"> <label for="art" style="font-weight: normal">Cleaning</label>
+                            <input type="radio" name="jenis" value="Painting" id="tukang" style="margin-left:15px;margin-right:5px;"> <label for="tukang" style="font-weight: normal">Painting</label>
+                            <input type="radio" name="jenis" value="Plumbing" id="tukang" style="margin-left:15px;margin-right:5px;"> <label for="tukang" style="font-weight: normal">Plumbing</label>
+                            <input type="radio" name="jenis" value="Electrical" id="tukang" style="margin-left:15px;margin-right:5px;"> <label for="tukang" style="font-weight: normal">Electrical</label>
+                            <input type="radio" name="jenis" value="Repair" id="tukang" style="margin-left:0px;margin-right:5px;"> <label for="tukang" style="font-weight: normal">Repair</label>
                         </div>
 
                         @error('jenis')

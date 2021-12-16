@@ -6,7 +6,7 @@ use App\Mail\TransaksiSelesai;
 use App\Models\addon;
 use Illuminate\Http\Request;
 use App\Models\barang;
-use App\Models\Cart;
+use App\Models\cart;
 use App\Models\htransTopup;
 use App\Models\kategori;
 use App\Models\user;

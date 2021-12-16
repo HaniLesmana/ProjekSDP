@@ -14,7 +14,7 @@ class barang extends Model
 
     protected $table="barangs";
     protected $primaryKey="id";
-    public $incrementing=false;
+    public $incrementing=true;
     public $timestamps=true;
     protected $fillable=[
         'barang_kategori',

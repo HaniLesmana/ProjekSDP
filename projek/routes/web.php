@@ -106,8 +106,8 @@ Route::middleware(['is_login'])->group(function () {
         {
             return view('admin.addPegawai_Admin');
         });
-        Route::get('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
-        Route::get('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
+        Route::post('/prosesAddPegawai', [HomeController::class, "prosesAddPegawai"]);
+        Route::post('/prosesEditPegawai/{id}', [HomeController::class, "prosesEditPegawai"]);
         Route::get('/prosesDeletePegawai/{id}', [HomeController::class, "prosesDeletePegawai"]);
         //MASTER PEGAWAI
 
@@ -172,7 +172,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::post("/detaileditcart/{id}", [UserController::class, "detaileditcart"]);
 
         Route::get("/detaileditcart/{id}", [UserController::class, "detaileditcart"]);
-        Route::get("/dotambahaddonedit/{id}", [UserController::class, "dotambahaddonedit"]);
+        Route::post("/dotambahaddonedit/{id}", [UserController::class, "dotambahaddonedit"]);
         Route::post("/doeditaddonedit", [UserController::class, "doeditaddonedit"]);
         Route::get("/doremoveaddonedit/{id}", [UserController::class, "doremoveaddonedit"]);
         Route::post("/doupdatedetailcart", [UserController::class, "doupdatedetailcart"]);
