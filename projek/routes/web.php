@@ -32,24 +32,26 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('payments/pending', 'PaymentController@pending');
 
     //Report
-    Route::get('report/transaksi_user', [ReportController::class,'transaksiUser']);
-    Route::get('report/transaksi_userPDF', [ReportController::class,'pdfTransaksiUser']);
-    Route::get('report/transaksi_barang', [ReportController::class,'transaksiBarang']);
-    Route::get('report/transaksi_barangPDF', [ReportController::class,'pdfTransaksiBarang']);
-    Route::get('report/reportTopUp', [ReportController::class,'reportTopUp']);
-    Route::get('report/topupPDF', [ReportController::class,'topupPDF']);
-    Route::get('report/reportRatingReview', [ReportController::class,'reportRatingReview']);
-    Route::get('report/reportPendapatan', [ReportController::class,'reportPendapatan']);
-    Route::get('report/reportPendapatanPDF', [ReportController::class,'reportPendapatanPDF']);
-    Route::get('report/reportRatingReviewPDF', [ReportController::class,'reportRatingReviewPDF']);
-    Route::get("report/reportpembelianbarang_ajax/", [ReportController::class, "reportpembelianbarang_ajax"]);
-    Route::get("report/reporttpwd_ajax/", [ReportController::class, "reporttpwd_ajax"]);
-    Route::get("report/reportsewa_ajax/", [ReportController::class, "reportsewa_ajax"]);
+    Route::group(['middleware' => ['checkrole:admin']], function () {
+        Route::get('report/transaksi_user', [ReportController::class,'transaksiUser']);
+        Route::get('report/transaksi_userPDF', [ReportController::class,'pdfTransaksiUser']);
+        Route::get('report/transaksi_barang', [ReportController::class,'transaksiBarang']);
+        Route::get('report/transaksi_barangPDF', [ReportController::class,'pdfTransaksiBarang']);
+        Route::get('report/reportTopUp', [ReportController::class,'reportTopUp']);
+        Route::get('report/topupPDF', [ReportController::class,'topupPDF']);
+        Route::get('report/reportRatingReview', [ReportController::class,'reportRatingReview']);
+        Route::get('report/reportPendapatan', [ReportController::class,'reportPendapatan']);
+        Route::get('report/reportPendapatanPDF', [ReportController::class,'reportPendapatanPDF']);
+        Route::get('report/reportRatingReviewPDF', [ReportController::class,'reportRatingReviewPDF']);
+        Route::get("report/reportpembelianbarang_ajax/", [ReportController::class, "reportpembelianbarang_ajax"]);
+        Route::get("report/reporttpwd_ajax/", [ReportController::class, "reporttpwd_ajax"]);
+        Route::get("report/reportsewa_ajax/", [ReportController::class, "reportsewa_ajax"]);
+    });
 
     Route::prefix("home")->group(function(){
-        Route::get("/user", [HomeController::class, "home_user"]);
-        Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
-        Route::get("/admin", [HomeController::class, "home_admin"]);
+        Route::get("/user", [HomeController::class, "home_user"])->middleware(['checkrole:user']);
+        Route::get("/pegawai", [HomeController::class, "home_pegawai"])->middleware(['checkrole:pegawai']);
+        Route::get("/admin", [HomeController::class, "home_admin"])->middleware(['checkrole:admin']);
         Route::get("/ajax/{jasa}", [HomeController::class, "ajax"]);
         Route::get("/add_cart/{id}", [HomeController::class, "add_cart"]);
         Route::get("/list_cart", [HomeController::class, "list_cart"]);
@@ -63,13 +65,12 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/history_filter_pegawai/{id}/{id1}', [UserController::class, "history_filter_pegawai"]);
         Route::get('/history_filter_pegawai_status/{id}', [UserController::class, "history_filter_pegawai_status"]);
     });
-    Route::prefix("admin")->group(function(){
+    Route::middleware(['checkrole:admin'])->prefix("admin")->group(function(){
         //Route::get("/listpegawai",function ()
         //{
             //return view('admin.listPegawai_Admin');
             //Route::get("/listPegawai_Admin", [HomeController::class, "home_list_pegawai"]);
         //});
-
 
         //MASTER KATEGORI
         Route::get('/listKategori', [HomeController::class, "listKategori"]);
@@ -139,7 +140,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/accpembayaran/{id}/{id1}', [HomeController::class, "accpembayaran"]);
         Route::get('/accpembayaransemua', [HomeController::class, "accpembayaransemua"]);
     });
-    Route::prefix("user")->group(function(){
+    Route::middleware(['checkrole:user'])->prefix("user")->group(function(){
         Route::get("/topUp",function ()
         {
             return view('user.user_topup');
@@ -193,7 +194,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/transvoucher", [UserController::class, "transvoucher"]);
         Route::post("/dotransvoucher", [voucherController::class, "dotransvoucher"]);
     });
-    Route::prefix("pegawai")->group(function(){
+    Route::middleware(['checkrole:pegawai'])->prefix("pegawai")->group(function(){
         Route::post("/editProfile", [HomeController::class, "editProfilePegawai"]);
         Route::post("/updatePhoto", [HomeController::class, "updatePhotoPegawai"]);
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);
@@ -224,9 +225,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('logout', [HomeController::class, "logout"]);
-
-
-
 
 Route::get('midtranssewa', [UserController::class, "midtranssewa"]);
 

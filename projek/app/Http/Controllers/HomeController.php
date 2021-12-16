@@ -1356,6 +1356,9 @@ class HomeController extends Controller
     }
     public function logout(Request $request){
         $request->session()->forget("loggedIn");
+        Auth::guard('web_user')->logout();
+        Auth::guard('web_pegawai')->logout();
+        Auth::guard('web_admin')->logout();
         return $this->home();
     }
     public function prosesEditStock(Request $request,$id){
