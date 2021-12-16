@@ -19,12 +19,15 @@ class htranssewa extends Model
         'user_id',
         'hBarang_id',
         'hSewa_total',
-        'voucher_id'
+        'voucher_id'//user voucher id
     ];
     public function dtranssewas(){
         return $this->hasMany(dtranssewa::class, 'hSewa_id','id');
     }
     public function user(){
         return $this->belongsTo(user::class, 'user_id','id');
+    }
+    public function user_voucher(){
+        return $this->belongsTo(user_voucher::class, 'voucher_id','id');
     }
 }

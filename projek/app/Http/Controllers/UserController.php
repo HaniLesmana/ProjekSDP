@@ -205,6 +205,9 @@ class UserController extends Controller
         if(session()->exists('addons')){
             $addons = json_decode(session('addons'),true);
             session()->forget(['addons']);
+            addon::where('id_user',$request->session()->get("loggedIn"))
+            ->where('id_pegawai',$request->idpegawai)->delete();
+
             foreach ($addons as $key => $value) {
                 addon::create([
                     'id_pegawai'=>$request->idpegawai,
@@ -214,7 +217,8 @@ class UserController extends Controller
                 ]);
             }
         }
-        return redirect("/home/user");
+        // return redirect("/home/user");
+        return redirect("/home/transaksi_sewa");
     }
     public function ongoingtrans(Request $request){
         $dtransewa = dtranssewa::leftJoin('htranssewa', function($join) {

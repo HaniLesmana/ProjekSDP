@@ -26,7 +26,7 @@
                     <select class="form-control-sm" name="datavoucher" id="dt" style="float:left;">
                         <option value="-1">-</option>
                         @foreach ($user_voucher as $uv)
-                            <option value="{{$uv->voucher->id}}">{{$uv->voucher->voucher_nama}}</option>
+                            <option value="{{$uv->id}}">{{$uv->voucher->voucher_nama}}</option>
                         @endforeach
                     </select>
 
@@ -57,15 +57,19 @@
             $('[name=datavoucher]').on('change', function() {
                 if(this.value==-1){
                     var temp=$('#tot').val();
-                    $('#txtpotongan').html(0);
+                    $('#txtpotongan').html("0");
                     $('#total').html("Total : "+temp);
                     $('#totalhidden').val(temp);
+                    //alert($("#"+"P"+this.value).val()+"zzzzz");
+                    //alert($('#txtpotongan').html());
                 }
                 else{
                     $('#txtpotongan').html($("#"+"P"+this.value).val());
                     var temp=$('#tot').val()-parseInt($('#txtpotongan').html());
                     $('#total').html("Total : "+temp);
                     $('#totalhidden').val(temp);
+                    //alert( $('[name=datavoucher]').val());
+                    //alert($('#txtpotongan').html());
                 }
             });
         });

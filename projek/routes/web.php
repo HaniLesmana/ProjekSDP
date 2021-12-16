@@ -174,7 +174,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/detaileditcart/{id}", [UserController::class, "detaileditcart"]);
         Route::post("/dotambahaddonedit/{id}", [UserController::class, "dotambahaddonedit"]);
         Route::post("/doeditaddonedit", [UserController::class, "doeditaddonedit"]);
-        Route::get("/doremoveaddonedit/{id}", [UserController::class, "doremoveaddonedit"]);
+        Route::get("/doremoveaddonedit/{id}/{idpegawai}", [UserController::class, "doremoveaddonedit"]);
         Route::post("/doupdatedetailcart", [UserController::class, "doupdatedetailcart"]);
 
         Route::get("/doremovecart/{id}", [UserController::class, "doremovecart"]);
@@ -207,6 +207,9 @@ Route::middleware(['is_login'])->group(function () {
 
         Route::get("/history", [HomeController::class, "history_pegawai"]);
         Route::get("/history_ajax/{id1}/{id2}", [HomeController::class, "history_pegawaiajax"]);
+
+        Route::get("/withdraw", [HomeController::class, "pegawaiWithdraw"]);
+        Route::post("/do_wd", [HomeController::class, "pegawai_do_wd"]);
     });
 });
 
