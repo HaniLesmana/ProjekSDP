@@ -56,11 +56,10 @@
                 <form enctype="multipart/form-data" action="{{ url('/user/updatePhoto') }}" method="post">
                     @csrf
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                        @if($user->user_photo=="" || $user->user_photo==null)
-                        <img src="https://i.imgur.com/wvxPV9S.png" style="transition: all 0.5s" height="100" width="100" />
-
+                        @if( $user->user_photo=="" || $user->user_photo==null)
+                            <img src="https://i.imgur.com/wvxPV9S.png" style="transition: all 0.5s" height="100" width="100" />
                         @else
-                        <img class="rounded-circle mt-5" width="150px" src={{asset('/storage/photos/'.$user->user_photo)}}>
+                            <img class="rounded-circle mt-5" width="150px" src="{{asset('/storage/photos/'.$user->user_photo)}}"/>
                         @endif
                         <label for="files" class="btn"style="font-style:underline">Select Your New Profile Photo</label>
                         <input id="files" name="photo_user" style="visibility:hidden;" type="file">

@@ -22,20 +22,20 @@
                 <div style="float:left;">
                     <input type="hidden" id="tot" value="{{$total}}">
                     <label class="lab" style="line-height:20px;">{{$total}}</label><br>
+
                     <select class="form-control-sm" name="datavoucher" id="dt" style="float:left;">
-                        {{-- @foreach ($datavoucher as $dv) --}}
-                            <option value="-1">-</option>
-                            @foreach ($user_voucher as $uv)
-                                {{-- @if ($uv->voucher_id==$dv->id) --}}
-                                    <option value="{{$uv->voucher->id}}">{{$uv->voucher->voucher_nama}}</option>
-                                {{-- @endif --}}
-                            @endforeach
-                        {{-- @endforeach --}}
-                    </select><br>
-                    @foreach ($user_voucher as $uv)
-                        <input type="hidden" id="P{{$uv->id}}" value="{{$uv->voucher->voucher_potongan}}">
-                    @endforeach
+                        <option value="-1">-</option>
+                        @foreach ($user_voucher as $uv)
+                            <option value="{{$uv->voucher->id}}">{{$uv->voucher->voucher_nama}}</option>
+                        @endforeach
+                    </select>
+
+                    <br>
+                        @foreach ($user_voucher as $uv)
+                            <input type="hidden" id="P{{$uv->id}}" value="{{$uv->voucher->voucher_potongan}}">
+                        @endforeach
                     <label class="lab" style="line-height:20px;" id="txtpotongan">0</label>
+
                 </div>
             </div>
             <div style="clear: both;"></div>

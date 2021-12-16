@@ -17,7 +17,6 @@
         <th>Pegawai Id</th>
         <th>Nama</th>
         <th>Saldo</th>
-        <th>Foto</th>
         <th></th>
       </tr>
     </thead>
@@ -27,7 +26,6 @@
             <td>{{$p->id}}</td>
             <td>{{$p->pegawai_nama}}</td>
             <td>{{$p->pegawai_saldo }}</td>
-            <td>{{$p->pegawai_photo }}</td>
             <td>
                 <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{$p->id}}" style="text-decoration: none; border:none; text-align:center;">
                     Detail

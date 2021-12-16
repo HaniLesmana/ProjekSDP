@@ -10,7 +10,6 @@ class user_voucher extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
     public $timestamps=true;
     protected $primaryKey="id";
     public $incrementing=true;
@@ -25,3 +24,4 @@ class user_voucher extends Model
         return $this->belongsTo(voucher::class, 'voucher_id','id');
     }
 }
+

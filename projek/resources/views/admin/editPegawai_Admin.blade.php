@@ -96,12 +96,36 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <label style="font-weight: normal">Jenis Pegawai</label> <br>
-                                @if ($p->pegawai_jasa=="art")
-                                <input type="radio" name="jenis" value="art" id="art" style="margin-right:5px;" checked> <label for="art" style="font-weight: normal"> ART</label>
-                                <input type="radio" name="jenis" value="tukang" id="tukang" style="margin-left:15px;margin-right:5px;"> <label for="tukang" style="font-weight: normal"> Tukang</label>
-                                @else
-                                <input type="radio" name="jenis" value="art" id="art" style="margin-right:5px;"> <label for="art" style="font-weight: normal"> ART</label>
-                                <input type="radio" name="jenis" value="tukang" id="tukang" style="margin-left:15px;margin-right:5px;" checked> <label for="tukang" style="font-weight: normal"> Tukang</label>
+                                @if ($p->pegawai_jasa=="Cleaning")
+                                    <input type="radio" name="jenis" value="Cleaning" id="Cleaning" style="margin-right:5px;" checked> <label for="Cleaning" style="font-weight: normal"> Cleaning</label>
+                                    <input type="radio" name="jenis" value="Painting" id="Painting" style="margin-left:15px;margin-right:5px;"> <label for="Painting" style="font-weight: normal"> Painting</label>
+                                    <input type="radio" name="jenis" value="Plumbing" id="Plumbing" style="margin-left:15px;margin-right:5px;"> <label for="Plumbing" style="font-weight: normal"> Plumbing</label>
+                                    <input type="radio" name="jenis" value="Electrical" id="Electrical" style="margin-left:15px;margin-right:5px;"> <label for="Electrical" style="font-weight: normal"> Electrical</label>
+                                    <input type="radio" name="jenis" value="Repair" id="Repair" style="margin-left:15px;margin-right:5px;"> <label for="Repair" style="font-weight: normal"> Repair</label>
+                                @elseif ($p->pegawai_jasa=="Painting")
+                                    <input type="radio" name="jenis" value="Cleaning" id="Cleaning" style="margin-right:5px;"> <label for="Cleaning" style="font-weight: normal"> Cleaning</label>
+                                    <input type="radio" name="jenis" value="Painting" id="Painting" style="margin-left:15px;margin-right:5px;" checked> <label for="Painting" style="font-weight: normal"> Painting</label>
+                                    <input type="radio" name="jenis" value="Plumbing" id="Plumbing" style="margin-left:15px;margin-right:5px;"> <label for="Plumbing" style="font-weight: normal"> Plumbing</label>
+                                    <input type="radio" name="jenis" value="Electrical" id="Electrical" style="margin-left:15px;margin-right:5px;"> <label for="Electrical" style="font-weight: normal"> Electrical</label>
+                                    <input type="radio" name="jenis" value="Repair" id="Repair" style="margin-left:15px;margin-right:5px;"> <label for="Repair" style="font-weight: normal"> Repair</label>
+                                @elseif ($p->pegawai_jasa=="Plumbing")
+                                    <input type="radio" name="jenis" value="Cleaning" id="Cleaning" style="margin-right:5px;"> <label for="Cleaning" style="font-weight: normal"> Cleaning</label>
+                                    <input type="radio" name="jenis" value="Painting" id="Painting" style="margin-left:15px;margin-right:5px;"> <label for="Painting" style="font-weight: normal"> Painting</label>
+                                    <input type="radio" name="jenis" value="Plumbing" id="Plumbing" style="margin-left:15px;margin-right:5px;" checked> <label for="Plumbing" style="font-weight: normal"> Plumbing</label>
+                                    <input type="radio" name="jenis" value="Electrical" id="Electrical" style="margin-left:15px;margin-right:5px;"> <label for="Electrical" style="font-weight: normal"> Electrical</label>
+                                    <input type="radio" name="jenis" value="Repair" id="Repair" style="margin-left:15px;margin-right:5px;"> <label for="Repair" style="font-weight: normal"> Repair</label>
+                                @elseif ($p->pegawai_jasa=="Electrical")
+                                    <input type="radio" name="jenis" value="Cleaning" id="Cleaning" style="margin-right:5px;"> <label for="Cleaning" style="font-weight: normal"> Cleaning</label>
+                                    <input type="radio" name="jenis" value="Painting" id="Painting" style="margin-left:15px;margin-right:5px;"> <label for="Painting" style="font-weight: normal"> Painting</label>
+                                    <input type="radio" name="jenis" value="Plumbing" id="Plumbing" style="margin-left:15px;margin-right:5px;"> <label for="Plumbing" style="font-weight: normal"> Plumbing</label>
+                                    <input type="radio" name="jenis" value="Electrical" id="Electrical" style="margin-left:15px;margin-right:5px;" checked> <label for="Electrical" style="font-weight: normal"> Electrical</label>
+                                    <input type="radio" name="jenis" value="Repair" id="Repair" style="margin-left:15px;margin-right:5px;"> <label for="Repair" style="font-weight: normal"> Repair</label>
+                                @elseif ($p->pegawai_jasa=="Repair")
+                                    <input type="radio" name="jenis" value="Cleaning" id="Cleaning" style="margin-right:5px;"> <label for="Cleaning" style="font-weight: normal"> Cleaning</label>
+                                    <input type="radio" name="jenis" value="Painting" id="Painting" style="margin-left:15px;margin-right:5px;"> <label for="Painting" style="font-weight: normal"> Painting</label>
+                                    <input type="radio" name="jenis" value="Plumbing" id="Plumbing" style="margin-left:15px;margin-right:5px;"> <label for="Plumbing" style="font-weight: normal"> Plumbing</label>
+                                    <input type="radio" name="jenis" value="Electrical" id="Electrical" style="margin-left:15px;margin-right:5px;"> <label for="Electrical" style="font-weight: normal"> Electrical</label>
+                                    <input type="radio" name="jenis" value="Repair" id="Repair" style="margin-left:15px;margin-right:5px;" checked> <label for="Repair" style="font-weight: normal"> Repair</label>
                                 @endif
 
 

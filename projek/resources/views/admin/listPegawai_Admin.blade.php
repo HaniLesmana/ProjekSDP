@@ -40,6 +40,7 @@
         <th>Telepon</th>
         <th>Jasa</th>
         <th>Saldo</th>
+        <th>Foto</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -56,6 +57,13 @@
             <td>{{$p->pegawai_telepon}}</td>
             <td>{{$p->pegawai_jasa}}</td>
             <td>{{$p->pegawai_saldo}}</td>
+
+            @if($p->pegawai_photo=="" || $p->pegawai_photo==null)
+                <td><img src="https://i.imgur.com/wvxPV9S.png" style="transition: all 0.5s" height="100" width="100" /></td>
+            @else
+                <td><img class="circle mt-5" width="100px" src="{{asset('/storage/photos/'.$p->pegawai_photo)}}"/></td>
+            @endif
+
             <td>
                 <button type="submit" style="border-radius:3px;border:1px solid black; background-color:#FACE7F;margin-top:3px;">
                     <a href="{{ url('admin/EditPegawai/'.$p->id) }}" style="text-decoration:none; color:white;">

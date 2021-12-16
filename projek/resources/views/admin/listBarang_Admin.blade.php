@@ -24,13 +24,11 @@
     <thead style="background-color:#E8D0B3;">
     {{-- <thead style="background-color:black;color:white;"> --}}
       <tr>
-        <th>No</th>
         <th>ID</th>
         <th>Kategori</th>
         <th>Nama</th>
         <th>Harga</th>
         <th>Stok</th>
-
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -39,9 +37,8 @@
         @if(isset($barang))
             @for($i = 0; $i < count($barang); $i++)
                 <tr>
-                    <td>{{ $i+1 }}</td>
                     <td>{{ $barang[$i]->id }}</td>
-                    {{-- <td>{{ $barang[$i]->kategori->kategori_nama }}</td> --}}
+                    <td>{{ $barang[$i]->kategori->kategori_nama }}</td>
                     <td>{{ $barang[$i]->barang_nama }}</td>
                     <td>{{ $barang[$i]->barang_harga }}</td>
                     <td>{{ $barang[$i]->barang_stok }}</td>
