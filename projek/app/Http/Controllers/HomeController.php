@@ -997,6 +997,9 @@ class HomeController extends Controller
                 $total=$total+400000;
             }
         }
+        foreach ($dataaddon as $key => $da) {
+            $total=$total+($da->barang->barang_harga*$da->jumlah);
+        }
         //$total=(count($datacart))*50000;
         return view("user.user_transaksi_sewa",['datacart'=>$datacart,'datauser'=>$datauser,"datapegawai"=>$datapegawai,"databarang"=>$databarang,"datakategori"=>$datakategori,"total"=>$total,"dataaddon"=>$dataaddon]);
     }
@@ -1568,5 +1571,25 @@ class HomeController extends Controller
     public function history_pegawaiajax($id1,$id2){
         $datadtrans=dtranssewa::where("pegawai_id",session('loggedIn'))->where('dSewa_tanggal','=>',$id1)->where('dSewa_tanggal','<=',$id2)->get();
         return view('pegawai.history_ajax',['dtransewa'=>$datadtrans]);
+    }
+    public function pegawaiWithdraw(){
+        $saldo=pegawai::where("id",session('loggedIn'))->first()->pegawai_saldo;
+        $wd = htransTopup::where('htranstpwd_tipe',"withdraw")->orderBy('htranstpwd_id','desc')->where('user_id',session('loggedIn'))->get();
+        return view('pegawai.withdraw',['saldo'=>$saldo,'wd'=>$wd]);
+    }
+    public function pegawai_do_wd(Request $request){
+        $data=json_decode($request->data);
+        $total = $request->total;
+        // $pegawai = pegawai::where('id',session('loggedIn'))->first();
+        htransTopup::create([
+            'user_id' => session('loggedIn'),
+            'htranstpwd_tanggal' => date("Y/m/d"),
+            'htranstpwd_total' => $total,
+            'htranstpwd_tipe' => 'withdraw',
+            'htranstpwd_status' => 2,
+            'token_payment' => "withdraw",
+            'status_payment'=>"null" ,
+        ]);
+        return redirect('/pegawai/withdraw');
     }
 }

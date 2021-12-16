@@ -70,7 +70,17 @@
                             <div style="float:left;padding:0px 10px 0px 30px;font-size:18px;width:30%;">
                                 <!-- <label for="" >: </label><br> --> <br>
                                 <label class="lab" style="line-height:20px;margin-top:10px;">: {{$peg->pegawai_nama}}</label><br>
-                                <label class="lab" style="line-height:20px;">: Rp. 50.000,--</label><br>
+                                @if($cart->pegawai->pegawai_jasa == "Cleaning")
+                                    <label class="lab" style="line-height:20px;">: Rp. 150.000,--</label><br>
+                                @elseif($cart->pegawai->pegawai_jasa == "Painting")
+                                    <label class="lab" style="line-height:20px;">: Rp. 200.000,--</label><br>
+                                @elseif($cart->pegawai->pegawai_jasa == "Plumbing")
+                                    <label class="lab" style="line-height:20px;">: Rp. 300.000,--</label><br>
+                                @elseif($cart->pegawai->pegawai_jasa == "Electrical")
+                                    <label class="lab" style="line-height:20px;">: Rp. 500.000,--</label><br>
+                                @elseif($cart->pegawai->pegawai_jasa == "Repair")
+                                    <label class="lab" style="line-height:20px;">: Rp. 400.000,--</label><br>
+                                @endif
                                 <label class="lab" style="line-height:20px;">: {{$cart->alamat}}</label><br>
                                 <label class="lab" style="line-height:20px;">: {{date("d-m-Y", strtotime($cart->tanggal_sewa)) }}</label><br>
                                 <a href="{{ url('user/doremovecart/'.$cart->id) }}"> <button class="btn btn-danger" style="color:white;width:40%;margin-top:20px;">Remove</button></a>

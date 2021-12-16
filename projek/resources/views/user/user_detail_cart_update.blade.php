@@ -92,14 +92,14 @@
                 </div>
                 <input type="hidden" name="idpegawai" value="{{$pegawai->id}}">
                 <div class="btn btn-warning btnTrans" style="float:right;">
-                    <button type="submit">Add to Cart</button>
+                    <button type="submit">Update Cart</button>
                 </div>
                 <div style="clear:both"></div>
 
                 <div style="margin-top:30px;margin-bottom:50px;">
                     <div class="shadow-lg" style="padding:20px;width:49.5%;float:left;margin-right:10px;border-radius:10px;pading:20px;">
                         <label for="tanggal">Alamat</label>
-                        <input type="text" name="alamat" id="alamat" value="{{ $user->user_alamat }}" readonly>
+                        <input type="text" name="alamat" id="alamat" value="{{ $cart->alamat }}" readonly>
                         <a href="" data-target="#pilihalamat" data-toggle="modal">
                             <button class="btn btn-warning btnTrans" data-target="#pilihalamat" data-toggle="modal" id="alamatlain">
                                 Pilih alamat lain
@@ -152,7 +152,7 @@
                                         Rp.{{ $addon->barang->barang_harga }} x {{ $addon->jumlah}}
 
                                     </p>
-                                    <a href="{{ url('user/doremoveaddon/'.$addon['id'].'/'.$pegawai->id) }}">&nbsp;&nbsp;&nbsp;<button data-toggle="modal" data-target="#modalEditAddOn{{$addon['id']}}" style="color:red; font-size:15px;font-weight:normal;margin-top:9px;margin-left:-10px;">Remove</button></a>
+                                    <a href="{{ url('user/doremoveaddonedit/'.$addon['id'].'/'.$pegawai->id) }}">&nbsp;&nbsp;&nbsp;<button data-toggle="modal" data-target="#modalEditAddOn{{$addon['id']}}" style="color:red; font-size:15px;font-weight:normal;margin-top:9px;margin-left:-10px;">Remove</button></a>
 
                                 </div>
                             </div>

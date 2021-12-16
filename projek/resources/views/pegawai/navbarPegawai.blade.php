@@ -39,6 +39,11 @@
                 </a>
                 {{-- <a class="nav-item nav-link" id="tes">CART</a> --}}
             </form>
+            <form action="{{ url('pegawai/withdraw')}}" method="get">
+                <a class="nav-item nav-link">
+                    <input class="btn" type="submit" value="Withdraw">
+                </a>
+            </form>
             <form action="{{ url('/logout')}}" method="get">
                 <a class="nav-item nav-link">
                     <input class="btn btn-danger" type="submit" value="Sign Out">
