@@ -131,7 +131,8 @@ Route::middleware(['is_login'])->group(function () {
             return view('admin.detailTopUp',['id'=>$id,'email'=>$email,'dataheader'=>$htranstpwd,'datadetail'=>$dtranstpwd]);
         });
         Route::get('/acc_wd/{id}', [HomeController::class, "prosesAcc"]);
-        Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDecline"]);
+        Route::post('/detailTopUp/actionDecline/{id}', [HomeController::class, "prosesDeclineTopup"]);
+        Route::post('/detailTopUp/actionAcc/{id}', [HomeController::class, "prosesAccTopup"]);
         //TRANSAKSI TOPUP WITHDRAW
 
         Route::get('/hasilCari/{nama}', [HomeController::class, "hasilCari"]);

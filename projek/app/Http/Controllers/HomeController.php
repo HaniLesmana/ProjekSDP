@@ -874,7 +874,7 @@ class HomeController extends Controller
         \Midtrans\Config::$is3ds = true;
         $params = array(
             'transaction_details' => array(
-                'order_id' => "TES".$ctr,
+                'order_id' => $ctr,
                 'gross_amount' => $total,
             ),
             'customer_details' => array(
@@ -941,11 +941,30 @@ class HomeController extends Controller
         ]);
         return back();
     }
-    function prosesDecline($id){
+    function prosesDeclineTopup($id){
         htransTopup::where('htranstpwd_id',$id)->update([
-            'htranstpwd_status' => 0
+            'htranstpwd_status' => 0,
+            'status_payment' => 'Deny'
         ]);
-        return view('admin.home_admin');
+        return back();
+    }
+    function prosesAccTopup($id){
+        $trans = htransTopup::where('htranstpwd_id',$id)->first();
+        $id = $trans->user_id;
+        $total = $trans->htranstpwd_total;
+        $trans->htranstpwd_status = 1;
+        $trans->status_payment = 'Success';
+        $trans->save();
+
+        $user = user::where('id',$id)->first();
+        $temp = $user->user_saldo;
+        $user->user_saldo = $temp+$total;
+        $user->save();
+        // htransTopup::where('htranstpwd_id',$id)->update([
+        //     'htranstpwd_status' => 0,
+        //     'status_payment' => 'Deny'
+        // ]);
+        return back();
     }
     function add_cart($id,Request $request){
         try {
