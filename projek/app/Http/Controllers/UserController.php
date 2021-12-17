@@ -47,6 +47,7 @@ class UserController extends Controller
         else{
             $addons = array();
         }
+        // dd(session('loggedIn'));
         return view('user.user_detail_cart',['pegawai'=>$pegawai,'user'=>$user,'databarang'=>$databarang,'addons'=>$addons]);
     }
 

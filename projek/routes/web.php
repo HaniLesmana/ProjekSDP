@@ -32,7 +32,7 @@ Route::middleware(['is_login'])->group(function () {
     Route::get('payments/pending', 'PaymentController@pending');
 
     //Report
-    Route::group(['middleware' => ['checkrole:admin']], function () {
+    // Route::group(['middleware' => ['checkrole:admin']], function () {
         Route::get('report/transaksi_user', [ReportController::class,'transaksiUser']);
         Route::get('report/transaksi_userPDF', [ReportController::class,'pdfTransaksiUser']);
         Route::get('report/transaksi_barang', [ReportController::class,'transaksiBarang']);
@@ -46,12 +46,15 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("report/reportpembelianbarang_ajax/", [ReportController::class, "reportpembelianbarang_ajax"]);
         Route::get("report/reporttpwd_ajax/", [ReportController::class, "reporttpwd_ajax"]);
         Route::get("report/reportsewa_ajax/", [ReportController::class, "reportsewa_ajax"]);
-    });
+    //});
 
     Route::prefix("home")->group(function(){
-        Route::get("/user", [HomeController::class, "home_user"])->middleware(['checkrole:user']);
-        Route::get("/pegawai", [HomeController::class, "home_pegawai"])->middleware(['checkrole:pegawai']);
-        Route::get("/admin", [HomeController::class, "home_admin"])->middleware(['checkrole:admin']);
+        // Route::get("/user", [HomeController::class, "home_user"])->middleware(['checkrole:user']);
+        // Route::get("/pegawai", [HomeController::class, "home_pegawai"])->middleware(['checkrole:pegawai']);
+        // Route::get("/admin", [HomeController::class, "home_admin"])->middleware(['checkrole:admin']);
+        Route::get("/user", [HomeController::class, "home_user"]);
+        Route::get("/pegawai", [HomeController::class, "home_pegawai"]);
+        Route::get("/admin", [HomeController::class, "home_admin"]);
         Route::get("/ajax/{jasa}", [HomeController::class, "ajax"]);
         Route::get("/add_cart/{id}", [HomeController::class, "add_cart"]);
         Route::get("/list_cart", [HomeController::class, "list_cart"]);
@@ -65,7 +68,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/history_filter_pegawai/{id}/{id1}', [UserController::class, "history_filter_pegawai"]);
         Route::get('/history_filter_pegawai_status/{id}', [UserController::class, "history_filter_pegawai_status"]);
     });
-    Route::middleware(['checkrole:admin'])->prefix("admin")->group(function(){
+    Route::prefix("admin")->group(function(){
         //Route::get("/listpegawai",function ()
         //{
             //return view('admin.listPegawai_Admin');
@@ -141,7 +144,7 @@ Route::middleware(['is_login'])->group(function () {
         Route::get('/accpembayaran/{id}/{id1}', [HomeController::class, "accpembayaran"]);
         Route::get('/accpembayaransemua', [HomeController::class, "accpembayaransemua"]);
     });
-    Route::middleware(['checkrole:user'])->prefix("user")->group(function(){
+    Route::prefix("user")->group(function(){
         Route::get("/topUp",function ()
         {
             return view('user.user_topup');
@@ -195,7 +198,8 @@ Route::middleware(['is_login'])->group(function () {
         Route::get("/transvoucher", [UserController::class, "transvoucher"]);
         Route::post("/dotransvoucher", [voucherController::class, "dotransvoucher"]);
     });
-    Route::middleware(['checkrole:pegawai'])->prefix("pegawai")->group(function(){
+    // Route::middleware(['checkrole:pegawai'])->prefix("pegawai")->group(function(){
+    Route::prefix("pegawai")->group(function(){
         Route::post("/editProfile", [HomeController::class, "editProfilePegawai"]);
         Route::post("/updatePhoto", [HomeController::class, "updatePhotoPegawai"]);
         Route::get('/pesanan', [HomeController::class, "pegawaiOrder"]);

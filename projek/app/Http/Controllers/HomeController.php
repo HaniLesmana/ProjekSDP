@@ -621,7 +621,7 @@ class HomeController extends Controller
                     'password' => $request->input("user_login_pass"),
                 ];
                 if(Auth::guard('web_user')->attempt($data)){
-                    $request->session()->regenerate();
+                    // $request->session()->regenerate();
                     $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
                     $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
                     return redirect("/home/user");
@@ -634,7 +634,6 @@ class HomeController extends Controller
                 $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
                 $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
                 return redirect("/home/user");
-
             }
             else if(pegawai::where('pegawai_email',$email)->first() != null){
                 $request->validate([
@@ -651,7 +650,7 @@ class HomeController extends Controller
                     'password' => $request->input("user_login_pass"),
                 ];
                 if(Auth::guard('web_pegawai')->attempt($data)){
-                    $request->session()->regenerate();
+                    // $request->session()->regenerate();
                     $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
                     $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
                     // dd(session()->all());
@@ -664,6 +663,7 @@ class HomeController extends Controller
 
                 $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
                 $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
+                // dd("test");
                 return redirect("/home/pegawai");
             }
             else if(admin::where('admin_email',$email)->first()!=null){
@@ -681,7 +681,7 @@ class HomeController extends Controller
                     'password' => $request->input("user_login_pass"),
                 ];
                 if(Auth::guard('web_admin')->attempt($data)){
-                    $request->session()->regenerate();
+                    // $request->session()->regenerate();
                     $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
                     $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
                     return redirect("/home/admin");
@@ -693,7 +693,8 @@ class HomeController extends Controller
 
                 $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
                 $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
-                return redirect("/home/admin");
+                dd("test");
+                //return redirect("/home/admin");
             }
             else {
                 return view('index',['error'=>'ERROR']);
@@ -874,7 +875,7 @@ class HomeController extends Controller
         \Midtrans\Config::$is3ds = true;
         $params = array(
             'transaction_details' => array(
-                'order_id' => $ctr,
+                'order_id' => $ctr.'tests',
                 'gross_amount' => $total,
             ),
             'customer_details' => array(
