@@ -10,6 +10,7 @@ class user_voucher extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public $table = "user_vouchers";
     public $timestamps=true;
     protected $primaryKey="id";
     public $incrementing=true;

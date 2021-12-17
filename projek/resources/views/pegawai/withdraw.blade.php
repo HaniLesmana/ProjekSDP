@@ -139,7 +139,7 @@
             </div>
         </div>
     </form>
-        <table class="table table-striped" style="margin-top: 100px">
+        <!-- <table class="table table-striped" style="margin-top: 100px">
             <thead>
             <tr>
                 <th scope="col"></th>
@@ -158,7 +158,7 @@
                 </tr>
             @endforeach
             </tbody>
-        </table>
+        </table> -->
     </div>
 
     <footer>

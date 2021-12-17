@@ -26,13 +26,21 @@
                     <select class="form-control-sm" name="datavoucher" id="dt" style="float:left;">
                         <option value="-1">-</option>
                         @foreach ($user_voucher as $uv)
-                            <option value="{{$uv->id}}">{{$uv->voucher->voucher_nama}}</option>
+                            @foreach ($datavoucher as $v)
+                                @if ($uv->voucher_id == $v->id)
+                                    <option value="{{$v->id}}">{{$v->voucher_nama}}</option>
+                                @endif
+                            @endforeach
                         @endforeach
                     </select>
 
                     <br>
                         @foreach ($user_voucher as $uv)
-                            <input type="hidden" id="P{{$uv->id}}" value="{{$uv->voucher->voucher_potongan}}">
+                            @foreach ($datavoucher as $v)
+                                @if ($uv->voucher_id == $v->id)
+                                    <input type="hidden" id="P{{$v->id}}" value="{{$v->voucher_potongan}}">
+                                @endif
+                            @endforeach
                         @endforeach
                     <label class="lab" style="line-height:20px;" id="txtpotongan">0</label>
 

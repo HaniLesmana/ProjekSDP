@@ -281,10 +281,10 @@ class HomeController extends Controller
     {
         $id = user::where("id",session('loggedIn'))->first()->id;
         $photou = user::where("id",session('loggedIn'))->first()->user_photo;
-        //dd($request->hasFile("photo_user"));
         if($photou == "" || $photou==null){
             if($request->hasFile("photo_user")){
-                Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('user_photo')->getClientOriginalExtension());
+                //Storage::delete("/public/photos","User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
+                Storage::putFileAs("/public/photos",$request->file('photo_user'),"User".$id.'.'.$request->file('photo_user')->getClientOriginalExtension());
                 $photo ="User".$id.".".$request->file('photo_user')->getClientOriginalExtension();
                 try {
                     user::where('id',$id)->update(
@@ -616,19 +616,19 @@ class HomeController extends Controller
                 ]);
 
                 // AUTH START
-                $data = [
-                    'user_email' => $request->input("user_login_email"),
-                    'password' => $request->input("user_login_pass"),
-                ];
-                if(Auth::guard('web_user')->attempt($data)){
-                    // $request->session()->regenerate();
-                    $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
-                    return redirect("/home/user");
-                }
-                else{
-                    return view('index',['error'=>'ERROR']);
-                }
+                // $data = [
+                //     'user_email' => $request->input("user_login_email"),
+                //     'password' => $request->input("user_login_pass"),
+                // ];
+                // if(Auth::guard('web_user')->attempt($data)){
+                //     // $request->session()->regenerate();
+                //     $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
+                //     $request->session()->flash("welcomeUser", "Selamat datang ".user::where('user_email',$email)->first()->user_nama);
+                //     return redirect("/home/user");
+                // }
+                // else{
+                //     return view('index',['error'=>'ERROR']);
+                // }
                 // AUTH END
 
                 $request->session()->put("loggedIn", user::where('user_email',$email)->first()->id);
@@ -645,20 +645,20 @@ class HomeController extends Controller
                 ]);
 
                 // AUTH START
-                $data = [
-                    'pegawai_email' => $request->input("user_login_email"),
-                    'password' => $request->input("user_login_pass"),
-                ];
-                if(Auth::guard('web_pegawai')->attempt($data)){
-                    // $request->session()->regenerate();
-                    $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
-                    // dd(session()->all());
-                    return redirect("/home/pegawai");
-                }
-                else{
-                    return view('index',['error'=>'ERROR']);
-                }
+                // $data = [
+                //     'pegawai_email' => $request->input("user_login_email"),
+                //     'password' => $request->input("user_login_pass"),
+                // ];
+                // if(Auth::guard('web_pegawai')->attempt($data)){
+                //     // $request->session()->regenerate();
+                //     $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
+                //     $request->session()->flash("welcomeUser", "Selamat datang ".pegawai::where('pegawai_email',$email)->first()->pegawai_nama);
+                //     // dd(session()->all());
+                //     return redirect("/home/pegawai");
+                // }
+                // else{
+                //     return view('index',['error'=>'ERROR']);
+                // }
                 // AUTH END
 
                 $request->session()->put("loggedIn", pegawai::where('pegawai_email',$email)->first()->id);
@@ -676,25 +676,25 @@ class HomeController extends Controller
                 ]);
 
                 //AUTH START
-                $data = [
-                    'admin_email' => $request->input("user_login_email"),
-                    'password' => $request->input("user_login_pass"),
-                ];
-                if(Auth::guard('web_admin')->attempt($data)){
-                    // $request->session()->regenerate();
-                    $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
-                    $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
-                    return redirect("/home/admin");
-                }
-                else{
-                    return view('index',['error'=>'ERROR']);
-                }
+                // $data = [
+                //     'admin_email' => $request->input("user_login_email"),
+                //     'password' => $request->input("user_login_pass"),
+                // ];
+                // if(Auth::guard('web_admin')->attempt($data)){
+                //     // $request->session()->regenerate();
+                //     $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
+                //     $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
+                //     return redirect("/home/admin");
+                // }
+                // else{
+                //     return view('index',['error'=>'ERROR']);
+                // }
                 //AUTH END
 
                 $request->session()->put("loggedIn", admin::where('admin_email',$email)->first()->id);
                 $request->session()->flash("welcomeUser", "Selamat datang ".admin::where('admin_email',$email)->first()->admin_nama);
-                dd("test");
-                //return redirect("/home/admin");
+                //dd("test");
+                return redirect("/home/admin");
             }
             else {
                 return view('index',['error'=>'ERROR']);
@@ -1377,9 +1377,9 @@ class HomeController extends Controller
     }
     public function logout(Request $request){
         $request->session()->forget("loggedIn");
-        Auth::guard('web_user')->logout();
-        Auth::guard('web_pegawai')->logout();
-        Auth::guard('web_admin')->logout();
+        // Auth::guard('web_user')->logout();
+        // Auth::guard('web_pegawai')->logout();
+        // Auth::guard('web_admin')->logout();
         return $this->home();
     }
     public function prosesEditStock(Request $request,$id){
@@ -1411,8 +1411,9 @@ class HomeController extends Controller
         $param["pegawai"]=$pegawai;
         return view("pegawai.pegawai_profile",$param);
     }
-    public function listVoucher()
+    public function listVoucher(Request $request)
     {
+        //dd($request->session()->get('loggedIn'));
         $voucher = voucher::get();
         $datavoucher=$voucher;
         $user = user::where('id',session('loggedIn'))->first();
@@ -1605,14 +1606,19 @@ class HomeController extends Controller
         $data=json_decode($request->data);
         $total = $request->total;
         // $pegawai = pegawai::where('id',session('loggedIn'))->first();
-        htransTopup::create([
-            'user_id' => session('loggedIn'),
-            'htranstpwd_tanggal' => date("Y/m/d"),
-            'htranstpwd_total' => $total,
-            'htranstpwd_tipe' => 'withdraw',
-            'htranstpwd_status' => 2,
-            'token_payment' => "withdraw",
-            'status_payment'=>"null" ,
+        // htransTopup::create([
+        //     'user_id' => session('loggedIn'),
+        //     'htranstpwd_tanggal' => date("Y/m/d"),
+        //     'htranstpwd_total' => $total,
+        //     'htranstpwd_tipe' => 'withdraw',
+        //     'htranstpwd_status' => 2,
+        //     'token_payment' => "withdraw",
+        //     'status_payment'=>"null" ,
+        // ]);
+        $saldo=pegawai::where('id',session('loggedIn'))->first()->pegawai_saldo;
+        $saldo=$saldo-$total;
+        pegawai::where('id',session('loggedIn'))->update([
+            'pegawai_saldo'=>$saldo
         ]);
         return redirect('/pegawai/withdraw');
     }

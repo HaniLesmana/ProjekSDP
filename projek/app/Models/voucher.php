@@ -11,6 +11,7 @@ class voucher extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $table = "vouchers";
     public $timestamps=true;
     protected $primaryKey="id";
     public $incrementing=true;
